@@ -3,7 +3,6 @@ make: Entering directory '/mnt/nfs/homes/tmoragli/42/minishell'
 echo "\033[0;31mMaking \033[1;31mminishell"
 echo "\033[1;32mCompiling objects\033[0;32m"
 make  -C libft -f Makefile
- 
 gcc -c srcs/minishell.c -o srcs/minishell.o -Wall -Werror -Wextra -lreadline -Iincludes -g3
 gcc -c srcs/parsing.c -o srcs/parsing.o -Wall -Werror -Wextra -lreadline -Iincludes -g3
 echo "\033[1;32mLinking all objects\033[0;32m"

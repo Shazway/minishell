@@ -6,28 +6,40 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/06/30 17:58:43 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/03 21:20:37 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-void	init_data(t_data *data)
-{
-	data->nb_pipes = 0;
-}
 
 void	prompt_loop(t_data *data)
 {
-	data->entry = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
-	if (ft_strlen(data->entry) > 0)
-		printf("%s\n", data->entry);
-	add_history(data->entry);
+	data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
+	if (ft_strlen(data->input) > 0)
+		printf("%s\n", data->input);
+	add_history(data->input);
 	parsing(data);
-	printf("Number of pipes is %d\n", data->nb_pipes);
-	data->nb_pipes = 0;
-	free(data->entry);
+	free(data->input);
+}
+
+int	ft_free(t_data *data)
+{
+	if (data->cmd)
+		free(data->cmd);
+	if (data->env_lst)
+		free(data->env_lst);
+	return (1);
+}
+
+int	ft_allocate(t_data *data)
+{
+	data->cmd = NULL;
+	data->env_lst = malloc(sizeof(t_env));
+	if (!data->env_lst)
+		return (ft_free(data));
+	return (0);
 }
 
 int	main(void)
@@ -37,7 +49,8 @@ int	main(void)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	init_data(data);
+	if (ft_allocate(data))
+		return (1);
 	while (1)
 		prompt_loop(data);
 	clear_history();

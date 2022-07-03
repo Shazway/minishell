@@ -5,14 +5,12 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Thu Jun 30 21:39:53 2022
+# Make data base, printed on Mon Jul  4 00:03:03 2022
+ 
 
 # Variables
 
-# environment
-VSCODE_GIT_ASKPASS_MAIN = /usr/share/code/resources/app/extensions/git/dist/askpass-main.js
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -50,9 +48,9 @@ RM = @rm -f
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-_ = /usr/bin/code
+_ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 9:389246
+JOURNAL_STREAM = 9:238110
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -74,19 +72,19 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'Makefile', line 19)
 OBJS = $(SRCS:.c=.o)
 # environment
-MANAGERPID = 54271
+MANAGERPID = 39678
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/39231/vscode-ipc-c16dabc3-2ee8-4d3e-945a-47fa07977e11.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/39231/vscode-ipc-8d6cb1a5-08fa-425b-8d06-07f6731c9881.sock
 # environment
-VSCODE_CWD = /mnt/nfs/homes/tmoragli/42/minishell
+VSCODE_CWD = /mnt/nfs/homes/tmoragli
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_39231_FYXvnS
+KRB5CCNAME = FILE:/tmp/krb5cc_39231_FEU6At
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /mnt/nfs/homes/tmoragli/bin:/mnt/nfs/homes/tmoragli/bin:/mnt/nfs/homes/tmoragli/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /mnt/nfs/homes/tmoragli/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # makefile (from 'Makefile', line 13)
 MINISHELL = minishell
 # environment
@@ -94,7 +92,7 @@ GPG_AGENT_INFO = /run/user/39231/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e2r8p6.42.fr:@/tmp/.ICE-unix/54754,unix/e2r8p6.42.fr:/tmp/.ICE-unix/54754
+SESSION_MANAGER = local/e2r13p12.42.fr:@/tmp/.ICE-unix/40248,unix/e2r13p12.42.fr:/tmp/.ICE-unix/40248
 # environment
 XDG_RUNTIME_DIR = /run/user/39231
 # environment
@@ -104,21 +102,19 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 368fa61005dd4579b91aa9840175fee0
+INVOCATION_ID = 74f6261ea05745e9a20b16f5cc869128
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
-# environment
 XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/tmoragli
 # environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+LS_COLORS = 
 # environment
 XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/39231/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 55125
+GIO_LAUNCHED_DESKTOP_FILE_PID = 40785
 # automatic
 %F = $(notdir $%)
 # environment
@@ -130,17 +126,15 @@ PWD = /mnt/nfs/homes/tmoragli/42/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 54718
+SSH_AGENT_PID = 40196
 # environment
-ORIGINAL_XDG_CURRENT_DESKTOP = Unity
+ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
 GTK_MODULES = gail:atk-bridge
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /mnt/nfs/homes/tmoragli
-# environment
-VSCODE_CLI = 1
 # environment
 VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/tmoragli/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
@@ -157,10 +151,6 @@ GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
 MAKELEVEL := 0
-# environment
-VSCODE_GIT_IPC_HANDLE = /run/user/39231/vscode-git-b5bb77d7a9.sock
-# environment
-COLORTERM = truecolor
 # default
 MAKE = $(MAKE_COMMAND)
 # default
@@ -170,7 +160,7 @@ QT_IM_MODULE = ibus
 # makefile (from 'Makefile', line 14)
 SRCS = srcs/minishell.c srcs/parsing.c
 # environment
-SHLVL = 2
+SHLVL = 1
 # makefile (from 'Makefile', line 25)
 LIBFT = libft/libft.a
 # makefile (from 'Makefile', line 20)
@@ -194,11 +184,7 @@ LESS = -R
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /mnt/nfs/homes/tmoragli/42/so_long
-# environment
-VSCODE_GIT_ASKPASS_EXTRA_ARGS = --ms-enable-electron-run-as-node
-# environment
-TERM_PROGRAM = vscode
+OLDPWD = /mnt/nfs/homes/tmoragli
 # default
 .VARIABLES := 
 # automatic
@@ -207,16 +193,12 @@ TERM_PROGRAM = vscode
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
 VSCODE_IPC_HOOK = /run/user/39231/vscode-bbeecf36-1.68.1-main.sock
-# environment
-VSCODE_GIT_ASKPASS_NODE = /usr/share/code/code
 # makefile
 MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
-# environment
-TERM_PROGRAM_VERSION = 1.68.1
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -224,13 +206,9 @@ GDK_BACKEND = x11
 # automatic
 +F = $(notdir $+)
 # environment
-NO_AT_BRIDGE = 1
-# environment
 QT_ACCESSIBILITY = 1
 # environment
 DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
-# environment
-GIT_ASKPASS = /usr/share/code/resources/app/extensions/git/dist/askpass.sh
 # default
 MAKEFILES := 
 # automatic
@@ -258,13 +236,11 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-TERM = xterm-256color
-# environment
 DOCKER_HOST = unix:///run/user/39231/docker.sock
 # environment
-VSCODE_PID = 55125
+VSCODE_PID = 40785
 # variable set hash-table stats:
-# Load=126/1024=12%, Rehash=0, Collisions=17/160=11%
+# Load=114/1024=11%, Rehash=0, Collisions=12/148=8%
 
 # Pattern-specific Variable Values
 
@@ -272,7 +248,7 @@ VSCODE_PID = 55125
 
 # Directories
 
-# . (device 58, inode 10884089): 12 files, no impossibilities.
+# . (device 59, inode 211877973): 12 files, no impossibilities.
 
 # 12 files, no impossibilities in 1 directories.
 
@@ -296,7 +272,6 @@ all: start_message minishell
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
- 
 # Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 
 .PHONY: all clean fclean re
@@ -313,7 +288,8 @@ all: start_message minishell
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-30 16:38:33.571082094
+#  Last modified 2022-07-03 22:31:08.468327124
+ 
 #  File has been updated.
 #  Successfully updated.
 
@@ -428,12 +404,12 @@ start_message:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 264 B / avg = 9 B
-# current buf: size = 8162 B / used = 264 B / count = 28 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 28 / storage = 257 B / avg = 9 B
+# current buf: size = 8162 B / used = 257 B / count = 28 / avg = 9 B
 
 # strcache performance: lookups = 56 / hit rate = 50%
 # hash-table stats:
 # Load=28/8192=0%, Rehash=0, Collisions=1/56=2%
-# Finished Make data base on Thu Jun 30 21:39:53 2022
+# Finished Make data base on Mon Jul  4 00:03:03 2022
 
  

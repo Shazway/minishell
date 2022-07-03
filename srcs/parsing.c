@@ -6,47 +6,64 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/06/30 21:20:39 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/03 22:31:06 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int	count_words(t_data *data)
+void	print_result(t_token *token)
 {
-	int	i;
-	int	count;
+	int i;
 
-	count = 0;
 	i = 0;
-	while (data->entry[i])
+	while (token->str_split && token->str_split[i])
 	{
-		while (data->entry[i] && ft_isblank(data->entry[i]))
-			i++;
-		if (data->entry[i] != '\0')
-			count++;
-		while (data->entry[i] && !ft_isblank(data->entry[i]))
-			i++;
+		printf("[%s]\n", token->str_split[i]);
+		i++;
 	}
-	return (count);
+}
+
+void	split_spaces(t_token *token, char *content)
+{
+	token->str_split = ft_split(content, ' ');
+	token->str = NULL;
+	token->name = NULL;
+	token->content = NULL;
+	print_result(token);
+}
+
+void	del_token(void *content)
+{
+	t_token *token;
+
+	token = (t_token *)content;
+	ft_free_tab(token->str_split);
+	free(token->str);
+	free(token->content);
+	free(token->name);
 }
 
 int	parsing(t_data *data)
 {
-	int	pipe_i;
-	int	count;
-	int i;
+	int 	i;
+	t_token *temp;
+	t_list	**test = &data->cmd;
+	char	**pipe_split;
 
 	i = 0;
-	pipe_i = 0;
-	data->entry = ft_strtrim(data->entry, " ");
-	while (count_words(data))
-		data->size_cmd++;
-	
-	while (data->entry[pipe_i] && data->entry[pipe_i] != '|')
+	data->input = ft_strtrim(data->input, " ");
+	pipe_split = ft_split(data->input, '|');
+	while (pipe_split[i])
+	{
+		temp = malloc(sizeof(t_token));
+		if (!temp)
+			return (1);
+		ft_lstadd_back(test, ft_lstnew((void *)temp));
+		split_spaces(temp, pipe_split[i]);
+		printf("New command\n", temp->str_split[0]);
 		i++;
-	if (data->entry[pipe_i + 1] && data->entry[pipe_i] == '|')
-		i++;
+	}
+	ft_lstclear(&(data->cmd), del_token);
 	return (i);
 }

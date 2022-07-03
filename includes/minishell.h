@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/05/08 15:59:36 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/03 22:39:06 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,50 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdio.h>
 #include <sys/wait.h>
+#define WORD = 0;
+#define R_DIR = 1;
+#define L_DIR = 2;
+#define RD_DIR = 3;
+#define LD_DIR = 4;
+#define O_PARENTH = 5;
+#define C_PARENTH = 6;
+#define AND_OP = 7;
+#define OR_OP = 8;
+#define PIPE = 9;
 
-typedef struct t_data
+typedef struct s_token
 {
-	char	*entry;
+	char	*str;
+	char	**str_split;
+	char	*name;
+	char	*content;
+	char	*redirect;
+}	t_token;
+
+typedef struct s_trash
+{
+	void			*to_free;
+	struct s_trash	*next;
+}	t_trash;
+
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_data
+{
+	char	*input;
+	char	*output;
 	char	**commands;
-	int		nb_commands;
-	int		nb_pipes;
+	char	**env_str;
+	t_env	*env_lst;
+	t_list	*cmd;
+	t_trash	*trash;
 }	t_data;
 
 int	parsing(t_data *data);
