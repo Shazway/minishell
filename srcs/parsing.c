@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/03 22:31:06 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/04 02:29:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ int	parsing(t_data *data)
 			return (1);
 		ft_lstadd_back(test, ft_lstnew((void *)temp));
 		split_spaces(temp, pipe_split[i]);
-		printf("New command\n", temp->str_split[0]);
+		printf("New command\n");
 		i++;
 	}
 	ft_lstclear(&(data->cmd), del_token);
+	ft_free_tab(pipe_split);
 	return (i);
 }

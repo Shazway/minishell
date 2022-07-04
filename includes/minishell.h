@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/03 22:39:06 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/04 02:15:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <term.h>
+#include <signal.h>
 #include <curses.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
@@ -60,6 +61,8 @@ typedef struct s_env
 
 typedef struct s_data
 {
+	int		read_ret;
+	char	*buf_trash;
 	char	*input;
 	char	*output;
 	char	**commands;
@@ -70,4 +73,5 @@ typedef struct s_data
 }	t_data;
 
 int	parsing(t_data *data);
+void	del_token(void *content);
 #endif

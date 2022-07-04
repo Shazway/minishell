@@ -1,5 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/mnt/nfs/homes/tmoragli/42/minishell'
+make: Entering directory '/home/telli/Code/C/minishell'
 echo "\033[0;31mMaking \033[1;31mminishell"
 echo "\033[1;32mCompiling objects\033[0;32m"
 make  -C libft -f Makefile
@@ -8,5 +8,5 @@ gcc -c srcs/parsing.c -o srcs/parsing.o -Wall -Werror -Wextra -lreadline -Iinclu
 echo "\033[1;32mLinking all objects\033[0;32m"
 gcc srcs/minishell.o srcs/parsing.o -Wall -Werror -Wextra -lreadline -Iincludes -g3 -o minishell libft/libft.a -fsanitize=address
 echo "\033[1;31mminishell\033[0m is ready to use!"
-make: Leaving directory '/mnt/nfs/homes/tmoragli/42/minishell'
+make: Leaving directory '/home/telli/Code/C/minishell'
  

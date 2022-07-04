@@ -6,8 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jul  4 00:03:03 2022
- 
+# Make data base, printed on Mon Jul  4 01:15:22 2022
 
 # Variables
 
@@ -16,15 +15,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # automatic
 ?F = $(notdir $?)
 # environment
-DESKTOP_SESSION = ubuntu
+WSLENV = VSCODE_WSL_EXT_LOCATION/up
 # default
 .SHELLFLAGS := -c
-# environment
-XDG_SESSION_CLASS = user
 # makefile (from 'Makefile', line 23)
 LD_FLAGS = libft/libft.a -fsanitize=address
-# environment
-XDG_SESSION_TYPE = x11
 # environment
 VSCODE_LOG_NATIVE = false
 # automatic
@@ -33,120 +28,66 @@ VSCODE_LOG_NATIVE = false
 INCLUDES = -Iincludes
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# environment
-XAUTHORITY = /mnt/nfs/homes/tmoragli/.Xauthority
-# environment
-GDMSESSION = ubuntu
-# environment
-XMODIFIERS = @im=ibus
+# automatic
+@F = $(notdir $@)
 # makefile
-CURDIR := /mnt/nfs/homes/tmoragli/42/minishell
+CURDIR := /home/telli/Code/C/minishell
 # makefile
 SHELL = /bin/sh
 # makefile (from 'Makefile', line 21)
 RM = @rm -f
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /usr/share/code/code
-# environment
-JOURNAL_STREAM = 9:238110
-# environment
-XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
+_ = /home/telli/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/node
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
-# automatic
-@F = $(notdir $@)
-# environment
-GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+# makefile (from 'Makefile', line 13)
+MINISHELL = minishell
 # 'override' directive
 GNUMAKEFLAGS := 
-# environment
-MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
-# environment
-XDG_DATA_DIRS = /usr/share/gnome:/usr/share/ubuntu:/mnt/nfs/homes/tmoragli/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
-# environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/39231/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'Makefile', line 19)
 OBJS = $(SRCS:.c=.o)
 # environment
-MANAGERPID = 39678
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/39231/vscode-ipc-8d6cb1a5-08fa-425b-8d06-07f6731c9881.sock
-# environment
-VSCODE_CWD = /mnt/nfs/homes/tmoragli
-# environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
-# environment
-KRB5CCNAME = FILE:/tmp/krb5cc_39231_FEU6At
+VSCODE_CWD = /mnt/c/Users/telli/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /mnt/nfs/homes/tmoragli/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-# makefile (from 'Makefile', line 13)
-MINISHELL = minishell
-# environment
-GPG_AGENT_INFO = /run/user/39231/gnupg/S.gpg-agent:0:1
+PATH = /home/telli/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Process Lasso/:/mnt/c/Program Files/PuTTY/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Airshipper/:/mnt/c/Users/telli/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/telli/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/telli/OneDrive/Bureau/Code/flutter/bin:/mnt/c/Users/telli/.dotnet/tools
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e2r13p12.42.fr:@/tmp/.ICE-unix/40248,unix/e2r13p12.42.fr:/tmp/.ICE-unix/40248
-# environment
-XDG_RUNTIME_DIR = /run/user/39231
-# environment
-XDG_MENU_PREFIX = gnome-
-# environment
 VSCODE_LOG_STACK = false
 # environment
-ELECTRON_RUN_AS_NODE = 1
-# environment
-INVOCATION_ID = 74f6261ea05745e9a20b16f5cc869128
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d7eb7313-dc64-467b-afa6-4a96a9c7d8d1.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
-XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/tmoragli
-# environment
-LS_COLORS = 
-# environment
-XDG_SESSION_DESKTOP = ubuntu
-# environment
-SSH_AUTH_SOCK = /run/user/39231/keyring/ssh
-# environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 40785
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 # automatic
 %F = $(notdir $%)
 # environment
-DISPLAY = :0
-# environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /mnt/nfs/homes/tmoragli/42/minishell
+PWD = /home/telli/Code/C/minishell
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 40196
-# environment
-ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
-# environment
-GTK_MODULES = gail:atk-bridge
+WSL_INTEROP = /run/WSL/2078_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /mnt/nfs/homes/tmoragli
+HOME = /home/telli
 # environment
-VSCODE_CODE_CACHE_PATH = /mnt/nfs/homes/tmoragli/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+LOGNAME = telli
 # environment
-LOGNAME = tmoragli
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# environment
-ZSH = /mnt/nfs/homes/tmoragli/.oh-my-zsh
+ZSH = /home/telli/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
-# environment
-GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
@@ -155,44 +96,36 @@ MAKELEVEL := 0
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
-# environment
-QT_IM_MODULE = ibus
 # makefile (from 'Makefile', line 14)
 SRCS = srcs/minishell.c srcs/parsing.c
 # environment
-SHLVL = 1
+SHLVL = 0
 # makefile (from 'Makefile', line 25)
 LIBFT = libft/libft.a
 # makefile (from 'Makefile', line 20)
 CC = gcc
-# environment
-IM_CONFIG_PHASE = 1
 # default
 MAKE_VERSION := 4.2.1
 # environment
-USER = tmoragli
+USER = telli
 # makefile
 .DEFAULT_GOAL := all
 # environment
-XDG_CURRENT_DESKTOP = Unity
-# environment
-LIBVIRT_DEFAULT_URI = qemu:///system
+NAME = DESKTOP-9TMBH8H
 # environment
 LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
+# environment
+VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/telli/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /mnt/nfs/homes/tmoragli
+OLDPWD = /mnt/c/Users/telli/AppData/Local/Programs/Microsoft VS Code
 # default
 .VARIABLES := 
 # automatic
 *F = $(notdir $*)
-# environment
-XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
-# environment
-VSCODE_IPC_HOOK = /run/user/39231/vscode-bbeecf36-1.68.1-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -201,14 +134,10 @@ MFLAGS = -pqrR
 *D = $(patsubst %/,%,$(dir $*))
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
-# environment
-GDK_BACKEND = x11
 # automatic
 +F = $(notdir $+)
 # environment
-QT_ACCESSIBILITY = 1
-# environment
-DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
+VSCODE_HANDLES_SIGPIPE = true
 # default
 MAKEFILES := 
 # automatic
@@ -218,29 +147,27 @@ PAGER = less
 # environment
 LC_ALL = C
 # environment
-GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+HOSTTYPE = x86_64
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
 # makefile (from 'Makefile', line 24)
 FLAGS = -Wall -Werror -Wextra -lreadline $(INCLUDES) -g3
-# environment
-CHROME_DESKTOP = code-url-handler.desktop
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
-# environment
-GJS_DEBUG_OUTPUT = stderr
 # default
 .RECIPEPREFIX := 
 # environment
 LANG = C
 # environment
-DOCKER_HOST = unix:///run/user/39231/docker.sock
+TERM = xterm-256color
 # environment
-VSCODE_PID = 40785
+VSCODE_EXTHOST_WILL_SEND_SOCKET = true
+# environment
+WSL_DISTRO_NAME = Ubuntu-20.04
 # variable set hash-table stats:
-# Load=114/1024=11%, Rehash=0, Collisions=12/148=8%
+# Load=78/1024=8%, Rehash=0, Collisions=6/112=5%
 
 # Pattern-specific Variable Values
 
@@ -248,9 +175,9 @@ VSCODE_PID = 40785
 
 # Directories
 
-# . (device 59, inode 211877973): 12 files, no impossibilities.
+# . (device 2064, inode 42311): 11 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -288,8 +215,7 @@ all: start_message minishell
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-03 22:31:08.468327124
- 
+#  Last modified 2022-07-04 01:05:46.307427
 #  File has been updated.
 #  Successfully updated.
 
@@ -358,6 +284,7 @@ re: fclean all
 #  File does not exist.
 #  File has not been updated.
 
+ 
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -407,9 +334,9 @@ start_message:
 # strcache buffers: 1 (0) / strings = 28 / storage = 257 B / avg = 9 B
 # current buf: size = 8162 B / used = 257 B / count = 28 / avg = 9 B
 
-# strcache performance: lookups = 56 / hit rate = 50%
+# strcache performance: lookups = 55 / hit rate = 49%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=1/56=2%
-# Finished Make data base on Mon Jul  4 00:03:03 2022
+# Load=28/8192=0%, Rehash=0, Collisions=1/55=2%
+# Finished Make data base on Mon Jul  4 01:15:22 2022
 
  
