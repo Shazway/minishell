@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/04 02:15:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:50:25 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,16 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	int		read_ret;
-	char	*buf_trash;
-	char	*input;
-	char	*output;
-	char	**commands;
-	char	**env_str;
-	t_env	*env_lst;
-	t_list	*cmd;
-	t_trash	*trash;
+	int					read_ret;
+	char				*buf_trash;
+	char				*input;
+	char				*output;
+	char				**commands;
+	char				**env_str;
+	struct sigaction	signals;
+	t_env				*env_lst;
+	t_list				*cmd;
+	t_trash				*trash;
 }	t_data;
 
 int	parsing(t_data *data);

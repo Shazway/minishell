@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jul  4 01:15:22 2022
+# Make data base, printed on Mon Jul  4 16:27:11 2022
 
 # Variables
 
@@ -61,7 +61,7 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d7eb7313-dc64-467b-afa6-4a96a9c7d8d1.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-c2879053-0534-4562-b7e9-438297c5511d.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -75,7 +75,7 @@ PWD = /home/telli/Code/C/minishell
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/2078_interop
+WSL_INTEROP = /run/WSL/12_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -175,9 +175,9 @@ WSL_DISTRO_NAME = Ubuntu-20.04
 
 # Directories
 
-# . (device 2064, inode 42311): 11 files, no impossibilities.
+# . (device 2064, inode 42311): 12 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -215,7 +215,7 @@ all: start_message minishell
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-04 01:05:46.307427
+#  Last modified 2022-07-04 15:47:39.902254
 #  File has been updated.
 #  Successfully updated.
 
@@ -276,6 +276,7 @@ srcs/minishell.o:
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 re: fclean all
@@ -284,7 +285,6 @@ re: fclean all
 #  File does not exist.
 #  File has not been updated.
 
- 
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -334,9 +334,9 @@ start_message:
 # strcache buffers: 1 (0) / strings = 28 / storage = 257 B / avg = 9 B
 # current buf: size = 8162 B / used = 257 B / count = 28 / avg = 9 B
 
-# strcache performance: lookups = 55 / hit rate = 49%
+# strcache performance: lookups = 56 / hit rate = 50%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=1/55=2%
-# Finished Make data base on Mon Jul  4 01:15:22 2022
+# Load=28/8192=0%, Rehash=0, Collisions=1/56=2%
+# Finished Make data base on Mon Jul  4 16:27:11 2022
 
  

@@ -6,14 +6,12 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/04 03:32:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:54:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
-
-struct sigaction	g_signal;
 
 void	handler()
 {
@@ -22,43 +20,16 @@ void	handler()
 	return ;
 }
 
-char *get_prompt(char *str)
+void	signal_intercept(t_data *data)
 {
-	int i;
-	int size;
-	int j;
-	char *dest;
-
-	size = 0;
-	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] == '/')
-			size = 0;
-		size++;
-		i++;
-	}
-	dest = malloc(sizeof(char) * (size + 1));
-	if (!dest)
-		return (NULL);
-	dest[size] = '\0';
-	while (i > 0 && i != '/')
-		i--;
-	j = 0;
-	while (str[i] && dest[j])
-	{
-		dest[j] = str[i];
-		j++;
-		i++;
-	}
-	return (dest);
+	signal_intercept(data);
+	data->signals.sa_handler = handler;
+	sigaction(SIGINT, &(data->signals), NULL);
+	sigaction(SIGQUIT, &(data->signals), NULL);
 }
 
 void	prompt_loop(t_data *data)
 {
-	g_signal.sa_handler = handler;
-	sigaction(SIGINT, &g_signal, NULL);
-	sigaction(SIGQUIT, &g_signal, NULL);
 	data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
 	if (!data->input)
 		exit(printf("\n"));
