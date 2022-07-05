@@ -6,30 +6,34 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/04 15:54:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:38:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
+struct sigaction g_signals;
+
 void	handler()
 {
 	printf("\n");
 	printf("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
+	sigaction(SIGINT, &(g_signals), NULL);
+	sigaction(SIGQUIT, &(g_signals), NULL);
 	return ;
 }
 
-void	signal_intercept(t_data *data)
+void	signal_intercept(void)
 {
-	signal_intercept(data);
-	data->signals.sa_handler = handler;
-	sigaction(SIGINT, &(data->signals), NULL);
-	sigaction(SIGQUIT, &(data->signals), NULL);
+	g_signals.sa_handler = handler;
+	sigaction(SIGINT, &(g_signals), NULL);
+	sigaction(SIGQUIT, &(g_signals), NULL);
 }
 
 void	prompt_loop(t_data *data)
 {
+	signal_intercept();
 	data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
 	if (!data->input)
 		exit(printf("\n"));

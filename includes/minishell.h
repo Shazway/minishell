@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/04 15:50:25 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:35:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_data
 	char				*output;
 	char				**commands;
 	char				**env_str;
-	struct sigaction	signals;
 	t_env				*env_lst;
 	t_list				*cmd;
 	t_trash				*trash;
@@ -75,4 +74,5 @@ typedef struct s_data
 
 int	parsing(t_data *data);
 void	del_token(void *content);
+void	signal_intercept();
 #endif

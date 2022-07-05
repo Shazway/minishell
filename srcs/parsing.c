@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 16:49:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:43:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,6 @@ void	del_token(void *content)
 	free(token);
 }
 
-void	check_redirect(t_data *data)
-{
-	t_list	*start;
-	t_list	*temp;
-
-	start = data->cmd;
-	while (start->next)
-	{
-		
-	}
-}
-
 int	parsing(t_data *data)
 {
 	int 	i;
@@ -66,7 +54,6 @@ int	parsing(t_data *data)
 
 	i = 0;
 	data->input = ft_strtrim(data->input, " ");
-	arrange_redirections(data);
 	pipe_split = ft_split(data->input, '|');
 	while (pipe_split[i])
 	{
@@ -78,7 +65,6 @@ int	parsing(t_data *data)
 		printf("New command\n");
 		i++;
 	}
-	check_redirect(data);
 	ft_lstclear(&(data->cmd), del_token);
 	ft_free_tab(pipe_split);
 	return (i);
