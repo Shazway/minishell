@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 19:35:26 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/05 19:49:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_data
 	t_env				*env_lst;
 	t_list				*cmd;
 	t_trash				*trash;
+	struct sigaction	signals;
 }	t_data;
 
 int		ft_echo(int ac, char **av);
@@ -84,7 +85,7 @@ int		directory_exists(char *s);
 char	*previous_dir(char *str);
 
 void	handler(void);
-void	signal_intercept(void);
+int		signal_intercept(t_data *data);
 void	prompt_loop(t_data *data);
 int		ft_free(t_data *data);
 int		ft_allocate(t_data *data);

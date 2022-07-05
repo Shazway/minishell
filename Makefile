@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/05 19:29:34 by mdkhissi         ###   ########.fr        #
+#    Updated: 2022/07/05 19:50:41 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DESCRIPTION = Minishell
 
 # ----------- COMPILER FLAGS -------
 CC			= clang
-CFLAGS		= -Wall -Wextra -Werror #-g3 #fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
 LPFLAGS		= -L$(LIBFT) -lft -lreadline
 
 # ----------- INCLUDE --------------

@@ -3,69 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 18:26:36 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/05 19:47:26 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_result(t_token *token)
+void    print_result(t_token *token)
 {
-	int i;
+    int i;
 
-	i = 0;
-	while (token->str_split && token->str_split[i])
-	{
-		printf("[%s]\n", token->str_split[i]);
-		i++;
-	}
+    i = 0;
+    while (token->str_split && token->str_split[i])
+    {
+        printf("[%s]\n", token->str_split[i]);
+        i++;
+    }
 }
 
-void	split_spaces(t_token *token, char *content)
+void    split_spaces(t_token *token, char *content)
 {
-	token->str_split = ft_split(content, ' ');
-	token->str = NULL;
-	token->name = NULL;
-	token->content = NULL;
-	print_result(token);
+    token->str_split = ft_split(content, ' ');
+    token->str = NULL;
+    token->name = NULL;
+    token->content = NULL;
+    print_result(token);
 }
 
-void	del_token(void *content)
+void    del_token(void *content)
 {
-	t_token *token;
+    t_token *token;
 
-	token = (t_token *)content;
-	ft_free_tab(token->str_split);
-	free(token->str);
-	free(token->content);
-	free(token->name);
-	free(token);
+    token = (t_token *)content;
+    ft_free_tab(token->str_split);
+    free(token->str);
+    free(token->content);
+    free(token->name);
+    free(token);
 }
 
-int	parsing(t_data *data)
+int    parsing(t_data *data)
 {
-	int 	i;
-	t_token *temp;
-	t_list	**test = &data->cmd;
-	char	**pipe_split;
+    int     i;
+    t_token *temp;
+    char    **pipe_split;
 
-	i = 0;
-	data->input = ft_strtrim(data->input, " ");
-	pipe_split = ft_split(data->input, '|');
-	while (pipe_split[i])
-	{
-		temp = malloc(sizeof(t_token));
-		if (!temp)
-			return (1);
-		ft_lstadd_back(test, ft_lstnew((void *)temp));
-		split_spaces(temp, pipe_split[i]);
-		printf("New command\n");
-		i++;
-	}
-	ft_lstclear(&(data->cmd), del_token);
-	ft_free_tab(pipe_split);
-	return (i);
+    i = 0;
+    data->input = ft_strtrim(data->input, " ");
+    pipe_split = ft_split(data->input, '|');
+    while (pipe_split[i])
+    {
+        temp = malloc(sizeof(t_token));
+        if (!temp)
+            return (1);
+        ft_lstadd_back(&(data->cmd), ft_lstnew((void *)temp));
+        split_spaces(temp, pipe_split[i]);
+        printf("New command\n");
+        i++;
+    }
+    ft_lstclear(&(data->cmd), del_token);
+    ft_free_tab(pipe_split);
+    return (i);
 }
