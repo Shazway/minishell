@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:45:01 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 19:34:10 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/05 20:19:11 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_echo(int ac, char **av)
 		write(1, "\n", 1);
 	return (0);
 }
-
 
 int	check_echo_n(char *str)
 {

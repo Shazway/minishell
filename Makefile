@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/05 19:50:41 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/05 20:23:02 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DESCRIPTION = Minishell
 
 # ----------- COMPILER FLAGS -------
 CC			= clang
-CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g3
 LPFLAGS		= -L$(LIBFT) -lft -lreadline
 
 # ----------- INCLUDE --------------
@@ -27,7 +27,7 @@ INCLUDES	= -I $(INCLUDE) -I $(LIBFT)
 SRC			= ./srcs
 OBJ			= ./objs
 LIBFT		= ./libft
-SRCS		= $(SRC)/builtins.c $(SRC)/cd.c $(SRC)/main.c $(SRC)/minishell.c $(SRC)/parsing.c $(SRC)/utils.c
+SRCS		= $(SRC)/builtins.c $(SRC)/cd.c $(SRC)/minishell.c $(SRC)/parsing.c $(SRC)/utils.c
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
 # ----------- COLORS ---------------
