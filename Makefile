@@ -3,60 +3,80 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/04 15:47:39 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/05 19:29:34 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MINISHELL	=	minishell
-SRCS		=	srcs/minishell.c								\
-				srcs/parsing.c
+# ----------- EXECUTABLE -----------
+NAME		= minishell
+DESCRIPTION = Minishell
 
-INCLUDES	=	-Iincludes
+# ----------- COMPILER FLAGS -------
+CC			= clang
+CFLAGS		= -Wall -Wextra -Werror #-g3 #fsanitize=address
+LPFLAGS		= -L$(LIBFT) -lft -lreadline
 
-OBJS		=	$(SRCS:.c=.o)
-CC			=	gcc
-RM			=	@rm -f
+# ----------- INCLUDE --------------
+INCLUDE		= includes
+INCLUDES	= -I $(INCLUDE) -I $(LIBFT)
 
-LD_FLAGS	=	libft/libft.a -fsanitize=address
-FLAGS		=	-Wall -Werror -Wextra -lreadline $(INCLUDES) -g3
-LIBFT		=	libft/libft.a
-.c.o:
-				$(CC) -c $< -o $(<:.c=.o) $(FLAGS)
+# ----------- FILES ----------------
+SRC			= ./srcs
+OBJ			= ./objs
+LIBFT		= ./libft
+SRCS		= $(SRC)/builtins.c $(SRC)/cd.c $(SRC)/main.c $(SRC)/minishell.c $(SRC)/parsing.c $(SRC)/utils.c
+OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
-all:			start_message $(MINISHELL)
+# ----------- COLORS ---------------
+BLACK		= \033[1;30m
+RED			= \033[1;31m
+GREEN		= \033[1;32m
+PURPLE		= \033[1;35m
+CYAN		= \033[1;36m
+WHITE		= \033[1;37m
+EOC			= \033[0;0m
 
-$(MINISHELL):		$(LIBFT) $(OBJS) start_link
-				$(CC) $(OBJS) $(FLAGS) -o $(MINISHELL) $(LD_FLAGS)
-				@echo "\033[1;31mminishell\033[0m is ready to use!"
+# ----------- RULES ----------------
+all			: $(NAME)
+${NAME}		: $(OBJS)
+	@echo "$(RED) =========> Compiling object files.............DONE √\n"
+	@echo "$(WHITE)"
+			$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LPFLAGS) -o $@
+	@echo "$(RED) =========> Building $(DESCRIPTION).............DONE √\n"
+	
+$(OBJ)/%.o	: $(SRC)/%.c | $(OBJ) compiling
+			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(LIBFT):
-				@make  -C libft -f Makefile
+compiling :
+			@echo "$(WHITE)"
 
-add_flag:
-			$(eval FLAGS := -D BONUS=1)
+$(OBJ):
+	@echo "$(PURPLE)"
+			mkdir $@
+	@echo "$(GREEN)"
+			make bonus -C $(LIBFT)
 
-clean:
-#					@clear
-					@make -s -C libft -f Makefile clean
-					@echo "\033[0;33mCleaning \033[1;31mminishell\033[0;33m's objects\033[0m"
-					$(RM) $(OBJS)
+clean		:
+	@echo "$(PURPLE)"
+			-rm -rf $(OBJ)
+	@echo "$(RED) =========> Deleting object files.............DONE √\n"
 
-fclean:
-					@make -s -C libft -f Makefile fclean
-					@echo "\033[0;33mRemoving \033[1;31mminishell\033[0;33m.\033[0m"
-					$(RM) $(MINISHELL) $(OBJS)
-					$(RM) $(OBJS)
-start_message:
-#				@clear
-				@echo "\033[0;31mMaking \033[1;31mminishell"
-				@echo "\033[1;32mCompiling objects\033[0;32m"
+fclean		: clean
+	@echo "$(PURPLE)"
+			-rm -f $(NAME)
+	@echo "$(RED) =========> Deleting executable................DONE √\n"
+	@echo "$(GREEN)"
+			make fclean -C $(LIBFT)
+	@echo "$(RED) =========> Cleaning libft.............DONE √\n"
 
-start_link:
-				@echo "\033[1;32mLinking all objects\033[0;32m"
+re			: fclean all
 
-re:				fclean all
+norm		:
+	@echo "$(CYAN)"
+			norminette $(SRC) $(INCLUDE)
+	@echo "$(RED) =========> Checking the norminette............DONE √\n"
 
-.PHONY:			all clean fclean re
+.PHONY: all clean fclean re norm

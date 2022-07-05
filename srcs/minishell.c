@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 17:38:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/05 19:17:04 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 struct sigaction g_signals;
 
@@ -59,21 +58,5 @@ int	ft_allocate(t_data *data)
 	data->env_lst = malloc(sizeof(t_env));
 	if (!data->env_lst)
 		return (ft_free(data));
-	return (0);
-}
-
-int	main(void)
-{
-	t_data *data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	if (ft_allocate(data))
-		return (1);
-	while (1)
-		prompt_loop(data);
-	clear_history();
-	free(data);
 	return (0);
 }
