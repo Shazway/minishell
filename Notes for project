@@ -1,0 +1,220 @@
+//--Readline Functions--/
+<stdio.h>
+
+char	*readline(const char * prompt);
+
+readline will read a line from the terminal and return it, using
+prompt as a prompt. If prompt is NULL or the string is empty, no
+prompt is issued.
+
+//--Access Function--/
+<unistd.h>
+
+int	access(const char*pathname, int mode);
+
+access will check if the process calling the function can access
+to the file pathname with the mode indicated
+(F_OK, R_OK, W_OK, X_OK, R_OK, W_OK, X_OK)
+returns 0 if authorized and -1 if not.
+
+//--Fork Function--/
+<unistd.h>
+
+pid_t fork(void);
+
+fork creates a new child process from the process calling
+the function that is an exact duplicate of the father process
+but it has a different PID, the PPID are the same.
+
+//--Wait Functions--/
+<sys/types.h>
+<sys/wait.h>
+
+pid_t wait(int *status);
+pid_t waitpid(pid_t pid, int *status, int options);
+
+wait function will pause the execution of the parent process
+calling it until one of their child processes ends.
+
+waitpid function pauses the execution of the process
+calling it till their child process specified by the pid 
+given changed their state. By default, it waits the termination
+of the given child process but it is modifiable with the
+options parameter -1 = same as wait, > 0 is waiting till
+the pid process ends, < -1 is GID ??
+
+//--GetCwd Function--/
+<unistd.h>
+
+char *getcwd(char *buf, size_t size);
+
+getcwd copies the absolute path of the current workspace
+in the string pointed by buf of size length
+
+//--Exit function--/
+<stdlib.h>
+void exit(int status);
+terminates the process calling it
+
+//--Chdir function--/
+<unistd.h>
+
+int chdir(const char *path);
+
+chdir changes the current workspace of the process calling
+it by the one indicated by path.
+
+cd [-L|[-P [-e]] [-@]] [dir]
+          Change  the  current  directory to dir.  if dir is not supplied,
+          the value of the HOME shell variable is the default.  Any  addi‐
+          tional arguments following dir are ignored.  The variable CDPATH
+          defines the search path for the directory containing  dir:  each
+          directory  name  in  CDPATH  is  searched  for dir.  Alternative
+          directory names in CDPATH are separated by a colon (:).  A  null
+          directory  name  in CDPATH is the same as the current directory,
+          i.e., ``.''.  If dir begins with a slash (/), then CDPATH is not
+          used.  The  -P  option  causes  cd to use the physical directory
+          structure by resolving symbolic links while traversing  dir  and
+          before processing instances of .. in dir (see also the -P option
+          to the set builtin command); the -L option forces symbolic links
+          to  be followed by resolving the link after processing instances
+          of .. in dir.  If .. appears in dir, it is processed by removing
+          the  immediately previous pathname component from dir, back to a
+          slash or the beginning of dir.  If the  -e  option  is  supplied
+          with  -P,  and  the current working directory cannot be success‐
+          fully determined after a successful directory  change,  cd  will
+          return  an unsuccessful status.  On systems that support it, the
+          -@ option presents the extended  attributes  associated  with  a
+          file  as  a directory.  An argument of - is converted to $OLDPWD
+          before the directory change is attempted.  If a non-empty direc‐
+          tory  name  from  CDPATH is used, or if - is the first argument,
+          and the directory change is successful, the absolute pathname of
+          the  new  working  directory  is written to the standard output.
+          The return value is  true  if  the  directory  was  successfully
+          changed; false otherwise.
+
+//--Stat function--/
+<sys/stat.h>
+<sys/types.h>
+int stat(const char *path, struct stat *buf);
+stat gets the state of the file from path and stores the
+informations in the buf struct
+struct stat {
+    dev_t     st_dev;      /* ID du périphérique contenant le fichier */
+    ino_t     st_ino;      /* Numéro inœud */
+    mode_t    st_mode;     /* Protection */
+    nlink_t   st_nlink;    /* Nb liens matériels */
+    uid_t     st_uid;      /* UID propriétaire */
+    gid_t     st_gid;      /* GID propriétaire */
+    dev_t     st_rdev;     /* ID périphérique (si fichier spécial) */
+    off_t     st_size;     /* Taille totale en octets */
+    blksize_t st_blksize;  /* Taille de bloc pour E/S */
+    blkcnt_t  st_blocks;   /* Nombre de blocs alloués */
+    time_t    st_atime;    /* Heure dernier accès */
+    time_t    st_mtime;    /* Heure dernière modification */
+    time_t    st_ctime;    /* Heure dernier changement état */
+};
+lstat does same but gives the state of the symbolic link
+if the path turns out to be one.
+fstat takes a file descriptor instead of a path
+
+//--Unlink Function--/
+int unlink(const char *path);
+unlink destroys a name in the files system. if this
+name was the last one on a file and no process opened it
+it is erased and the memory used by it is free by now.
+
+//--Execve Function--/
+<unistdh>
+int execve(const char *file, char *const av[]);
+Executes the file given, it has to be an executable or a binary file.
+
+//--Dup and Dup2--//
+<unistd.h>
+int dup(int oldfd);
+int dup2(int oldfd, int newfd);
+duplicates an fd
+
+//--Pipe function--//
+int pipe(int pipefd[2]);
+Seems to work like a | in terminal
+
+//--Opendir function--//
+<dirent.h>
+DIR *opendir(const char *name);
+Opens a directory
+
+//--Readdir--//
+I did not get it ahem
+
+//--CloseDir--//
+int closedir(DIR *dir);
+Closes directory
+
+//--Isatty--//
+int isatty(int desc);
+checks if a descriptor opened is connected to a terminal
+returns 1 if true, 0 if else
+
+//--TtyName function--//
+char *ttyname(int fd);
+Gives the path of the opened terminal by the fd given in parameter
+
+//--ttyslot function--//
+int ttyslot(void);
+Returns the position of the current terminal in a file
+
+//--ioctl function--//
+<sys/ioctl.h>
+int ioctl(int d, int request, ...);
+La fonction ioctl() modifie le comportement des périphériques sous-jacents
+des fichiers spéciaux. En particulier, de nombreuses caractéristiques
+des fichiers spéciaux en mode caractère (par exemple des terminaux) peuvent
+être contrôlées avec des requêtes ioctl(). L argument d doit être un
+descripteur de fichier ouvert.
+
+//--getenv function--//
+char *getenv(const char *name);
+The getenv function searches in the list of environment variables the variable
+given by name and returns a pointer to the corresponding value.
+
+//--tcsetattr function--/
+int tcgetattr(int fd, struct termios *termios_p);
+int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+The termios functions describe a general terminal interface that is provided to
+control asynchronous communications ports.
+
+//--tget functions--//
+<curses.h>
+<term.h>
+int tgetent(char *bp, const char *name);
+int tgetflag(char *id);
+int tgetnum(char *id);
+char *tgetstr(char *id, char **area);
+char *tgoto(const char *cap, int col, int row);
+int tputs(const char *str, int affcnt, int (*putc)(int));
+
+The tgetent routine loads the entry for name.
+It returns 1 on success, 0 if there is no such entry, and -1 if 
+the terminfo database could not be found. The emulation ignores 
+the buffer pointer bp.
+
+The tgetflag routine gets the boolean entry for id, or zero if it is not
+available.
+
+The tgetnum routine gets the numeric entry for id, or -1 if it is not 
+available.
+
+The tgetstr routine returns the string entry for id, or zero if it is not
+available. Use tputs to output the returned string. The return value will
+also be copied to the buffer pointed to by area, and the area value will
+be updated to point past the null ending this value.
+
+Only the first two characters of the id parameter of tgetflag, tgetnum and
+tgetstr are compared in lookups.
+
+The tgoto routine instantiates the parameters into the given capability.
+The output from this routine is to be passed to tputs.
+
+The tputs routine is described on the curs_terminfo(3X) manual page. It can
+retrieve capabilities by either termcap or terminfo name.
