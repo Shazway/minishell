@@ -6,11 +6,10 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:37:32 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/05/30 18:37:34 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/06 22:56:00 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
 /*

@@ -6,13 +6,11 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:39:03 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/06/04 19:02:55 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/06 22:55:40 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <math.h>
-#include <string.h>
 
 static void	strtrim_worker(size_t slen, size_t *k, size_t *i, size_t *len)
 {
