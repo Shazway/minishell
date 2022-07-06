@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/06 01:51:56 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/06 22:48:24 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,10 +50,10 @@ ${NAME}		: $(OBJS)
 $(OBJ)/%.o	: $(SRC)/%.c | $(OBJ) compiling
 			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-compiling :
+compiling	:
 			@echo "$(WHITE)"
 
-$(OBJ):
+$(OBJ)		:
 	@echo "$(PURPLE)"
 			mkdir $@
 	@echo "$(GREEN)"
@@ -75,6 +75,8 @@ fclean		: clean
 re			: fclean all
 
 norm		:
+	@echo "$(BLACK)"
+			norminette $(LIBFT)	
 	@echo "$(CYAN)"
 			norminette $(SRC) $(INCLUDE)
 	@echo "$(RED) =========> Checking the norminette............DONE √\n"
