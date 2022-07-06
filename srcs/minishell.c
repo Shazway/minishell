@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 20:22:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/06 02:06:06 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    prompt_loop(t_data *data)
         exit(1);
     data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
     if (!data->input)
-        exit(printf("\n"));
+        exit(printf("exit\n"));
     if (ft_strlen(data->input) > 0)
         printf("%s\n", data->input);
     add_history(data->input);
@@ -61,11 +61,25 @@ void    sig_info(int signal, siginfo_t *s, void *trash)
     (void)s;
     if (signal == SIGINT)
     {
-        printf("\n");
+        printf("^C\n");
         printf("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
     }
     if (signal == SIGQUIT)
         return ;
+}
+
+int	termios_setup(t_data *data)
+{
+	int rc;
+
+	rc = tcgetattr(0, &data->termios);
+	if (rc)
+		return (1);
+	data->termios.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(0, 0, &data->termios);
+	if (rc)
+		return (1);
+	return (0);
 }
 
 int	main(void)
@@ -75,6 +89,11 @@ int	main(void)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
+	if (termios_setup(data))
+	{
+		free(data);
+		return (1);
+	}
 	g_signals.sa_sigaction = sig_info;
 	if (ft_allocate(data))
 		return (1);

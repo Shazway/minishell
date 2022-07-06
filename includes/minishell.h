@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 20:23:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/06 01:56:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINISHELL_H
 
 # include <libft.h>
-
 # include <stdio.h>
 # include <readline/readline.h>
+# include <stdlib.h>
 # include <readline/history.h>
 # include <term.h>
 # include <signal.h>
@@ -25,6 +25,7 @@
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <termios.h>
 # include <sys/wait.h>
 
 # define WORD = 0;
@@ -68,6 +69,7 @@ typedef struct s_data
 	char				*output;
 	char				**commands;
 	char				**env_str;
+	struct termios		termios;
 	t_env				*env_lst;
 	t_list				*cmd;
 	t_trash				*trash;
