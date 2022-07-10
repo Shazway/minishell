@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 17:20:34 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:27:49 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ struct sigaction	g_signals;
 
 int	signal_intercept(void)
 {
-	if (sigaction(SIGINT, &(g_signals), NULL) == -1)
+    if (sigaction(SIGINT, &(g_signals), NULL) == -1)
 		return (1);
 	if (sigaction(SIGQUIT, &(g_signals), NULL) == -1)
 		return (1);
@@ -48,8 +48,29 @@ int    ft_free(t_data *data)
     return (1);
 }
 
+int     set_env(t_data *data)
+{
+    int size_env;
+    int i;
+
+    i = 0;
+    size_env = count_tab_str(__environ);
+    data->env_str = malloc(sizeof(char *) * (size_env + 1));
+    if (!(data->env_str))
+        return (1);
+    data->env_str[size_env] = NULL;
+    while (data->env_str[i])
+    {
+        data->env_str[i] = ft_strdup(__environ[i]);
+        i++;
+    }
+    return (0);
+}
+
 int    ft_allocate(t_data *data)
 {
+    if (set_env(data))
+        return (1);
     data->cmd = NULL;
     return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:45:01 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/05 20:19:11 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:03:36 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int	check_echo_n(char *str)
 	}
 	return (0);
 }
-
+void	shell_exit(int error)
+{
+	exit(error);
+}
 char	*pwd(void)
 {
 	char *path;
@@ -68,4 +71,36 @@ int		is_double_dot(char *str)
 	if (i == 2 && str[i] == '\0')
 		return (1);
 	return (0);
+}
+
+void	ft_export(t_data *data, t_cmd *cmd)
+{
+	int		i;
+	char	**new_env;
+	char	*eq;
+	int		len;
+	int		j;
+
+	if (cmd->ac == 1)
+		ft_env(data, cmd);
+	else
+	{
+		i = 1;
+		while (i < cmd->ac)
+		{
+			eq = ft_strchr(cmd->args[i], '=');
+			if (!eq)
+				len = ft_strlen(cmd->args[i]);
+			else
+				len = eq - cmd->args[i][0];
+			j = 0;
+			while (j < len)
+			{
+				if (!(ft_isalnum(cmd->args[i][j]) && cmd->args[i][j] == '_'))
+					break ;
+				j++;
+			}
+			ft_strdup(cmd->args[i]);
+		}
+	}
 }
