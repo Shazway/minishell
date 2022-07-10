@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 16:34:19 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:20:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,12 @@ int    ft_free(t_data *data)
 {
     if (data->cmd)
         free(data->cmd);
-    if (data->env_lst)
-        free(data->env_lst);
     return (1);
 }
 
 int    ft_allocate(t_data *data)
 {
     data->cmd = NULL;
-    data->env_lst = malloc(sizeof(t_env));
-    if (!data->env_lst)
-        return (ft_free(data));
     return (0);
 }
 

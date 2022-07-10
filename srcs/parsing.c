@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 16:39:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:19:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,17 @@ void	print_result(t_token *token)
 	int i;
 
 	i = 0;
-	while (token->str_split && token->str_split[i])
+	while (token->args && token->args[i])
 	{
-		printf("[%s]\n", token->str_split[i]);
+		printf("[%s]\n", token->args[i]);
 		i++;
 	}
 	}
 
 void	split_spaces(t_token *token, char *content)
 {
-	token->str_split = unquote_split(content, ' ');
-	token->str = NULL;
-	token->name = NULL;
-	token->content = NULL;
+	token->args = unquote_split(content, ' ');
+	token->cmd = NULL;
 	print_result(token);
 }
 
@@ -38,10 +36,8 @@ void	del_token(void *content)
 	t_token *token;
 
 	token = (t_token *)content;
-	ft_free_tab(token->str_split);
-	free(token->str);
-	free(token->content);
-	free(token->name);
+	ft_free_tab(token->args);
+	free(token->cmd);
 	free(token);
 }
 

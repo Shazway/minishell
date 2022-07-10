@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 16:10:53 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:18:37 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,9 @@
 
 typedef struct s_token
 {
-	char	*str;
-	char	**str_split;
-	char	*name;
-	char	*content;
-	char	*redirect;
+	char	*cmd;
+	char	**args;
 }	t_token;
-
-typedef struct s_trash
-{
-	void			*to_free;
-	struct s_trash	*next;
-}	t_trash;
-
-typedef struct s_env
-{
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
 
 typedef struct s_data
 {
@@ -70,9 +54,7 @@ typedef struct s_data
 	char				**commands;
 	char				**env_str;
 	struct termios		termios;
-	t_env				*env_lst;
 	t_list				*cmd;
-	t_trash				*trash;
 }	t_data;
 
 void	sig_info(int signal, siginfo_t *s, void *trash);
