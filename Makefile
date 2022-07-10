@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/10 20:10:15 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/10 20:42:51 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,14 @@ SRCS		=	$(SRC)/builtins.c 		\
 				$(SRC)/minishell.c		\
 				$(SRC)/parsing.c		\
 				$(SRC)/utils.c			\
-				$(SRC)/unquote_split.c
+				$(SRC)/unquote_split.c	\
+				srcs/builtins/pwd.c		\
+				srcs/builtins/echo.c	\
+				srcs/builtins/env.c		\
+				srcs/builtins/exit.c	\
+				srcs/builtins/unset.c	\
+				srcs/builtins/cd.c		\
+				srcs/builtins/export.c	\
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
 # ----------- COLORS ---------------
