@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 17:18:37 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:22:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@
 # define OR_OP = 8;
 # define PIPE = 9;
 
-typedef struct s_token
+typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
-}	t_token;
+}	t_cmd;
 
 typedef struct s_data
 {
@@ -73,8 +73,8 @@ void	prompt_loop(t_data *data);
 int		ft_free(t_data *data);
 int		ft_allocate(t_data *data);
 
-void	print_result(t_token *token);
-void	split_spaces(t_token *token, char *content);
+void	print_result(t_cmd *token);
+void	split_spaces(t_cmd *token, char *content);
 void	del_token(void *content);
 int		parsing(t_data *data);
 
