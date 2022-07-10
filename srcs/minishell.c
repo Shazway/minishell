@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/06 02:06:06 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:34:19 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,31 @@
 
 struct sigaction	g_signals;
 
-int    signal_intercept(void)
+int	signal_intercept(void)
 {
-    if (sigaction(SIGINT, &(g_signals), NULL) == -1)
-        return (1);
-    if (sigaction(SIGQUIT, &(g_signals), NULL) == -1)
-        return (1);
-    return (0);
+	if (sigaction(SIGINT, &(g_signals), NULL) == -1)
+		return (1);
+	if (sigaction(SIGQUIT, &(g_signals), NULL) == -1)
+		return (1);
+	return (0);
 }
 
-void    prompt_loop(t_data *data)
+void	prompt_loop(t_data *data)
 {
-    if (signal_intercept())
-        exit(1);
-    data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
-    if (!data->input)
-        exit(printf("exit\n"));
-    if (ft_strlen(data->input) > 0)
-        printf("%s\n", data->input);
-    add_history(data->input);
-    parsing(data);
-    free(data->input);
+	if (signal_intercept())
+		exit(1);
+	data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
+	if (!data->input)
+		exit(printf("exit\n"));
+	if (ft_strlen(data->input) >= 2)
+	{
+		printf("[%s]\n", data->input);
+		add_history(data->input);
+		parsing(data);
+	}
+	else
+		printf("[[%c]]\n", data->input[0]);
+	free(data->input);
 }
 
 int    ft_free(t_data *data)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/06 22:48:24 by mdkhissi         ###   ########.fr        #
+#    Updated: 2022/07/10 16:06:39 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,12 @@ INCLUDES	= -I $(INCLUDE) -I $(LIBFT)
 SRC			= ./srcs
 OBJ			= ./objs
 LIBFT		= ./libft
-SRCS		= $(SRC)/builtins.c $(SRC)/cd.c $(SRC)/minishell.c $(SRC)/parsing.c $(SRC)/utils.c
+SRCS		=	$(SRC)/builtins.c 		\
+				$(SRC)/cd.c 			\
+				$(SRC)/minishell.c		\
+				$(SRC)/parsing.c		\
+				$(SRC)/utils.c			\
+				$(SRC)/unquote_split.c
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
 # ----------- COLORS ---------------

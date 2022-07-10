@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/06 01:56:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:10:53 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,8 @@ void	del_token(void *content);
 int		parsing(t_data *data);
 
 void	ft_free_tab(char **str);
+int	ft_malloc(void **p, int length);
+
+char	**unquote_split(char const *s, char c);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/05 19:28:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:09:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,12 @@ void	ft_free_tab(char **str)
 		i++;
 	}
 	free(str);
+}
+
+int	ft_malloc(void **p, int length)
+{
+	*p = malloc(length);
+	if (*p)
+		return (1);
+	return (0);
 }
