@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/10 16:06:39 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/10 20:10:15 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DESCRIPTION = Minishell
 
 # ----------- COMPILER FLAGS -------
 CC			= clang
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address 
 LPFLAGS		= -L$(LIBFT) -lft -lreadline
 
 # ----------- INCLUDE --------------

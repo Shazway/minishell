@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 19:23:34 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:18:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ typedef struct s_cmd
 	char	*cmd;
 	char	**args;
 	int		ac;
+	/*> O_RDWR, O_CREAT, O_TRUNC
+	>> O_RDWR, O_CREAT, O_APPEND
+	< O_RDONLY
+	<< */
 }	t_cmd;
 
 typedef struct s_data

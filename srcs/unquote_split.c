@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 16:04:51 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 16:11:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:15:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	check_quote(char *type, char c)
 		*type = -1;
 }
 
-int	count_words(char const *s, char c)
+int	count_words(char *s, char c)
 {
 	int	i;
 	int	count;
@@ -29,6 +29,10 @@ int	count_words(char const *s, char c)
 	count = 1;
 	i = 0;
 	type = -1;
+	if (c == '|')
+		s = ft_strtrim(s, "|");
+	else if (c == ' ')
+		s = ft_strtrim(s, " ");
 	while (s[i])
 	{
 		check_quote(&type, s[i]);
@@ -41,10 +45,11 @@ int	count_words(char const *s, char c)
 		else
 			i++;
 	}
+	free(s);
 	return (count);
 }
 
-int	malloc_words(char const *s, char c, char **str, int count)
+int	malloc_words(char *s, char c, char **str, int count)
 {
 	int		i;
 	int		j;
@@ -72,7 +77,7 @@ int	malloc_words(char const *s, char c, char **str, int count)
 	return (0);
 }
 
-char	**fill(char const *s, char c, char **str)
+char	**fill(char *s, char c, char **str)
 {
 	int		i;
 	int		k;
@@ -100,18 +105,28 @@ char	**fill(char const *s, char c, char **str)
 	return (str);
 }
 
-char	**unquote_split(char const *s, char c)
+char	**unquote_split(char *s, char c)
 {
 	char	**str;
+	char	**tmp;
 	int		count;
 
 	if (!s)
 		return (NULL);
 	count = count_words(s, c);
+	printf("%d\n", count);
 	if (!ft_malloc((void **)&str, sizeof(char *) * (count + 1)))
 		return (NULL);
 	str[count] = NULL;
 	if (malloc_words(s, c, str, count))
 		return (NULL);
-	return (fill(s, c, str));
+	tmp = fill(s, c, str);
+	int i = 0;
+	while (tmp && tmp[i])
+	{
+		printf("Temp = [%s]\n", tmp[i]);
+		i++;
+	}
+	printf("Temp = [%s]\n", tmp[i]);
+	return (tmp);
 }

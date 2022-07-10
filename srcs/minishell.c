@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 19:27:49 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:19:15 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ void	prompt_loop(t_data *data)
 	data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
 	if (!data->input)
 		exit(printf("exit\n"));
-	if (ft_strlen(data->input) >= 2)
+	if (!(data->input[0] == 0))
 	{
-		printf("[%s]\n", data->input);
+		printf("%s\n", data->input);
 		add_history(data->input);
 		parsing(data);
 	}
-	else
-		printf("[[%c]]\n", data->input[0]);
 	free(data->input);
 }
 

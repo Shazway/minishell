@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 20:06:43 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:18:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ int		count_tab_str(char **args)
 void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
-	
 	token->cmd = token->args[0];
 	token->ac = count_tab_str(token->args);
-	token->cmd = NULL;
 	print_result(token);
 }
 
@@ -51,18 +49,20 @@ void	del_token(void *content)
 
 	token = (t_cmd *)content;
 	ft_free_tab(token->args);
-	free(token->cmd);
 	free(token);
 }
 
 int	parsing(t_data *data)
 {
 	int		i;
+	char	*tmp;
 	t_cmd	*temp;
 	char	**pipe_split;
 
 	i = 0;
+	tmp = data->input;
 	data->input = ft_strtrim(data->input, " ");
+	free(tmp);
 	pipe_split = unquote_split(data->input, '|');
 	while (pipe_split[i])
 	{
