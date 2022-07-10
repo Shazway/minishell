@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 17:32:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 18:08:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		count_tab_str(char **args)
 void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
+	
+	token->cmd = token->args[0];
 	token->ac = count_tab_str(token->args);
 	token->cmd = NULL;
 	print_result(token);
