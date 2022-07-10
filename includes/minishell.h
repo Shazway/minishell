@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 17:22:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:25:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
+	int		ac;
 }	t_cmd;
 
 typedef struct s_data

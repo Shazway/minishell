@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 17:22:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:32:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,20 @@ void	print_result(t_cmd *token)
 	}
 	}
 
+int		count_tab_str(char **args)
+{
+	int	count;
+
+	count = 0;
+	while (args && args[count])
+		count++;
+	return (count);
+}
+
 void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
+	token->ac = count_tab_str(token->args);
 	token->cmd = NULL;
 	print_result(token);
 }
@@ -40,7 +51,6 @@ void	del_token(void *content)
 	free(token->cmd);
 	free(token);
 }
-
 
 int	parsing(t_data *data)
 {
