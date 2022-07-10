@@ -1,54 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 23:09:17 by mdkhissi         ###   ########.fr       */
+/*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
+/*   Updated: 2022/07/10 23:10:22 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_echo_n(char *str)
+int	main(void)
 {
-	int i;
+	t_data *data;
 	extern struct sigaction	g_signals;
 
-	(void)g_signals;
-	i = 0;
-	if (str[i] != '-')
+	data = malloc(sizeof(t_data));
+	if (!data)
 		return (1);
-	while (str && str[i])
+	if (termios_setup(data))
 	{
-		if (str[i] != 'n')
-			return (1);
-		i++;
+		free(data);
+		return (1);
 	}
+	g_signals.sa_sigaction = sig_info;
+	if (msh_init(data))
+		return (1);
+	while (1)
+		prompt_loop(data);
+	clear_history();
+	free(data);
 	return (0);
 }
-
-int	ft_echo(int ac, char **av)
-{
-	int	i;
-	int	new_line;
-
-	new_line = 1;
-	i = 0;
-	if (ac == 1)
-		return(write(1, "\n", 1));
-	while (av && av[i])
-	{
-		if (check_echo_n(av[i]))
-			ft_putstr_fd(av[i], 1);
-		else
-			new_line = 0;
-		i++;
-	}
-	if (new_line)
-		write(1, "\n", 1);
-	return (0);
-}
-
