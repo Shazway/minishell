@@ -62,3 +62,4 @@ test
 
 # Built Visual Studio Code Extensions
 *.vsix
+minishell
