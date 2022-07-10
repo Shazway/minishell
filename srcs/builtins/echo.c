@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 23:09:17 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 01:07:19 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	check_echo_n(char *str)
 {
 	int i;
-	extern struct sigaction	g_signals;
 
-	(void)g_signals;
 	i = 0;
 	if (str[i] != '-')
 		return (1);
