@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 00:40:22 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:47:15 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@ typedef struct s_cmd
 	char	*cmd;
 	char	**args;
 	int		ac;
-	/*> O_RDWR, O_CREAT, O_TRUNC
-	>> O_RDWR, O_CREAT, O_APPEND
-	< O_RDONLY
-	<< */
 }	t_cmd;
 
 typedef struct s_data
@@ -62,38 +58,48 @@ typedef struct s_data
 	t_list				*cmd;
 }	t_data;
 
-void	sig_info(int signal, siginfo_t *s, void *trash);
-int		ft_echo(int ac, char **av);
-int		check_echo_n(char *str);
-char	*pwd(void);
-int		is_double_dot(char *str);
-
 int		cd(char *str);
+int		is_double_dot(char *str);
 char	*path_finder(char *str);
 int		directory_exists(char *s);
 char	*previous_dir(char *str);
 
-int		signal_intercept(void);
-void	prompt_loop(t_data *data);
-int		msh_free(t_data *data);
-int		msh_init(t_data *data);
+int		ft_echo(int ac, char **av);
+int		check_echo_n(char *str);
 
+void	ft_env(t_data *data, t_cmd *cmd);
+int		set_env(t_data *data);
+int		update_env(t_data *data, char **entry, int len_entry);
+
+int		shell_exit(int ac, char **av);
+
+void	ft_export(t_data *data, t_cmd *cmd);
+int		is_validid(char	*identifier, int len);
+
+char	*pwd(void);
+
+int		msh_init(t_data *data);
+int		msh_free(t_data *data);
+int		prompt_loop(t_data *data);
+
+int		parsing(t_data *data);
 void	print_result(t_cmd *token);
 void	split_spaces(t_cmd *token, char *content);
 void	del_token(void *content);
-int		parsing(t_data *data);
+
+int		signal_intercept(void);
+void	sig_info(int signal, siginfo_t *s, void *trash);
+int		termios_setup(t_data *data);
+
+void	check_quote(char *type, char c);
+int		count_words(char *s, char c);
+int		malloc_words(char *s, char c, char **str, int count);
+char	**fill(char *s, char c, char **str);
+char	**unquote_split(char *s, char c);
 
 void	str_arr_free(char **str);
-int	ft_malloc(void **p, int length);
-
-char	**unquote_split(char *s, char c);
-int		count_tab_str(char **args);
-
-int	termios_setup(t_data *data);
-
-int     set_env(t_data *data);
-int		update_env(t_data *data, char **entry, int len_entry);
-
+int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
-void	ft_env(t_data *data, t_cmd *cmd);
+int		ft_malloc(void **p, int length);
+
 #endif

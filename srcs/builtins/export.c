@@ -6,25 +6,11 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 00:39:21 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:38:03 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		is_validid(char	*identifier, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		if (!(ft_isalnum(identifier[i]) && identifier[i] == '_'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 void	ft_export(t_data *data, t_cmd *cmd)
 {
@@ -59,4 +45,18 @@ void	ft_export(t_data *data, t_cmd *cmd)
 		}
 		update_env(data, entry, j);
 	}
+}
+
+int	is_validid(char	*identifier, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (!(ft_isalnum(identifier[i]) && identifier[i] == '_'))
+			return (0);
+		i++;
+	}
+	return (1);
 }

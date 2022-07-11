@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 15:15:26 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:46:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,20 @@ int	msh_free(t_data *data)
 
 int	prompt_loop(t_data *data)
 {
-	if (signal_intercept())
-		exit(1);
-	data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
-	if (!data->input)
-		return (0);
-	if (!(data->input[0] == 0))
+	while (1)
 	{
-		printf("%s\n", data->input);
-		add_history(data->input);
-		parsing(data);
+		if (signal_intercept())
+			exit(1);
+		data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
+		if (!data->input)
+			return (0);
+		if (!(data->input[0] == 0))
+		{
+			printf("%s\n", data->input);
+			add_history(data->input);
+			parsing(data);
+		}
+		free(data->input);
+		return (1);
 	}
-	free(data->input);
-	return (1);
 }

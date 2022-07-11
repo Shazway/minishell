@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 15:20:13 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:27:25 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,20 @@ char	**str_arr_add(char **sarr, char **entry, int len_entry)
 {
 	int		len_sarr;
 	char	**new;
-    int		i;
+	int		i;
 	int		j;
 
 	len_sarr = str_arr_size(sarr);
-    new = malloc(sizeof(char *) * (len_sarr + len_entry + 1));
-    if (!new)
-        return (NULL);
-    new[len_sarr + len_entry] = NULL;
+	new = malloc(sizeof(char *) * (len_sarr + len_entry + 1));
+	if (!new)
+		return (NULL);
+	new[len_sarr + len_entry] = NULL;
 	i = 0;
-    while (i < len_sarr)
-    {
-        new[i] = ft_strdup(sarr[i]);
-        i++;
-    }
+	while (i < len_sarr)
+	{
+		new[i] = ft_strdup(sarr[i]);
+		i++;
+	}
 	j = 0;
 	while (entry && j < len_entry)
 	{
@@ -60,7 +60,7 @@ char	**str_arr_add(char **sarr, char **entry, int len_entry)
 		j++;
 		i++;
 	}
-    return (new);
+	return (new);
 }
 
 int	ft_malloc(void **p, int length)
