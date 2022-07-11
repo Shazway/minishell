@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 00:15:19 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:24:33 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		cd(int ac, char **str)
+{
+	char *path;
+
+	path = pwd();
+	if (ac == 1)
+		return (chdir(getenv("HOME")));
+	if (is_double_dot(str))
+		return (chdir(previous_dir(path)));
+	if (directory_exists(str))
+		return (chdir(path_finder(path)));
+	else
+		return (printf("cd: no such file or directory : %s\n", str));
+}
 
 int		is_double_dot(char *str)
 {
@@ -50,19 +65,3 @@ char	*previous_dir(char *str)
 	}
 	return (str);
 }
-
-int		cd(char *str)
-{
-	char *path;
-
-	path = pwd();
-	if (!str)
-		return (chdir(getenv("HOME")));
-	if (is_double_dot(str))
-		return (chdir(previous_dir(path)));
-	if (directory_exists(str))
-		return (chdir(path_finder(path)));
-	else
-		return (printf("cd: no such file or directory : %s\n", str));
-}
-

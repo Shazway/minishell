@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 20:18:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/11 00:40:22 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,25 @@ char	*previous_dir(char *str);
 
 int		signal_intercept(void);
 void	prompt_loop(t_data *data);
-int		ft_free(t_data *data);
-int		ft_allocate(t_data *data);
+int		msh_free(t_data *data);
+int		msh_init(t_data *data);
 
 void	print_result(t_cmd *token);
 void	split_spaces(t_cmd *token, char *content);
 void	del_token(void *content);
 int		parsing(t_data *data);
 
-void	ft_free_tab(char **str);
+void	str_arr_free(char **str);
 int	ft_malloc(void **p, int length);
 
-char	**unquote_split(char const *s, char c);
+char	**unquote_split(char *s, char c);
 int		count_tab_str(char **args);
+
+int	termios_setup(t_data *data);
+
+int     set_env(t_data *data);
+int		update_env(t_data *data, char **entry, int len_entry);
+
+char	**str_arr_add(char **sarr, char **entry, int len_entry);
+void	ft_env(t_data *data, t_cmd *cmd);
 #endif

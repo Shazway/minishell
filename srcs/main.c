@@ -1,41 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 15:06:31 by mdkhissi         ###   ########.fr       */
+/*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
+/*   Updated: 2022/07/11 15:10:57 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int     set_env(t_data *data)
+int	main(void)
 {
-	data->env_str = str_arr_add(__environ, NULL, 0);
-	if (!data->env_str)
+	t_data					*data;
+	extern struct sigaction	g_signals;
+	int						loop;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
 		return (1);
-	else
-		return (0);
-}
-
-int		update_env(t_data *data, char **entry, int len_entry)
-{
-	char **old_envr;
-
-	old_envr = data->env_str;
-	data->env_str = str_arr_add(data->env_str, entry, len_entry);
-	str_arr_free(old_envr);
-	if (!data->env_str)
+	if (termios_setup(data))
+	{
+		free(data);
 		return (1);
-	else
-		return (0);
-}
-
-void	ft_env(t_data *data, t_cmd *cmd)
-{
-	(void)data;
-	(void)cmd;
+	}
+	g_signals.sa_sigaction = sig_info;
+	if (msh_init(data))
+		return (1);
+	loop = 1;
+	while (loop)
+		loop = prompt_loop(data);
+	if (!data->input)
+		printf("exit\n"));
+	clear_history();
+	free(data);
+	return (0);
 }

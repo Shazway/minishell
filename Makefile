@@ -3,43 +3,44 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/10 20:42:51 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/10 23:31:03 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ----------- EXECUTABLE -----------
-NAME		= minishell
-DESCRIPTION = Minishell
+NAME		=	minishell
+DESCRIPTION =	Minishell
 
 # ----------- COMPILER FLAGS -------
-CC			= clang
-CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address 
-LPFLAGS		= -L$(LIBFT) -lft -lreadline
+CC			=	clang
+CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address 
+LPFLAGS		=	-L$(LIBFT) -lft -lreadline
 
 # ----------- INCLUDE --------------
-INCLUDE		= includes
-INCLUDES	= -I $(INCLUDE) -I $(LIBFT)
+INCLUDE		=	includes
+INCLUDES	=	-I $(INCLUDE) -I $(LIBFT)
 
 # ----------- FILES ----------------
-SRC			= ./srcs
-OBJ			= ./objs
-LIBFT		= ./libft
-SRCS		=	$(SRC)/builtins.c 		\
-				$(SRC)/cd.c 			\
-				$(SRC)/minishell.c		\
-				$(SRC)/parsing.c		\
-				$(SRC)/utils.c			\
-				$(SRC)/unquote_split.c	\
-				srcs/builtins/pwd.c		\
-				srcs/builtins/echo.c	\
-				srcs/builtins/env.c		\
-				srcs/builtins/exit.c	\
-				srcs/builtins/unset.c	\
-				srcs/builtins/cd.c		\
-				srcs/builtins/export.c	\
+SRC			=	./srcs
+OBJ			=	./objs
+LIBFT		=	./libft
+SRCS		=	$(SRC)/builtins/cd.c		\
+				$(SRC)/builtins/echo.c		\
+				$(SRC)/builtins/env.c		\
+				$(SRC)/builtins/exit.c		\
+				$(SRC)/builtins/export.c	\
+				$(SRC)/builtins/pwd.c		\
+				$(SRC)/builtins/unset.c		\
+				$(SRC)/main.c				\
+				$(SRC)/minishell.c			\
+				$(SRC)/parsing.c			\
+				$(SRC)/signals.c			\
+				$(SRC)/unquote_split.c		\
+				$(SRC)/utils.c
+				
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
 # ----------- COLORS ---------------
@@ -68,6 +69,7 @@ compiling	:
 $(OBJ)		:
 	@echo "$(PURPLE)"
 			mkdir $@
+			mkdir $@/builtins
 	@echo "$(GREEN)"
 			make bonus -C $(LIBFT)
 

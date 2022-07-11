@@ -3,33 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 20:19:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:15:26 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-struct sigaction	g_signals;
-
-int	signal_intercept(void)
+int	msh_init(t_data *data)
 {
-    if (sigaction(SIGINT, &(g_signals), NULL) == -1)
+	if (set_env(data))
 		return (1);
-	if (sigaction(SIGQUIT, &(g_signals), NULL) == -1)
-		return (1);
+	data->cmd = NULL;
 	return (0);
 }
 
-void	prompt_loop(t_data *data)
+int	msh_free(t_data *data)
+{
+	if (data->cmd)
+		free(data->cmd);
+	return (1);
+}
+
+int	prompt_loop(t_data *data)
 {
 	if (signal_intercept())
 		exit(1);
 	data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
 	if (!data->input)
-		exit(printf("exit\n"));
+		return (0);
 	if (!(data->input[0] == 0))
 	{
 		printf("%s\n", data->input);
@@ -37,87 +41,5 @@ void	prompt_loop(t_data *data)
 		parsing(data);
 	}
 	free(data->input);
-}
-
-int    ft_free(t_data *data)
-{
-    if (data->cmd)
-        free(data->cmd);
-    return (1);
-}
-
-int     set_env(t_data *data)
-{
-    int size_env;
-    int i;
-
-    i = 0;
-    size_env = count_tab_str(__environ);
-    data->env_str = malloc(sizeof(char *) * (size_env + 1));
-    if (!(data->env_str))
-        return (1);
-    data->env_str[size_env] = NULL;
-    while (data->env_str[i])
-    {
-        data->env_str[i] = ft_strdup(__environ[i]);
-        i++;
-    }
-    return (0);
-}
-
-int    ft_allocate(t_data *data)
-{
-    if (set_env(data))
-        return (1);
-    data->cmd = NULL;
-    return (0);
-}
-
-void    sig_info(int signal, siginfo_t *s, void *trash)
-{
-    (void)trash;
-    (void)s;
-    if (signal == SIGINT)
-    {
-        printf("^C\n");
-        printf("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
-    }
-    if (signal == SIGQUIT)
-        return ;
-}
-
-int	termios_setup(t_data *data)
-{
-	int rc;
-
-	rc = tcgetattr(0, &data->termios);
-	if (rc)
-		return (1);
-	data->termios.c_lflag &= ~ECHOCTL;
-	rc = tcsetattr(0, 0, &data->termios);
-	if (rc)
-		return (1);
-	return (0);
-}
-
-int	main(void)
-{
-	t_data *data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	if (termios_setup(data))
-	{
-		free(data);
-		return (1);
-	}
-	g_signals.sa_sigaction = sig_info;
-	if (ft_allocate(data))
-		return (1);
-	while (1)
-		prompt_loop(data);
-	clear_history();
-	free(data);
-	return (0);
+	return (1);
 }
