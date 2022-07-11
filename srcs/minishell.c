@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 15:46:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:01:43 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 int	msh_init(t_data *data)
 {
+	extern struct sigaction	g_signals;
+
+	g_signals.sa_sigaction = sig_info;
+	data->read_ret = -1;
+	data->buf_trash = NULL;
+	data->input = NULL;
+	data->output = NULL;
+	data->commands = NULL;
+	data->env_str = NULL;
 	if (set_env(data))
 		return (1);
 	data->cmd = NULL;
@@ -22,12 +31,16 @@ int	msh_init(t_data *data)
 
 int	msh_free(t_data *data)
 {
-	if (data->cmd)
-		free(data->cmd);
+	free(data->buf_trash);
+	free(data->input);
+	free(data->output);
+	str_arr_free(data->commands);
+	str_arr_free(data->env_str);
+	free(data->cmd);
 	return (1);
 }
 
-int	prompt_loop(t_data *data)
+void	prompt_loop(t_data *data)
 {
 	while (1)
 	{
@@ -35,7 +48,7 @@ int	prompt_loop(t_data *data)
 			exit(1);
 		data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
 		if (!data->input)
-			return (0);
+			break ;
 		if (!(data->input[0] == 0))
 		{
 			printf("%s\n", data->input);
@@ -43,6 +56,6 @@ int	prompt_loop(t_data *data)
 			parsing(data);
 		}
 		free(data->input);
-		return (1);
 	}
+
 }

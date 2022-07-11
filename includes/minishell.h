@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 15:47:15 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:01:45 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*pwd(void);
 
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
-int		prompt_loop(t_data *data);
+void	prompt_loop(t_data *data);
 
 int		parsing(t_data *data);
 void	print_result(t_cmd *token);
