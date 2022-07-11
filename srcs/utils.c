@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 00:35:20 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:20:13 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	str_arr_free(char **str)
 	free(str);
 }
 
-int		count_tab_str(char **args)
+int	str_arr_size(char **args)
 {
 	int	count;
 
@@ -42,7 +42,7 @@ char	**str_arr_add(char **sarr, char **entry, int len_entry)
     int		i;
 	int		j;
 
-    len_sarr = count_tab_str(sarr);
+	len_sarr = str_arr_size(sarr);
     new = malloc(sizeof(char *) * (len_sarr + len_entry + 1));
     if (!new)
         return (NULL);

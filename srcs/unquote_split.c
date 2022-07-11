@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquote_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 16:04:51 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 20:15:42 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:18:55 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	check_quote(char *type, char c)
 
 int	count_words(char *s, char c)
 {
-	int	i;
-	int	count;
-	char type;
+	int		i;
+	int		count;
+	char	type;
 
 	count = 1;
 	i = 0;
@@ -110,6 +110,7 @@ char	**unquote_split(char *s, char c)
 	char	**str;
 	char	**tmp;
 	int		count;
+	int		i;
 
 	if (!s)
 		return (NULL);
@@ -121,7 +122,7 @@ char	**unquote_split(char *s, char c)
 	if (malloc_words(s, c, str, count))
 		return (NULL);
 	tmp = fill(s, c, str);
-	int i = 0;
+	i = 0;
 	while (tmp && tmp[i])
 	{
 		printf("Temp = [%s]\n", tmp[i]);
