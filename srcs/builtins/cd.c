@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 17:32:38 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/11 22:58:10 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,5 @@ int		cd(int ac, char **str)
 		free(path);
 		return (printf("cd: %s: no such file or directory\n", str[0]));
 	}
+	return (1);
 }
