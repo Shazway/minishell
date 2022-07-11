@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 16:48:43 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:02:02 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,20 @@ int	termios_setup(t_data *data)
 	rc = tcsetattr(0, 0, &data->termios);
 	if (rc)
 		return (1);
+	return (0);
+}
+
+int	msh_init(t_data *data)
+{
+	g_signals.sa_sigaction = sig_info;
+	data->read_ret = -1;
+	data->buf_trash = NULL;
+	data->input = NULL;
+	data->output = NULL;
+	data->commands = NULL;
+	data->env_str = NULL;
+	if (set_env(data))
+		return (1);
+	data->cmd = NULL;
 	return (0);
 }
