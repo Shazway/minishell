@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 15:24:33 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:14:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int		cd(int ac, char **str)
 	path = pwd();
 	if (ac == 1)
 		return (chdir(getenv("HOME")));
-	if (is_double_dot(str))
-		return (chdir(previous_dir(path)));
-	if (directory_exists(str))
-		return (chdir(path_finder(path)));
+	//if (is_double_dot(str))
+	//	return (chdir(previous_dir(path)));
+	//if (directory_exists(str))
+	//	return (chdir(path_finder(path)));
 	else
-		return (printf("cd: no such file or directory : %s\n", str));
+		return (printf("cd: no such file or directory : %s\n", str[0]));
 }
 
 int		is_double_dot(char *str)

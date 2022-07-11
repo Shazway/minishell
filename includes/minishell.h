@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 16:01:45 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:16:56 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ typedef struct s_data
 	t_list				*cmd;
 }	t_data;
 
-int		cd(char *str);
+int		cd(int ac, char **str);
 int		is_double_dot(char *str);
 char	*path_finder(char *str);
 int		directory_exists(char *s);
 char	*previous_dir(char *str);
 
-int		ft_echo(int ac, char **av);
+int	ft_echo(int ac, char **av);
 int		check_echo_n(char *str);
 
 void	ft_env(t_data *data, t_cmd *cmd);
