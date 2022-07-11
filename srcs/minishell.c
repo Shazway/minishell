@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 16:01:43 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:38:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	msh_init(t_data *data)
-{
-	extern struct sigaction	g_signals;
-
-	g_signals.sa_sigaction = sig_info;
-	data->read_ret = -1;
-	data->buf_trash = NULL;
-	data->input = NULL;
-	data->output = NULL;
-	data->commands = NULL;
-	data->env_str = NULL;
-	if (set_env(data))
-		return (1);
-	data->cmd = NULL;
-	return (0);
-}
 
 int	msh_free(t_data *data)
 {
