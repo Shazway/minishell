@@ -3,31 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 16:41:18 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:48:43 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 struct sigaction g_signals;
-
-int	msh_init(t_data *data)
-{
-	g_signals.sa_sigaction = sig_info;
-	data->read_ret = -1;
-	data->buf_trash = NULL;
-	data->input = NULL;
-	data->output = NULL;
-	data->commands = NULL;
-	data->env_str = NULL;
-	if (set_env(data))
-		return (1);
-	data->cmd = NULL;
-	return (0);
-}
 
 int	signal_intercept(void)
 {
