@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/12 22:00:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:54:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,24 @@ int	is_dash(char	*str)
 int		change_path(char *str, char *path)
 {
 	if (is_double_dash(str) == -1)
+	{
+		free(path);
 		return (printf("bash: --: invalid option\n"));
+	}
 	if (!str)
 		if (!getenv("HOME"))
 			return (printf("bash: cd: HOME not set\n"));
 	if (chdir(str) == -1)
-		return (printf("cd: %s: No such file or directory\n", str));
+	{
+		printf("cd: %s: No such file or directory\n", str);
+		free(path);
+		return (1);
+	}
 	else
 		free(path);
 	return (1);
 }
+
 
 char	*concat_path(char *s1, char *s2)
 {
@@ -103,10 +111,7 @@ int		cd(int ac, char **str)
 	printf("Path to go to is [%s]\n", path);
 	if (!path)
 		return (printf("Allocation for path failed\n"));
-	if (change_path(path, path) == -1)
-	{
-		free(path);
-		return (printf("cd: %s: No such file or directory\n", str[0]));
-	}
+	if (change_path(path, path))
+		return (0);
 	return (1);
 }
