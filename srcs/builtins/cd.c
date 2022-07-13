@@ -6,13 +6,13 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/13 16:00:34 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:04:20 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		is_double_dash(char *str)
+int	is_double_dash(char *str)
 {
 	int	i;
 
@@ -25,7 +25,10 @@ int		is_double_dash(char *str)
 		return (-1);
 	return (0);
 }
-//----------TO DO BEFORE CD: CHANGE ENVIRONMENT VARIABLE : SWAP $OLDPWD and $PWD//
+
+/*----------TO DO BEFORE CD: 
+CHANGE ENVIRONMENT VARIABLE : SWAP $OLDPWD and $PWD*/
+
 char	*dash_dir(char *str, int ret)
 {
 	if (ret == 1)
@@ -38,7 +41,7 @@ char	*dash_dir(char *str, int ret)
 int	is_dash(char	*str)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	i = 0;
 	ret = is_double_dash(str);
@@ -49,36 +52,9 @@ int	is_dash(char	*str)
 	return (ret);
 }
 
-int		change_path(char *str, char *path)
-{
-	if (!str)
-	{
-		if (!getenv("HOME"))
-		{
-			free(path);
-			return (printf("bash: cd: HOME not set\n"));
-		}
-	}
-	if (is_double_dash(str) == -1)
-	{
-		free(path);
-		return (printf("bash: --: invalid option\n"));
-	}
-	if (chdir(str) == -1)
-	{
-		printf("cd: %s: No such file or directory\n", str);
-		free(path);
-		return (1);
-	}
-	else
-		free(path);
-	return (1);
-}
-
-
 char	*concat_path(char *s1, char *s2)
 {
-	char *temp;
+	char	*temp;
 
 	temp = s1;
 	s1 = ft_strjoin(s1, "/");
@@ -93,7 +69,7 @@ char	*concat_path(char *s1, char *s2)
 	return (s1);
 }
 
-int		cd(int ac, char **str)
+int	cd(int ac, char **str)
 {
 	char	*path;
 	char	*temp;

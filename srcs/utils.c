@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 15:27:25 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:04:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,30 @@ int	ft_malloc(void **p, int length)
 	if (*p)
 		return (1);
 	return (0);
+}
+
+int	change_path(char *str, char *path)
+{
+	if (!str)
+	{
+		if (!getenv("HOME"))
+		{
+			free(path);
+			return (printf("bash: cd: HOME not set\n"));
+		}
+	}
+	if (is_double_dash(str) == -1)
+	{
+		free(path);
+		return (printf("bash: --: invalid option\n"));
+	}
+	if (chdir(str) == -1)
+	{
+		printf("cd: %s: No such file or directory\n", str);
+		free(path);
+		return (1);
+	}
+	else
+		free(path);
+	return (1);
 }

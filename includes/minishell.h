@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 16:16:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:05:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_data
 }	t_data;
 
 int		cd(int ac, char **str);
-int		is_double_dot(char *str);
-char	*path_finder(char *str);
+int		is_double_dash(char *str);
+int		change_path(char *str, char *path);
 int		directory_exists(char *s);
 char	*previous_dir(char *str);
 
