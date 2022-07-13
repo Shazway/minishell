@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 16:59:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:07:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_echo_n(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] != '-' && str[i + 1] != 'n')
@@ -37,7 +37,7 @@ int	ft_echo(int ac, char **av)
 	new_line = 1;
 	i = 0;
 	if (ac == 1)
-		return(write(1, "\n", 1));
+		return (write(1, "\n", 1));
 	if (check_echo_n(av[0]))
 	{
 		new_line = 0;

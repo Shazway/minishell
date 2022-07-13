@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/13 16:04:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:07:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_double_dash(char *str)
 	return (0);
 }
 
-/*----------TO DO BEFORE CD: 
+/*----------TO DO BEFORE CD:
 CHANGE ENVIRONMENT VARIABLE : SWAP $OLDPWD and $PWD*/
 
 char	*dash_dir(char *str, int ret)
