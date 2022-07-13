@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/13 15:54:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:00:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,19 @@ int	is_dash(char	*str)
 
 int		change_path(char *str, char *path)
 {
+	if (!str)
+	{
+		if (!getenv("HOME"))
+		{
+			free(path);
+			return (printf("bash: cd: HOME not set\n"));
+		}
+	}
 	if (is_double_dash(str) == -1)
 	{
 		free(path);
 		return (printf("bash: --: invalid option\n"));
 	}
-	if (!str)
-		if (!getenv("HOME"))
-			return (printf("bash: cd: HOME not set\n"));
 	if (chdir(str) == -1)
 	{
 		printf("cd: %s: No such file or directory\n", str);
