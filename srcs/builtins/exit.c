@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/13 17:27:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:58:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,17 @@ int	check_digits(char **str)
 
 int	shell_exit(int ac, char **av)
 {
+	unsigned char	ret;
+
 	if (check_digits(av))
 	{
-		printf("exit\nbash: exit: %s: numeric argument required"))
-		exit(1);
+		printf("exit\nbash: exit: %s: numeric argument required", av[0]);
+		exit(2);
 	}
 	if (ac > 1)
 		return (printf("bash: exit: too many arguments\n"));
 	printf("exit\n");
-	exit(ft_atoi(av[0]));
+	ret = ft_atoi(av[0]);
+	exit((int)ret);
+	return (1);
 }
