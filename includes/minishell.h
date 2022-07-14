@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/13 16:07:10 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:49:33 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,15 @@ typedef struct s_cmd
 	char	*cmd;
 	char	**args;
 	int		ac;
+	char	*fullpath;
+	int		*fin;
+	int		*fout;
 }	t_cmd;
+
+typedef struct s_pipex
+{
+	int fd[2];
+}				t_pipex;
 
 typedef struct s_data
 {
@@ -56,6 +64,7 @@ typedef struct s_data
 	char				**env_str;
 	struct termios		termios;
 	t_list				*cmd;
+	t_pipex				*pips;
 }	t_data;
 
 int		cd(int ac, char **str);
