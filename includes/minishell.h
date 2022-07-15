@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/13 16:07:10 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:57:58 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ void	str_arr_free(char **str);
 int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
 int		ft_malloc(void **p, int length);
+
+char	*separate_redir(char *str);
 
 #endif

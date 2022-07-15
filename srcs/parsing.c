@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 15:53:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:58:04 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	parsing(t_data *data)
 {
 	int		i;
-	char	*tmp;
 	t_cmd	*temp;
 	char	**pipe_split;
 

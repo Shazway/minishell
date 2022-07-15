@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 15:51:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:58:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	*check_redir(char *str, int *i)
 char	*separate_redir(char *str)
 {
 	int		i;
-	int		size;
 	char	*temp;
-	char	*dest;
 
 	i = 0;
 	temp = str;
