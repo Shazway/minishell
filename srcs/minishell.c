@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 16:59:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:52:39 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,35 @@ int	msh_free(t_data *data)
 	free(data->output);
 	str_arr_free(data->commands);
 	str_arr_free(data->env_str);
-	free(data->cmd);
-	free(data);
+	ft_lstclear(&data->cmd, &free_cmd);
+	free_pips(data->pips, data->n_cmd);
 	return (1);
+}
+
+void	free_pips(t_pipex *pips, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n - 1)
+	{
+		close(pips[i].fd[0]);
+		close(pips[i].fd[1]);
+		i++;
+	}
+	free(pips);
+}
+
+void	free_cmd(void *vcmd)
+{
+	t_cmd *cmd;
+
+	cmd = (t_cmd *)vcmd;
+	free(cmd->cmd);
+	str_arr_free(cmd->args);
+	free(cmd->fullpath);
+	free(cmd->fin);
+	free(cmd->fout);
 }
 
 void	prompt_loop(t_data *data)

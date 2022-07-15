@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/14 19:49:33 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:08:26 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/stat.h>
 # include <termios.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 
 # define WORD = 0;
 # define R_DIR = 1;
@@ -46,6 +47,8 @@ typedef struct s_cmd
 	int		ac;
 	char	*fullpath;
 	int		*fin;
+	int		n_fin;
+	int		n_fout;
 	int		*fout;
 }	t_cmd;
 
@@ -64,6 +67,7 @@ typedef struct s_data
 	char				**env_str;
 	struct termios		termios;
 	t_list				*cmd;
+	int					n_cmd;
 	t_pipex				*pips;
 }	t_data;
 
@@ -110,5 +114,15 @@ void	str_arr_free(char **str);
 int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
 int		ft_malloc(void **p, int length);
+
+void	free_pips(t_pipex *pips, int n);
+void	free_cmd(void *vcmd);
+void	search_cmds(t_data *data);
+int		is_builtin(char *c_name);
+void    execute(t_data *data);
+void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd);
+char	*get_path(char *c_name, char **envr);
+char	*getpath_worker(char *c_name, char **envr);
+char	*parse_path(char **path_array, char *c_name);
 
 #endif

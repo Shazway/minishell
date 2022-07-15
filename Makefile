@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/11 17:00:28 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/15 15:07:32 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DESCRIPTION =	Minishell
 
 # ----------- COMPILER FLAGS -------
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address 
+CFLAGS		=	-Wall -Wextra -Werror #-g3 -fsanitize=address 
 LPFLAGS		=	-L$(LIBFT) -lft -lreadline
 
 # ----------- INCLUDE --------------
@@ -34,6 +34,7 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/builtins/export.c	\
 				$(SRC)/builtins/pwd.c		\
 				$(SRC)/builtins/unset.c		\
+				$(SRC)/execution.c			\
 				$(SRC)/main.c				\
 				$(SRC)/minishell.c			\
 				$(SRC)/parsing.c			\
