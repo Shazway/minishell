@@ -6,11 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/15 15:57:58 by tmoragli         ###   ########.fr       */
-=======
-/*   Updated: 2022/07/15 15:08:26 by mdkhissi         ###   ########.fr       */
->>>>>>> execution
+/*   Updated: 2022/07/15 16:58:39 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +100,10 @@ void	print_result(t_cmd *token);
 void	split_spaces(t_cmd *token, char *content);
 void	del_token(void *content);
 
+char	*concat_redir(char *str, char *redir, int *i, int is_double);
+char	*check_redir(char *str, int *i);
+char	*separate_redir(char *str);
+
 int		signal_intercept(void);
 void	sig_info(int signal, siginfo_t *s, void *trash);
 int		termios_setup(t_data *data);
@@ -118,6 +118,7 @@ void	str_arr_free(char **str);
 int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
 int		ft_malloc(void **p, int length);
+int		change_path(char *str, char *path);
 
 void	free_pips(t_pipex *pips, int n);
 void	free_cmd(void *vcmd);
