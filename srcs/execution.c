@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/15 16:52:31 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/15 19:32:23 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ void    execute(t_data *data)
 
 	i = 0;
     c_idx = data->cmd;
+	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
     while (c_idx != NULL)
     {
 		if (c_idx->next != NULL)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
-        to_execute = data->cmd->content;
+		to_execute = data->cmd->content;
         pid = fork();
 		if (pid == -1)
 			return ;
@@ -70,13 +71,20 @@ void    execute(t_data *data)
 	c_idx = data->cmd;
 	while (c_idx->next != NULL)
 	{
+		//printf("pipe[%d]\n", i);
 		close(data->pips[i].fd[0]);
 		close(data->pips[i].fd[1]);
+		c_idx = c_idx->next;
 		i++;
 	}
 	c_idx = data->cmd;
+	to_execute = c_idx->content;
 	while (c_idx != NULL)
+	{
+		//close(to_execute->fin)
 		wait(NULL);
+		c_idx = c_idx->next;
+	}
 }
 
 void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
@@ -85,6 +93,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	int		w;
 	int		j;
 
+	
 	if (c_idx == 0)
 		r = c_idx;
 	else
@@ -94,7 +103,10 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	else
 		w = c_idx;
 	if (cmd->n_fin == 0)
-		dup2(data->pips[r].fd[0], STDIN_FILENO);
+	{
+		if (c_idx != 0)
+			dup2(data->pips[r].fd[0], STDIN_FILENO);
+	}
 	else
 	{
 		dup2(cmd->fin[cmd->n_fin - 1], STDIN_FILENO);
@@ -104,7 +116,10 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	while (j <= r)
 		close(data->pips[j++].fd[0]);
 	if (cmd->n_fout == 0)
-		dup2(data->pips[w].fd[1], STDOUT_FILENO);
+	{
+		if (c_idx != n_cmd - 1)
+			dup2(data->pips[w].fd[1], STDOUT_FILENO);
+	}
 	else
 	{
 		dup2(cmd->fout[cmd->n_fout - 1], STDOUT_FILENO);
@@ -194,6 +209,7 @@ void print_fullpath(t_data *data)
 	t_cmd	*cmd;
 
 	i = data->cmd;
+	cmd = (t_cmd *)i->content;
 	while (i != NULL)
 	{
 		cmd = (t_cmd *) i->content;

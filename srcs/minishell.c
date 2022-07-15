@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 16:52:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/15 19:56:51 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,30 @@ void	free_cmd(void *vcmd)
 	free(cmd->fout);
 }
 
+/*
+void	ft_open_files(t_data *data)
+{
+	t_cmd	*cmd;
+	t_list	*c_idx;
+	int		i;
+
+	c_idx = data->cmd;
+	while (c_idx != NULL)
+	{
+		cmd = c_idx->content;
+		i = 0;
+		while (cmd->args[i])
+		{
+			if (!ft_strncmp(cmd->args[i], "<", 1))
+			{
+				cmd->fin
+			}
+			i++;
+		}
+		c_idx = c_idx->next;
+	}	
+}
+*/
 void	prompt_loop(t_data *data)
 {
 	while (1)
@@ -64,6 +88,10 @@ void	prompt_loop(t_data *data)
 			printf("%s\n", data->input);
 			add_history(data->input);
 			parsing(data);
+			//ft_open_files(data);
+			search_cmds(data);
+			print_fullpath(data);
+			//execute(data);
 		}
 		free(data->input);
 	}

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 16:58:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:03:05 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,6 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd);
 char	*get_path(char *c_name, char **envr);
 char	*getpath_worker(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
+void	print_fullpath(t_data *data);
 
 #endif
