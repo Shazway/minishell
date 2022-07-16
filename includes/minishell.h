@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 20:39:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:39:11 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_cmd
 	char	*fullpath;
 	int		fin;
 	int		fout;
-	char	*lim;
 }	t_cmd;
 
 typedef struct s_pipex
@@ -125,5 +124,6 @@ char	*get_path(char *c_name, char **envr);
 char	*getpath_worker(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
 void	print_fullpath(t_data *data);
+void	cmd_notfound(void);
 
 #endif
