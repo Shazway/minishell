@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/13 16:04:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:37:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int	change_path(char *str, char *path)
 		if (!getenv("HOME"))
 		{
 			free(path);
-			return (printf("bash: cd: HOME not set\n"));
+			return (printf("minishell: cd: HOME not set\n"));
 		}
 	}
 	if (is_double_dash(str) == -1)
 	{
 		free(path);
-		return (printf("bash: --: invalid option\n"));
+		return (printf("minishell: --: invalid option\n"));
 	}
 	if (chdir(str) == -1)
 	{

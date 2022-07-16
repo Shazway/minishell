@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 16:04:51 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 18:17:28 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:59:08 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ char	**unquote_split(char *s, char c)
 	if (!s)
 		return (NULL);
 	count = count_words(s, c);
-	printf("%d\n", count);
 	if (!ft_malloc((void **)&str, sizeof(char *) * (count + 1)))
 		return (NULL);
 	str[count] = NULL;
@@ -124,10 +123,6 @@ char	**unquote_split(char *s, char c)
 	tmp = fill(s, c, str);
 	i = 0;
 	while (tmp && tmp[i])
-	{
-		printf("Temp = [%s]\n", tmp[i]);
 		i++;
-	}
-	printf("Temp = [%s]\n", tmp[i]);
 	return (tmp);
 }

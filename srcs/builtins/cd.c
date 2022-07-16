@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/13 16:07:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:37:56 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*concat_path(char *s1, char *s2)
 		return (NULL);
 	return (s1);
 }
-
+/*--CHANGE TO **env--*/
 int	cd(int ac, char **str)
 {
 	char	*path;
@@ -78,8 +78,8 @@ int	cd(int ac, char **str)
 	temp = path;
 	if (ac > 2)
 	{
-		free(temp);
-		return (printf("bash: cd: too many arguments\n"));
+		free(path);
+		return (printf("minishell: cd: too many arguments\n"));
 	}
 	printf("Path or folder given is [%s]\n", str[0]);
 	if (ac == 1)
@@ -91,7 +91,7 @@ int	cd(int ac, char **str)
 	path = concat_path(path, str[0]);
 	printf("Path to go to is [%s]\n", path);
 	if (!path)
-		return (printf("Allocation for path failed\n"));
+		return (-1);
 	if (change_path(path, path))
 		return (0);
 	return (1);

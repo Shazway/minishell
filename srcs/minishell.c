@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 19:56:51 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:58:58 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	prompt_loop(t_data *data)
 			break ;
 		if (!(data->input[0] == 0))
 		{
-			printf("%s\n", data->input);
+			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
 			parsing(data);
 			//ft_open_files(data);
