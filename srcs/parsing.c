@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 23:55:54 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 00:06:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,6 @@ char	**eliminate_redirections(char **args)
 	return (dest);
 }
 
-void	create_file(char *path)
-{
-	int	temp_fd;
-
-	temp_fd = open(path, O_CREAT, S_IRUSR, S_IWUSR);
-	if (temp_fd != -1)
-		close(temp_fd);
-}
-
 int	setup_rfiles(t_cmd	*arg, int *type, int i)
 {
 	char	*work_path;
@@ -111,16 +102,15 @@ int	setup_rfiles(t_cmd	*arg, int *type, int i)
 		arg->fout = 1;
 		return (1);
 	}
-	create_file(final_path);
 	if (*type == R_DIR)
-		arg->fin = open(final_path, O_TRUNC, O_WRONLY);
+		arg->fin = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (*type == R_DDIR)
-		arg->fin = open(final_path, O_APPEND, O_WRONLY);
+		arg->fin = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (*type == L_DIR)
-		arg->fout = open(final_path, O_APPEND, O_WRONLY);
+		arg->fout = open(final_path, O_RDONLY);
 //	if (*type == L_DDIR)
 //		here_docs()
-	//args = eliminate_redirections(args);
+	//arg->args = eliminate_redirections(arg->args);
 	printf("fin = %d fout = %d\n", arg->fin, arg->fout);
 	free(final_path);
 	return (1);
