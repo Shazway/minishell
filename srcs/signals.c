@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/11 17:04:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:01:42 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ int	msh_init(t_data *data)
 	data->output = NULL;
 	data->commands = NULL;
 	data->env_str = NULL;
+	data->pips = NULL;
 	if (set_env(data))
 		return (1);
 	data->cmd = NULL;
+	
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/16 18:03:03 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:35:03 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void    execute(t_data *data)
 		if (c_idx->next != NULL)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
-		to_execute = data->cmd->content;
+		to_execute = c_idx->content;
         pid = fork();
 		if (pid == -1)
 			return ;
@@ -70,7 +70,6 @@ void    execute(t_data *data)
 	c_idx = data->cmd;
 	while (c_idx->next != NULL)
 	{
-		//printf("pipe[%d]\n", i);
 		close(data->pips[i].fd[0]);
 		close(data->pips[i].fd[1]);
 		c_idx = c_idx->next;
@@ -92,7 +91,6 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	int		w;
 	int		j;
 
-	
 	if (c_idx == 0)
 		r = c_idx;
 	else
@@ -101,37 +99,48 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		w = c_idx - 1;
 	else
 		w = c_idx;
-	if (cmd->n_fin == 0)
+	
+	if (cmd->fin == -1)
 	{
 		if (c_idx != 0)
+		{
 			dup2(data->pips[r].fd[0], STDIN_FILENO);
+			printf("c_idx %d\t n_cmd %d\n", c_idx, n_cmd);
+		}
 	}
 	else
 	{
-		dup2(cmd->fin[cmd->n_fin - 1], STDIN_FILENO);
-		close(cmd->fin[cmd->n_fin - 1]);
+		dup2(cmd->fin, STDIN_FILENO);
+		close(cmd->fin);
 	}
 	j = 0;
 	while (j <= r)
 		close(data->pips[j++].fd[0]);
-	if (cmd->n_fout == 0)
+	if (cmd->fout == -1)
 	{
+		
 		if (c_idx != n_cmd - 1)
+		{
+			
 			dup2(data->pips[w].fd[1], STDOUT_FILENO);
+			
+		}
 	}
 	else
 	{
-		dup2(cmd->fout[cmd->n_fout - 1], STDOUT_FILENO);
-		close(cmd->fout[cmd->n_fout - 1]);
+
+		dup2(cmd->fout, STDOUT_FILENO);
+		close(cmd->fout);
 	}
 	j = 0;
 	while (j <= w)
 		close(data->pips[j++].fd[1]);
 	if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 	{
-		msh_free(data);
-		//if (!cmd->fullpath)
-		//	cmd_notfound();
+		
+		//msh_free(data);
+		if (!cmd->fullpath)
+			cmd_notfound();
 	//	else
 		//	perrxit("Error");
 	}
@@ -216,3 +225,29 @@ void print_fullpath(t_data *data)
 		i = i->next;
 	}
 }
+
+void	cmd_notfound(void)
+{
+	ft_putendl_fd("Error: command not found", 2);
+	exit(EXIT_FAILURE);
+}
+/*
+int		here_doc(char *lim)
+{
+	int		i;
+	char	*buf;
+
+	i = 0;
+	while (true)
+	{
+		buf = readline(">");
+		if (!buf)
+		{
+			printf("signal\n");
+			break ;
+		}
+		ft_strnstr()
+		i++;
+	}
+}
+*/

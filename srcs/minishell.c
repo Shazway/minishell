@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 18:04:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:12:05 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	free_cmd(void *vcmd)
 	free(cmd->cmd);
 	str_arr_free(cmd->args);
 	free(cmd->fullpath);
-	free(cmd->fin);
-	free(cmd->fout);
+	free(cmd);
 }
 
 /*
@@ -90,7 +89,7 @@ void	prompt_loop(t_data *data)
 			parsing(data);
 			//ft_open_files(data);
 			search_cmds(data);
-			//print_fullpath(data);
+			print_fullpath(data);
 			execute(data);
 		}
 		free(data->input);

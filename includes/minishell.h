@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 17:03:05 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 20:23:49 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ typedef struct s_cmd
 	char	**args;
 	int		ac;
 	char	*fullpath;
-	int		*fin;
-	int		n_fin;
-	int		n_fout;
-	int		*fout;
+	int		fin;
+	int		fout;
 }	t_cmd;
 
 typedef struct s_pipex
@@ -77,7 +75,7 @@ int		change_path(char *str, char *path);
 int		directory_exists(char *s);
 char	*previous_dir(char *str);
 
-int	ft_echo(int ac, char **av);
+int		ft_echo(int ac, char **av);
 int		check_echo_n(char *str);
 
 void	ft_env(t_data *data, t_cmd *cmd);
@@ -130,5 +128,6 @@ char	*get_path(char *c_name, char **envr);
 char	*getpath_worker(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
 void	print_fullpath(t_data *data);
+void	cmd_notfound(void);
 
 #endif

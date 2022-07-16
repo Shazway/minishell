@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 18:04:09 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:14:29 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	parsing(t_data *data)
 		temp = malloc(sizeof(t_cmd));
 		if (!temp)
 			return (1);
-		temp->n_fin = 0;
-		temp->n_fout = 0;
+		temp->fin = -1;
+		temp->fout = -1;
 		ft_lstadd_back(&(data->cmd), ft_lstnew((void *)temp));
 		split_spaces(temp, pipe_split[i]);
 		printf("New command\n");
@@ -53,7 +53,7 @@ void	print_result(t_cmd *token)
 void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
-	token->cmd = token->args[0];
+	token->cmd = ft_strdup(token->args[0]);
 	token->ac = str_arr_size(token->args);
 	print_result(token);
 }
