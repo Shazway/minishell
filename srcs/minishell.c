@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 16:52:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:51:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	prompt_loop(t_data *data)
 			break ;
 		if (!(data->input[0] == 0))
 		{
-			printf("%s\n", data->input);
+			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
 			parsing(data);
 		}
