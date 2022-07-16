@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 20:59:06 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:33:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_redirection(char	*str, int *type)
 {
-	if (str && (str[0] == ' ' || str[0] == ' '))
+	if (str && (str[0] == '"' || str[0] == 39))
 		return (*type);
 	if (!ft_strncmp(str, ">", 4))
 		*type = R_DIR;
@@ -27,34 +27,71 @@ int	is_redirection(char	*str, int *type)
 	return (*type);
 }
 
+int	str_arr_size_r(char	**str)
+{
+	int	i;
+	int	size;
+
+	size = 0;
+	i = 0;
+	while (str && str[i])
+	{
+		if (!is_redirection(str[i], 0))
+			size++;
+		i++;
+	}
+	return (size);
+}
+
+char	**eliminate_redirections(char **args)
+{
+	int		size;
+	char	**dest;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	size = str_arr_size_r(args);
+	dest = malloc(sizeof(char *) * (size + 1));
+	if (!dest)
+		return (NULL);
+	dest[size] = NULL;
+	while (args && args[i])
+	{
+		if (is_redirection(args[i], 0))
+			i++;
+		if (!args[i])
+			break ;
+		else
+			dest[j] = ft_strdup(args[i]);
+		j++;
+		i++;
+	}
+	str_arr_free(args);
+	return (dest);
+}
+
+
 int	setup_rfiles(t_cmd	*arg, int type, int i)
 {
 	char	*work_path;
-	int		*trash;
 
-	*trash = 0;
-	if (!arg->args[i + 1] || is_redirection(arg->args[i + 1], &trash))
+	if (!arg->args[i + 1] || is_redirection(arg->args[i + 1], 0))
 		return (printf("minishell:syntax error near unexpected token`newline'\n"));
 	work_path = pwd();
 	if (type == R_DIR)
-	{
 		arg->fin = open(concat_path(work_path,
 			arg->args[i + 1]), O_CREAT, O_TRUNC, O_WRONLY);
-	}
 	if (type == R_DDIR)
-	{
 		arg->fin = open(concat_path(work_path,
 			arg->args[i + 1]), O_CREAT, O_APPEND, O_WRONLY);
-	}
 	if (type == L_DIR)
-	{
-		if (i == 0)
-			arg->fout = -1;
-		else
+		if (i > 0)
 			arg->fout = open(concat_path(work_path, arg->args[i]), O_RDONLY);
-	}
 	if (type == L_DDIR)
 		here_doc(arg->args[i + 1], &arg->fin);
+	arg->args = eliminate_redirections(arg->args);
 	free(work_path);
 	return (1);
 }
@@ -123,7 +160,7 @@ void	print_result(t_cmd *token)
 void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
-	token->cmd = token->args[0];
+	token->cmd = ft_strdup(token->args[0]);
 	token->ac = str_arr_size(token->args);
 	print_result(token);
 }
