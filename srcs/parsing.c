@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 21:37:15 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:39:59 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_redirection(char	*str, int *type)
 	return (*type);
 }
 
-int	setup_rfiles(t_cmd	*arg, int type, int i)
+int	setup_rfiles(t_cmd	*arg, int *type, int i)
 {
 	char	*work_path;
 	int		*trash;
@@ -81,6 +81,7 @@ int	open_redirections(t_data	*data)
 		data->cmd = data->cmd->next;
 	}
 	data->cmd = tmp;
+	return (1);
 }
 
 int	parsing(t_data *data)
@@ -100,7 +101,6 @@ int	parsing(t_data *data)
 		ft_lstadd_back(&(data->cmd), ft_lstnew((void *)temp));
 		temp->fin = -1;
 		temp->fout = -1;
-		temp->lim = NULL;
 		split_spaces(temp, pipe_split[i]);
 		printf("New command\n");
 		i++;
