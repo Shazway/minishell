@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 16:58:54 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:42:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	shell_exit(int ac, char **av)
 {
 	unsigned char	ret;
 
+	if (ac == 0)
+		exit(printf("exit\n"));
 	if (check_digits(av))
 	{
 		printf("exit\nbash: exit: %s: numeric argument required", av[0]);
