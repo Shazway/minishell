@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/07/16 20:23:49 by mdkhissi         ###   ########.fr       */
+=======
+/*   Updated: 2022/07/16 20:39:17 by tmoragli         ###   ########.fr       */
+>>>>>>> bc0cc68be85057940c5282513cb996014b55741f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +33,10 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
-# define WORD = 0;
-# define R_DIR = 1;
-# define L_DIR = 2;
-# define RD_DIR = 3;
-# define LD_DIR = 4;
-# define O_PARENTH = 5;
-# define C_PARENTH = 6;
-# define AND_OP = 7;
-# define OR_OP = 8;
-# define PIPE = 9;
+# define R_DIR 1
+# define R_DDIR 2
+# define L_DIR 3
+# define L_DDIR 4
 
 typedef struct s_cmd
 {
@@ -48,6 +46,10 @@ typedef struct s_cmd
 	char	*fullpath;
 	int		fin;
 	int		fout;
+<<<<<<< HEAD
+=======
+	char	*lim;
+>>>>>>> bc0cc68be85057940c5282513cb996014b55741f
 }	t_cmd;
 
 typedef struct s_pipex
@@ -88,6 +90,8 @@ void	ft_export(t_data *data, t_cmd *cmd);
 int		is_validid(char	*identifier, int len);
 
 char	*pwd(void);
+
+char	*concat_path(char *s1, char *s2);
 
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
