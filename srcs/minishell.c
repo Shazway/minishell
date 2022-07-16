@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 17:58:58 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:04:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	prompt_loop(t_data *data)
 			parsing(data);
 			//ft_open_files(data);
 			search_cmds(data);
-			print_fullpath(data);
-			//execute(data);
+			//print_fullpath(data);
+			execute(data);
 		}
 		free(data->input);
 	}

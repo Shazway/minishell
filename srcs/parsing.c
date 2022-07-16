@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 21:13:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:04:09 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	parsing(t_data *data)
 
 	i = 0;
 	data->input = separate_redir(data->input);
-	printf("data->nput = %s\n", data->input);
 	pipe_split = unquote_split(data->input, '|');
 	while (pipe_split[i])
 	{

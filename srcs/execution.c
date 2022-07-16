@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/16 17:59:13 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:03:03 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	search_cmds(t_data *data)
 	i = data->cmd;
 	while (i != NULL)
 	{
-		printf("what\n");
 		current_cmd = i->content;
 		if (!is_builtin(current_cmd->cmd))
 			current_cmd->fullpath = get_path(current_cmd->cmd, data->env_str);
