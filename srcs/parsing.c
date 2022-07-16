@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 21:42:34 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 23:55:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	is_redirection(char	*str, int *type)
 {
-	if (str && (str[0] == '"' || str[0] == 39))
+	if (!str || (str && (str[0] == '"' || str[0] == 39)))
 		return (*type);
-	if (!ft_strncmp(str, ">", 4))
+	if (!ft_strncmp(str, ">", 2))
 		*type = R_DIR;
-	if (!ft_strncmp(str, ">>", 4))
+	if (!ft_strncmp(str, ">>", 3))
 		*type = R_DDIR;
-	if (!ft_strncmp(str, "<", 4))
+	if (!ft_strncmp(str, "<", 2))
 		*type = L_DIR;
-	if (!ft_strncmp(str, "<<", 4))
+	if (!ft_strncmp(str, "<<", 3))
 		*type = L_DDIR;
 	return (*type);
 }
@@ -42,6 +42,18 @@ int	str_arr_size_r(char	**str)
 	}
 	return (size);
 }
+void	str_arr_display(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		printf("Args[%d] = [%s]\n", i, str[i]);
+		i++;
+	}
+}
+
 
 char	**eliminate_redirections(char **args)
 {
@@ -69,50 +81,68 @@ char	**eliminate_redirections(char **args)
 		i++;
 	}
 	str_arr_free(args);
+	str_arr_display(args);
 	return (dest);
 }
 
+void	create_file(char *path)
+{
+	int	temp_fd;
 
-int	setup_rfiles(t_cmd	*arg, int type, int i)
+	temp_fd = open(path, O_CREAT, S_IRUSR, S_IWUSR);
+	if (temp_fd != -1)
+		close(temp_fd);
+}
+
+int	setup_rfiles(t_cmd	*arg, int *type, int i)
 {
 	char	*work_path;
+	char	*final_path;
 
-	if (!arg->args[i + 1] || is_redirection(arg->args[i + 1], 0))
+	if (!arg->args[i + 1])
 		return (printf("minishell:syntax error near unexpected token`newline'\n"));
 	work_path = pwd();
-	if (type == R_DIR)
-		arg->fin = open(concat_path(work_path,
-			arg->args[i + 1]), O_CREAT, O_TRUNC, O_WRONLY);
-	if (type == R_DDIR)
-		arg->fin = open(concat_path(work_path,
-			arg->args[i + 1]), O_CREAT, O_APPEND, O_WRONLY);
-	if (type == L_DIR)
-		if (i > 0)
-			arg->fout = open(concat_path(work_path, arg->args[i]), O_RDONLY);
-	if (type == L_DDIR)
-		here_doc(arg->args[i + 1], &arg->fin);
-	arg->args = eliminate_redirections(arg->args);
-	free(work_path);
+	if (*type == R_DIR || *type == R_DDIR)
+		final_path = concat_path(work_path, arg->args[i + 1]);
+	else
+	{
+		if (i != 0)
+			final_path = concat_path(work_path, arg->args[i - 1]);
+		arg->fout = 1;
+		return (1);
+	}
+	create_file(final_path);
+	if (*type == R_DIR)
+		arg->fin = open(final_path, O_TRUNC, O_WRONLY);
+	if (*type == R_DDIR)
+		arg->fin = open(final_path, O_APPEND, O_WRONLY);
+	if (*type == L_DIR)
+		arg->fout = open(final_path, O_APPEND, O_WRONLY);
+//	if (*type == L_DDIR)
+//		here_docs()
+	//args = eliminate_redirections(args);
+	printf("fin = %d fout = %d\n", arg->fin, arg->fout);
+	free(final_path);
 	return (1);
 }
 
-int	open_redirections(t_data	*data)
+int	open_redirections(t_data *data)
 {
 	int		i;
 	t_cmd	*arg;
 	t_list	*tmp;
-	int		*type;
+	int		type;
 
 	i = 0;
 	tmp = data->cmd;
-	while (data->cmd && data->cmd->next)
+	while (data->cmd)
 	{
-		*type = 0;
+		type = 0;
 		arg = data->cmd->content;
 		while (arg->args && arg->args[i])
 		{
 			if (is_redirection(arg->args[i], &type))
-				setup_rfiles(arg, type, i);
+				setup_rfiles(arg, &type, i);
 			i++;
 		}
 		data->cmd = data->cmd->next;
@@ -139,7 +169,8 @@ int	parsing(t_data *data)
 		temp->fin = -1;
 		temp->fout = -1;
 		split_spaces(temp, pipe_split[i]);
-		printf("New command\n");
+		if (pipe_split[i + 1])
+			printf("New command (cmd->next)\n");
 		i++;
 	}
 	data->n_cmd = i;

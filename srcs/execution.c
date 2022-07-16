@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/16 21:35:03 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 22:05:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	
 	if (cmd->fin == -1)
 	{
-		if (c_idx != 0)
+		if (c_idx != 0 && data->n_cmd > 1)
 		{
 			dup2(data->pips[r].fd[0], STDIN_FILENO);
 			printf("c_idx %d\t n_cmd %d\n", c_idx, n_cmd);
@@ -114,12 +114,12 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		close(cmd->fin);
 	}
 	j = 0;
-	while (j <= r)
+	while (j <= r && data->n_cmd > 1)
 		close(data->pips[j++].fd[0]);
 	if (cmd->fout == -1)
 	{
 		
-		if (c_idx != n_cmd - 1)
+		if (c_idx != n_cmd - 1 && data->n_cmd > 1)
 		{
 			
 			dup2(data->pips[w].fd[1], STDOUT_FILENO);
@@ -133,7 +133,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		close(cmd->fout);
 	}
 	j = 0;
-	while (j <= w)
+	while (j <= w && data->n_cmd > 1)
 		close(data->pips[j++].fd[1]);
 	if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 	{

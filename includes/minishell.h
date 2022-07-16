@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 21:39:11 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:47:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	del_token(void *content);
 
 char	*concat_redir(char *str, char *redir, int *i, int is_double);
 char	*check_redir(char *str, int *i);
+int		open_redirections(t_data *data);
 char	*separate_redir(char *str);
 
 int		signal_intercept(void);
