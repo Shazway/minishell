@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 18:04:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:08:48 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ int	msh_free(t_data *data)
 	free(data->buf_trash);
 	free(data->input);
 	free(data->output);
-	str_arr_free(data->commands);
 	str_arr_free(data->env_str);
-	ft_lstclear(&data->cmd, &free_cmd);
-	free_pips(data->pips, data->n_cmd);
+	//free_pips(data->pips, data->n_cmd);
 	return (1);
 }
 
@@ -46,8 +44,6 @@ void	free_cmd(void *vcmd)
 	free(cmd->cmd);
 	str_arr_free(cmd->args);
 	free(cmd->fullpath);
-	free(cmd->fin);
-	free(cmd->fout);
 }
 
 /*
@@ -88,10 +84,11 @@ void	prompt_loop(t_data *data)
 			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
 			parsing(data);
+			//open_redirections(data);
 			//ft_open_files(data);
-			search_cmds(data);
+			//search_cmds(data);
 			//print_fullpath(data);
-			execute(data);
+			//execute(data);
 		}
 		free(data->input);
 	}

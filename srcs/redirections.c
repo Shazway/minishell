@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/15 15:58:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:30:11 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*separate_redir(char *str)
 	free(temp);
 	while (str && str[i])
 	{
-		if (i != 0 && (str[i] == '>' || str[i] == '<'))
+		if ((str[i] == '>' || str[i] == '<'))
 		{
 			str = check_redir(str, &i);
 			if (!str)
