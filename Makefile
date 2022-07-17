@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/16 21:00:48 by mdkhissi         ###   ########.fr        #
+#    Updated: 2022/07/17 19:19:07 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/parsing.c			\
 				$(SRC)/signals.c			\
 				$(SRC)/unquote_split.c		\
-				$(SRC)/utils.c
+				$(SRC)/append_variables.c	\
+				$(SRC)/utils.c				\
 				
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 

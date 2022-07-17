@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 22:04:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:12:00 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int		update_env(t_data *data, char **entry, int len_entry);
 
 int		shell_exit(int ac, char **av);
 
+void	append_variables(t_data *data);
 void	ft_export(t_data *data, t_cmd *cmd);
 int		is_validid(char	*identifier, int len);
 

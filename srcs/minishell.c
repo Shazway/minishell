@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 22:08:02 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:11:53 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	prompt_loop(t_data *data)
 			add_history(data->input);
 			parsing(data);
 			open_redirections(data);
+			//append_variables(data);
 			search_cmds(data);
 			//print_fullpath(data);
 			execute(data);
