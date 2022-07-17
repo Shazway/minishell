@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 14:54:09 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 16:52:08 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,6 @@ int	is_redirection(char	*str, int type)
 	return (type);
 }
 
-int	str_arr_size_r(char	**str)
-{
-	int	i;
-	int	size;
-	int	type;
-
-	size = 0;
-	i = 0;
-	while (str && str[i])
-	{
-		type = 0;
-		if (!is_redirection(str[i], type))
-			size++;
-		i++;
-	}
-	return (size);
-}
-
 void	str_arr_display(char **str)
 {
 	int	i;
@@ -57,6 +39,30 @@ void	str_arr_display(char **str)
 		i++;
 	}
 }
+int	str_arr_size_r(char	**str)
+{
+	int	i;
+	int	size;
+	int	type;
+
+	size = str_arr_size(str);
+	i = 0;
+	type = 0;
+	while (str && str[i])
+	{
+		type = is_redirection(str[i], 0);
+		if (type)
+			size--;
+		if (str[i + 1] &&
+			(type == R_DDIR || type == R_DIR))
+			size--;
+		if (i > 0 && (type == L_DIR || type == L_DDIR))
+			if (str[i - 1])
+				size--;
+		i++;
+	}
+	return (size);
+}
 
 char	**eliminate_redirections(char **args)
 {
@@ -64,32 +70,41 @@ char	**eliminate_redirections(char **args)
 	char	**dest;
 	int		i;
 	int		j;
+	int		type;
+	int		type_next;
 
 	i = 0;
 	j = 0;
 	size = str_arr_size_r(args);
-	printf("%d\n", size);
+	printf("Size of dest will be %d\n", size);
+	if (size <= 0)
+		return (NULL);
 	dest = malloc(sizeof(char *) * (size + 1));
 	if (!dest)
 		return (NULL);
 	dest[size] = NULL;
+	type = 0;
+	type_next = 0;
 	while (args && args[i])
 	{
-		if (is_redirection(args[i], 0))
+		type = is_redirection(args[i], 0);
+		if (type)
+			if (args[++i])
+				i++;
+		if (args[i])
 		{
-			i++;
-			continue ;
+			printf("dest[%d] = args[%d] : [%s]\n", j, i, args[i]);
+			dest[j] = ft_strdup(args[i]);
+			j++;
 		}
-		if (!args[i])
-			break ;
-		dest[j] = ft_strdup(args[i]);
-		j++;
-		i++;
+		if (args[i])
+			i++;
 	}
 	str_arr_free(args);
 	return (dest);
 }
-int	setup_rfiles(t_cmd	*arg, int *type, int i)
+
+int	setup_rfiles(t_cmd	*arg, int type, int i)
 {
 	char	*work_path;
 	char	*final_path;
@@ -97,27 +112,18 @@ int	setup_rfiles(t_cmd	*arg, int *type, int i)
 	//if (!arg->args[i + 1])
 	//	return (printf("minishell:syntax error near unexpected token`newline'\n"));
 	work_path = pwd();
-	if (*type == R_DIR || *type == R_DDIR)
-		final_path = concat_path(work_path, arg->args[i + 1]);
-	else
-	{
-		if (i != 0)
-			final_path = concat_path(work_path, arg->args[i - 1]);
-		arg->fout = 1;
-		return (1);
-	}
-	if (*type == R_DIR)
-		arg->fin = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (*type == R_DDIR)
-		arg->fin = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (*type == L_DIR)
-		arg->fout = open(final_path, O_RDONLY);
-//	if (*type == L_DDIR)
+	final_path = concat_path(work_path, arg->args[i + 1]);
+	if (type == R_DIR)
+		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (type == R_DDIR)
+		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (type == L_DIR)
+		arg->fin = open(final_path, O_RDONLY);
+//	if (type == L_DDIR)
 //		here_docs()
-	arg->args = eliminate_redirections(arg->args);
 	str_arr_display(arg->args);
-	printf("fin = %d fout = %d\n", arg->fin, arg->fout);
-	free(final_path);
+	printf("args[i] %s fin = %d fout = %d\n", arg->args[i], arg->fin, arg->fout);
+	free(final_path);	
 	return (1);
 }
 
@@ -127,6 +133,7 @@ int	open_redirections(t_data *data)
 	t_cmd	*arg;
 	t_list	*tmp;
 	int		type;
+	
 
 	i = 0;
 	tmp = data->cmd;
@@ -138,9 +145,14 @@ int	open_redirections(t_data *data)
 		{
 			type = is_redirection(arg->args[i], type);
 			if (type)
-				setup_rfiles(arg, &type, i);
-			i++;
+			{
+				setup_rfiles(arg, type, i);
+				i++;
+			}
+			if (arg->args[i])
+				i++;
 		}
+		arg->args = eliminate_redirections(arg->args);
 		data->cmd = data->cmd->next;
 	}
 	data->cmd = tmp;
