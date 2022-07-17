@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 22:12:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 00:19:36 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,6 @@ char	*find_var(char **envr, char *entry);
 char	*extract_var(char *pvar);
 void	heredoc_writer(int fd, char *buf, int expand, char **envr);
  int	here_doc(char *lim, int expand, char **envr);
+char	*get_var(char *str, t_data *data);
 
 #endif

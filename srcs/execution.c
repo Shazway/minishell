@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/17 22:12:05 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 00:38:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,21 @@ void	search_cmds(t_data *data)
 {
 	t_list	*i;
 	t_cmd	*current_cmd;
+	char	*fullpath;
 
 	i = data->cmd;
 	while (i != NULL)
 	{
 		current_cmd = i->content;
+		current_cmd->fullpath = ft_strdup(current_cmd->cmd);
 		if (!is_builtin(current_cmd->cmd))
 		{
-			current_cmd->fullpath = get_path(current_cmd->cmd, data->env_str);
+			fullpath = get_path(current_cmd->cmd, data->env_str);
+			if (fullpath)
+			{
+				free(current_cmd->fullpath);
+				current_cmd->fullpath = fullpath;
+			}
 		}
 		i = i->next;
 	}
@@ -60,7 +67,7 @@ void    execute(t_data *data)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
 		to_execute = c_idx->content;
-		str_arr_display(to_execute->args);
+		//str_arr_display(to_execute->args);
         pid = fork();
 		if (pid == -1)
 			return ;
@@ -83,6 +90,7 @@ void    execute(t_data *data)
 	while (c_idx != NULL)
 	{
 		//close(to_execute->fin)
+		close(to_execute->fin);
 		wait(NULL);
 		c_idx = c_idx->next;
 	}
@@ -108,11 +116,11 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		if (c_idx != 0 && data->n_cmd > 1)
 		{
 			dup2(data->pips[r].fd[0], STDIN_FILENO);
-			printf("c_idx %d\t n_cmd %d\n", c_idx, n_cmd);
 		}
 	}
 	else
 	{
+		printf("fin %d\n", cmd->fin);
 		dup2(cmd->fin, STDIN_FILENO);
 		close(cmd->fin);
 	}
@@ -213,7 +221,7 @@ void print_fullpath(t_data *data)
 	while (i != NULL)
 	{
 		cmd = (t_cmd *) i->content;
-			printf("fullpath: %s\n", cmd->fullpath);
+		printf("fullpath: %s\n", cmd->fullpath);
 		i = i->next;
 	}
 }
@@ -248,6 +256,8 @@ void	cmd_notfound(void)
 			break ;
 		heredoc_writer(fd, buf, expand, envr);
 	}
+	close(fd);
+	fd = open("/tmp/msh_here_doc", O_RDONLY);
 	return (fd);
 }
 
@@ -263,8 +273,11 @@ void	heredoc_writer(int fd, char *buf, int expand, char **envr)
 		if (p)
 		{
 			write(fd, buf, p - buf);
-			var = extract_var(p);
+			//printf("p = %s\n", p);
+			var = extract_var(p + 1);
+			//printf("var = %s\n", var);
 			ft_putstr_fd(find_var(envr, var), fd);
+		//	printf("value %s\n", find_var(envr, var));
 			ft_putendl_fd(p + ft_strlen(var) + 1, fd);
 		}
 	}
@@ -278,6 +291,7 @@ char	*extract_var(char *pvar)
 	char	*var;
 
 	to = is_validid(pvar, -1);
+	//printf("to %d %s\n", to, pvar);
 	if (to > 0)
 	{
 		var = ft_substr(pvar, 0, to);

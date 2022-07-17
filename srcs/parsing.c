@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 22:09:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 23:54:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	str_arr_size_r(char	**str)
 	int	type;
 
 	size = str_arr_size(str);
+
 	i = 0;
 	type = 0;
 	while (str && str[i])
@@ -75,7 +76,6 @@ char	**eliminate_redirections(char **args)
 	i = 0;
 	j = 0;
 	size = str_arr_size_r(args);
-	printf("Size of dest will be %d\n", size);
 	if (size <= 0)
 		return (NULL);
 	dest = malloc(sizeof(char *) * (size + 1));
@@ -85,24 +85,30 @@ char	**eliminate_redirections(char **args)
 	type = 0;
 	while (args && args[i])
 	{
+		
 		type = is_redirection(args[i], 0);
 		if (type)
-			if (args[++i])
+			if (args[i])
+			{
 				i++;
+				if (args[i])
+					i++;
+			}
+
 		if (args[i])
 		{
-			printf("dest[%d] = args[%d] : [%s]\n", j, i, args[i]);
 			dest[j] = ft_strdup(args[i]);
 			j++;
 		}
-		if (args[i])
-			i++;
+		if (!args[i])
+			break ;
+		i++;
 	}
 	str_arr_free(args);
 	return (dest);
 }
 
-int	setup_rfiles(t_cmd	*arg, int type, int i)
+int	setup_rfiles(t_cmd	*arg, int type, int i, char **envr)
 {
 	char	*work_path;
 	char	*final_path;
@@ -117,11 +123,11 @@ int	setup_rfiles(t_cmd	*arg, int type, int i)
 		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (type == L_DIR)
 		arg->fin = open(final_path, O_RDONLY);
-//	if (type == L_DDIR)
-//		here_docs()
+	if (type == L_DDIR)
+		arg->fin = here_doc(arg->args[i + 1], 1, envr);
 	str_arr_display(arg->args);
 
-	printf("args[i] %s fin = %d fout = %d\n", arg->args[i], arg->fin, arg->fout);
+	//printf("args[i] %s fin = %d fout = %d\n", arg->args[i], arg->fin, arg->fout);
 	free(final_path);	
 	return (1);
 }
@@ -144,14 +150,16 @@ int	open_redirections(t_data *data)
 			type = is_redirection(arg->args[i], 0);
 			if (type)
 			{
-				setup_rfiles(arg, type, i);
+				setup_rfiles(arg, type, i, data->env_str);
 				i++;
 			}
 			if (arg->args[i])
 				i++;
 		}
 		arg->args = eliminate_redirections(arg->args);
-		arg->cmd = ft_strdup(arg->args[0]);
+
+		if (arg->args)
+			arg->cmd = ft_strdup(arg->args[0]);
 		tmp = tmp->next;
 	}
 	return (1);
@@ -165,6 +173,8 @@ int	parsing(t_data *data)
 
 	i = 0;
 	data->input = separate_redir(data->input);
+	if (!ft_strlen(data->input))
+		return (0);
 	pipe_split = unquote_split(data->input, '|');
 	while (pipe_split && pipe_split[i])
 	{
@@ -174,6 +184,10 @@ int	parsing(t_data *data)
 		ft_lstadd_back(&(data->cmd), ft_lstnew((void *)temp));
 		temp->fin = -1;
 		temp->fout = -1;
+		temp->cmd = NULL;
+		temp->args = NULL;
+		temp->ac = 0;
+		temp->fullpath = NULL;
 		split_spaces(temp, pipe_split[i]);
 		if (pipe_split[i + 1])
 			printf("New command (cmd->next)\n");
@@ -196,27 +210,10 @@ void	print_result(t_cmd *token)
 	}
 }
 
-char	**only_spaces(char *str)
-{
-	int		i;
-	char	**dest;
-
-	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] && str[i] != ' ')
-			return (NULL);
-		i++;
-	}
-	dest = malloc(sizeof(char) * 2);
-	dest[1] = NULL;
-	dest[0] = ft_strdup(str);
-	return (dest);
-}
-
 void	split_spaces(t_cmd *token, char *content)
 {
-	token->args = only_spaces(content);
+	token->args = unquote_split(content, ' ');
+	str_arr_display(token->args);
 	token->ac = str_arr_size(token->args);
 	print_result(token);
 }

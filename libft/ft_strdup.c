@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:38:15 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/05/30 18:38:16 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/17 23:47:52 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(char *src)
 	size_t	lensrc;
 
 	lensrc = ft_strlen(src);
+	if (!lensrc)
+		return (NULL);
 	dup = malloc(sizeof(char) * (lensrc + 1));
 	if (!dup)
 		return (NULL);

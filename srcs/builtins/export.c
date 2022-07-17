@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 19:17:54 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 00:35:53 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,27 @@ int	is_validid(char	*identifier, int len)
 	int	i;
 
 	i = 0;
-	while ((i < len || len == -1) && identifier[i])
+	if (len == -1)
 	{
-		if (!(ft_isalnum(identifier[i]) && identifier[i] == '_'))
+		while (identifier[i])
 		{
-			if (len == -1)
+			if (!(ft_isalnum(identifier[i]) || identifier[i] == '_'))
+			{
 				return (i);
-			else
-				return (0);
+			}
+			i++;
 		}
-		i++;
 	}
-	return (1);
+	else
+	{
+		while (i < len && identifier[i])
+		{
+			if (!ft_isalnum(identifier[i]) || identifier[i] != '_')
+			{
+					return (0);
+			}
+			i++;
+		}
+	}
+	return (i);
 }

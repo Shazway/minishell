@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 22:11:53 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 00:39:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	free_pips(t_pipex *pips, int n)
 {
 	int	i;
 
+	if (!pips)
+		return ;
 	i = 0;
 	while (i < n - 1)
 	{
@@ -43,33 +45,14 @@ void	free_cmd(void *vcmd)
 	free(cmd->cmd);
 	str_arr_free(cmd->args);
 	free(cmd->fullpath);
+	if (cmd->fin != -1)
+		close(cmd->fin);
+	if (cmd->fout != -1)
+		close(cmd->fout);
 	free(cmd);
+	
 }
 
-/*
-void	ft_open_files(t_data *data)
-{
-	t_cmd	*cmd;
-	t_list	*c_idx;
-	int		i;
-
-	c_idx = data->cmd;
-	while (c_idx != NULL)
-	{
-		cmd = c_idx->content;
-		i = 0;
-		while (cmd->args[i])
-		{
-			if (!ft_strncmp(cmd->args[i], "<", 1))
-			{
-				cmd->fin
-			}
-			i++;
-		}
-		c_idx = c_idx->next;
-	}	
-}
-*/
 void	prompt_loop(t_data *data)
 {
 	while (1)
@@ -83,15 +66,19 @@ void	prompt_loop(t_data *data)
 		{
 			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
-			parsing(data);
-			open_redirections(data);
-			//append_variables(data);
-			search_cmds(data);
-			//print_fullpath(data);
-			execute(data);
+			if (parsing(data))
+			{
+				open_redirections(data);
+				append_variables(data);
+				//str_arr_display(data->env_str);
+				search_cmds(data);
+				print_fullpath(data);
+				execute(data);
+				ft_lstclear(&data->cmd, &free_cmd);
+				free_pips(data->pips, data->n_cmd);
+			}
 		}
 		free(data->input);
-		ft_lstclear(&data->cmd, &free_cmd);
-		free_pips(data->pips, data->n_cmd);
+		
 	}
 }
