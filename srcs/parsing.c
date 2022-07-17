@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 17:40:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:09:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	open_redirections(t_data *data)
 	t_cmd	*arg;
 	t_list	*tmp;
 	int		type;
-	
+
 	tmp = data->cmd;
 	while (tmp)
 	{
@@ -152,7 +152,6 @@ int	open_redirections(t_data *data)
 		}
 		arg->args = eliminate_redirections(arg->args);
 		arg->cmd = ft_strdup(arg->args[0]);
-		str_arr_display(arg->args);
 		tmp = tmp->next;
 	}
 	return (1);
@@ -167,7 +166,7 @@ int	parsing(t_data *data)
 	i = 0;
 	data->input = separate_redir(data->input);
 	pipe_split = unquote_split(data->input, '|');
-	while (pipe_split[i])
+	while (pipe_split && pipe_split[i])
 	{
 		temp = malloc(sizeof(t_cmd));
 		if (!temp)
@@ -197,10 +196,27 @@ void	print_result(t_cmd *token)
 	}
 }
 
+char	**only_spaces(char *str)
+{
+	int		i;
+	char	**dest;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] && str[i] != ' ')
+			return (NULL);
+		i++;
+	}
+	dest = malloc(sizeof(char) * 2);
+	dest[1] = NULL;
+	dest[0] = ft_strdup(str);
+	return (dest);
+}
+
 void	split_spaces(t_cmd *token, char *content)
 {
-	token->args = unquote_split(content, ' ');
-	
+	token->args = only_spaces(content);
 	token->ac = str_arr_size(token->args);
 	print_result(token);
 }

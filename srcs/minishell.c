@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 17:18:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 21:54:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	prompt_loop(t_data *data)
 			add_history(data->input);
 			parsing(data);
 			open_redirections(data);
+			//append_variables(data);
 			search_cmds(data);
 			execute(data);
 		}
