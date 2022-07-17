@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/16 22:05:44 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:41:39 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void    execute(t_data *data)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
 		to_execute = c_idx->content;
+		str_arr_display(to_execute->args);
         pid = fork();
 		if (pid == -1)
 			return ;

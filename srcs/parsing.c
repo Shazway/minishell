@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 16:52:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:40:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	str_arr_size_r(char	**str)
 		if (str[i + 1] &&
 			(type == R_DDIR || type == R_DIR))
 			size--;
-		if (i > 0 && (type == L_DIR || type == L_DDIR))
-			if (str[i - 1])
-				size--;
+		if (str[i + 1] &&
+			(type == L_DIR || type == L_DDIR))
+			size--;
 		i++;
 	}
 	return (size);
@@ -71,7 +71,6 @@ char	**eliminate_redirections(char **args)
 	int		i;
 	int		j;
 	int		type;
-	int		type_next;
 
 	i = 0;
 	j = 0;
@@ -84,7 +83,6 @@ char	**eliminate_redirections(char **args)
 		return (NULL);
 	dest[size] = NULL;
 	type = 0;
-	type_next = 0;
 	while (args && args[i])
 	{
 		type = is_redirection(args[i], 0);
@@ -122,6 +120,7 @@ int	setup_rfiles(t_cmd	*arg, int type, int i)
 //	if (type == L_DDIR)
 //		here_docs()
 	str_arr_display(arg->args);
+
 	printf("args[i] %s fin = %d fout = %d\n", arg->args[i], arg->fin, arg->fout);
 	free(final_path);	
 	return (1);
@@ -134,16 +133,15 @@ int	open_redirections(t_data *data)
 	t_list	*tmp;
 	int		type;
 	
-
-	i = 0;
 	tmp = data->cmd;
-	while (data->cmd)
+	while (tmp)
 	{
 		type = 0;
-		arg = data->cmd->content;
+		arg = tmp->content;
+		i = 0;
 		while (arg->args && arg->args[i])
 		{
-			type = is_redirection(arg->args[i], type);
+			type = is_redirection(arg->args[i], 0);
 			if (type)
 			{
 				setup_rfiles(arg, type, i);
@@ -153,9 +151,10 @@ int	open_redirections(t_data *data)
 				i++;
 		}
 		arg->args = eliminate_redirections(arg->args);
-		data->cmd = data->cmd->next;
+		arg->cmd = ft_strdup(arg->args[0]);
+		str_arr_display(arg->args);
+		tmp = tmp->next;
 	}
-	data->cmd = tmp;
 	return (1);
 }
 
@@ -201,7 +200,7 @@ void	print_result(t_cmd *token)
 void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
-	token->cmd = ft_strdup(token->args[0]);
+	
 	token->ac = str_arr_size(token->args);
 	print_result(token);
 }
