@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/17 17:41:39 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:15:23 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,21 +233,38 @@ void	cmd_notfound(void)
 	exit(EXIT_FAILURE);
 }
 /*
-int		here_doc(char *lim)
+ int		here_doc(char *lim, int expand)
 {
 	int		i;
 	char	*buf;
+	char	*p;
+	int		fd;
 
-	i = 0;
+	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	while (true)
 	{
-		buf = readline(">");
+		buf = readline("> ");
 		if (!buf)
 		{
 			printf("signal\n");
 			break ;
 		}
-		ft_strnstr()
+		p = ft_strnstr(buf, lim, ft_strlen(lim));
+		if (p && p == buf && p[ft_strlen(lim)] == '\0')
+			break ;
+		if (expand)
+			p = ft_strchr(buf, '$');
+		i = 0;
+		while (expand && p && p[++i])
+		{
+			if (!ft_isalnum(p[i]))
+			{
+				ft_substr(buf, p)
+				break ;
+			}
+		}
+			
+		}
 		i++;
 	}
 }
