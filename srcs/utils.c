@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/16 17:37:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 21:41:10 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,3 +96,4 @@ int	change_path(char *str, char *path)
 		free(path);
 	return (1);
 }
+

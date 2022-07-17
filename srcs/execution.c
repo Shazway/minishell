@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/17 18:15:23 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:07:29 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	search_cmds(t_data *data)
 	{
 		current_cmd = i->content;
 		if (!is_builtin(current_cmd->cmd))
+		{
 			current_cmd->fullpath = get_path(current_cmd->cmd, data->env_str);
+		}
 		i = i->next;
 	}
 }
@@ -138,24 +140,16 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		close(data->pips[j++].fd[1]);
 	if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 	{
-		
 		//msh_free(data);
 		if (!cmd->fullpath)
 			cmd_notfound();
+		exit(EXIT_FAILURE);
 	//	else
 		//	perrxit("Error");
 	}
 }
 
 char	*get_path(char *c_name, char **envr)
-{
-	char	*fullpath;
-
-	fullpath = getpath_worker(c_name, envr);
-	return (fullpath);
-}
-
-char	*getpath_worker(char *c_name, char **envr)
 {
 	int		i;
 	char	*path_var;
@@ -206,10 +200,7 @@ char	*parse_path(char **path_array, char *c_name)
 	if (found)
 		return (working_cmd);
 	else
-	{
-		working_cmd = malloc(1 * sizeof(char));
-		return (working_cmd);
-	}
+		return (NULL);
 }
 
 void print_fullpath(t_data *data)
@@ -222,7 +213,7 @@ void print_fullpath(t_data *data)
 	while (i != NULL)
 	{
 		cmd = (t_cmd *) i->content;
-		printf("fullpath: %s\n", cmd->fullpath);
+			printf("fullpath: %s\n", cmd->fullpath);
 		i = i->next;
 	}
 }
@@ -232,16 +223,19 @@ void	cmd_notfound(void)
 	ft_putendl_fd("Error: command not found", 2);
 	exit(EXIT_FAILURE);
 }
-/*
- int		here_doc(char *lim, int expand)
+
+ int	here_doc(char *lim, int expand, char **envr)
 {
-	int		i;
+	int		fd;
 	char	*buf;
 	char	*p;
-	int		fd;
+	int		len_lim;
 
 	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	while (true)
+	if (!fd)
+		perror("open");
+	len_lim = ft_strlen(lim);
+	while (fd)
 	{
 		buf = readline("> ");
 		if (!buf)
@@ -249,23 +243,46 @@ void	cmd_notfound(void)
 			printf("signal\n");
 			break ;
 		}
-		p = ft_strnstr(buf, lim, ft_strlen(lim));
-		if (p && p == buf && p[ft_strlen(lim)] == '\0')
+		p = ft_strnstr(buf, lim, len_lim);
+		if (p && p == buf && p[len_lim] == '\0')
 			break ;
-		if (expand)
-			p = ft_strchr(buf, '$');
-		i = 0;
-		while (expand && p && p[++i])
-		{
-			if (!ft_isalnum(p[i]))
-			{
-				ft_substr(buf, p)
-				break ;
-			}
-		}
-			
-		}
-		i++;
+		heredoc_writer(fd, buf, expand, envr);
 	}
+	return (fd);
 }
-*/
+
+void	heredoc_writer(int fd, char *buf, int expand, char **envr)
+{
+	char	*p;
+	char	*var;
+
+	p = NULL;
+	if (expand)
+	{
+		p = ft_strchr(buf, '$');
+		if (p)
+		{
+			write(fd, buf, p - buf);
+			var = extract_var(p);
+			ft_putstr_fd(find_var(envr, var), fd);
+			ft_putendl_fd(p + ft_strlen(var) + 1, fd);
+		}
+	}
+	if (!expand || !p)
+		ft_putendl_fd(buf, fd);
+}
+
+char	*extract_var(char *pvar)
+{
+	int		to;
+	char	*var;
+
+	to = is_validid(pvar, -1);
+	if (to > 0)
+	{
+		var = ft_substr(pvar, 0, to);
+		return (var);
+	}
+	return (NULL);
+
+}

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 15:38:03 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/17 19:17:54 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,15 @@ int	is_validid(char	*identifier, int len)
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while ((i < len || len == -1) && identifier[i])
 	{
 		if (!(ft_isalnum(identifier[i]) && identifier[i] == '_'))
-			return (0);
+		{
+			if (len == -1)
+				return (i);
+			else
+				return (0);
+		}
 		i++;
 	}
 	return (1);

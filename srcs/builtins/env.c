@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/11 15:36:40 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/17 21:43:24 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,17 @@ int	update_env(t_data *data, char **entry, int len_entry)
 		return (1);
 	else
 		return (0);
+}
+
+char	*find_var(char **envr, char *entry)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	len = ft_strlen(entry);
+	while (envr[++i])
+		if (!strncmp(envr[i], entry, len))
+			return (ft_strdup(envr[i] + len + 1));
+	return (NULL);
 }

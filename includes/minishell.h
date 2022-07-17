@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 17:28:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:04:39 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_data
 	t_list				*cmd;
 	int					n_cmd;
 	t_pipex				*pips;
+	unsigned char		ret;
 }	t_data;
 
 int		cd(int ac, char **str);
@@ -123,9 +124,14 @@ int		is_builtin(char *c_name);
 void    execute(t_data *data);
 void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd);
 char	*get_path(char *c_name, char **envr);
-char	*getpath_worker(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
 void	print_fullpath(t_data *data);
 void	cmd_notfound(void);
+
+char	*ft_strsetchr(const char *s, char *set);
+char	*find_var(char **envr, char *entry);
+char	*extract_var(char *pvar);
+void	heredoc_writer(int fd, char *buf, int expand, char **envr);
+ int	here_doc(char *lim, int expand, char **envr);
 
 #endif
