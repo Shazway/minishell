@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 17:28:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:30:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_data
 	t_list				*cmd;
 	int					n_cmd;
 	t_pipex				*pips;
+	unsigned char		ret;
 }	t_data;
 
 int		cd(int ac, char **str);
