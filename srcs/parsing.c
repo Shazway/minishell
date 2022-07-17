@@ -6,42 +6,46 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 00:06:44 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/17 14:54:09 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_redirection(char	*str, int *type)
+int	is_redirection(char	*str, int type)
 {
+
 	if (!str || (str && (str[0] == '"' || str[0] == 39)))
-		return (*type);
+		return (type);
 	if (!ft_strncmp(str, ">", 2))
-		*type = R_DIR;
+		type = R_DIR;
 	if (!ft_strncmp(str, ">>", 3))
-		*type = R_DDIR;
+		type = R_DDIR;
 	if (!ft_strncmp(str, "<", 2))
-		*type = L_DIR;
+		type = L_DIR;
 	if (!ft_strncmp(str, "<<", 3))
-		*type = L_DDIR;
-	return (*type);
+		type = L_DDIR;
+	return (type);
 }
 
 int	str_arr_size_r(char	**str)
 {
 	int	i;
 	int	size;
+	int	type;
 
 	size = 0;
 	i = 0;
 	while (str && str[i])
 	{
-		if (!is_redirection(str[i], 0))
+		type = 0;
+		if (!is_redirection(str[i], type))
 			size++;
 		i++;
 	}
 	return (size);
 }
+
 void	str_arr_display(char **str)
 {
 	int	i;
@@ -54,7 +58,6 @@ void	str_arr_display(char **str)
 	}
 }
 
-
 char	**eliminate_redirections(char **args)
 {
 	int		size;
@@ -65,6 +68,7 @@ char	**eliminate_redirections(char **args)
 	i = 0;
 	j = 0;
 	size = str_arr_size_r(args);
+	printf("%d\n", size);
 	dest = malloc(sizeof(char *) * (size + 1));
 	if (!dest)
 		return (NULL);
@@ -72,26 +76,26 @@ char	**eliminate_redirections(char **args)
 	while (args && args[i])
 	{
 		if (is_redirection(args[i], 0))
+		{
 			i++;
+			continue ;
+		}
 		if (!args[i])
 			break ;
-		else
-			dest[j] = ft_strdup(args[i]);
+		dest[j] = ft_strdup(args[i]);
 		j++;
 		i++;
 	}
 	str_arr_free(args);
-	str_arr_display(args);
 	return (dest);
 }
-
 int	setup_rfiles(t_cmd	*arg, int *type, int i)
 {
 	char	*work_path;
 	char	*final_path;
 
-	if (!arg->args[i + 1])
-		return (printf("minishell:syntax error near unexpected token`newline'\n"));
+	//if (!arg->args[i + 1])
+	//	return (printf("minishell:syntax error near unexpected token`newline'\n"));
 	work_path = pwd();
 	if (*type == R_DIR || *type == R_DDIR)
 		final_path = concat_path(work_path, arg->args[i + 1]);
@@ -110,7 +114,8 @@ int	setup_rfiles(t_cmd	*arg, int *type, int i)
 		arg->fout = open(final_path, O_RDONLY);
 //	if (*type == L_DDIR)
 //		here_docs()
-	//arg->args = eliminate_redirections(arg->args);
+	arg->args = eliminate_redirections(arg->args);
+	str_arr_display(arg->args);
 	printf("fin = %d fout = %d\n", arg->fin, arg->fout);
 	free(final_path);
 	return (1);
@@ -131,7 +136,8 @@ int	open_redirections(t_data *data)
 		arg = data->cmd->content;
 		while (arg->args && arg->args[i])
 		{
-			if (is_redirection(arg->args[i], &type))
+			type = is_redirection(arg->args[i], type);
+			if (type)
 				setup_rfiles(arg, &type, i);
 			i++;
 		}
