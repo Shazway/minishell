@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/18 00:38:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:06:45 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	search_cmds(t_data *data)
 	while (i != NULL)
 	{
 		current_cmd = i->content;
-		current_cmd->fullpath = ft_strdup(current_cmd->cmd);
 		if (!is_builtin(current_cmd->cmd))
 		{
 			fullpath = get_path(current_cmd->cmd, data->env_str);
@@ -31,6 +30,10 @@ void	search_cmds(t_data *data)
 				free(current_cmd->fullpath);
 				current_cmd->fullpath = fullpath;
 			}
+		}
+		else
+		{
+			current_cmd->fullpath = ft_strdup(current_cmd->cmd);
 		}
 		i = i->next;
 	}
@@ -92,6 +95,7 @@ void    execute(t_data *data)
 		//close(to_execute->fin)
 		close(to_execute->fin);
 		wait(NULL);
+	//	waitpid()
 		c_idx = c_idx->next;
 	}
 }
@@ -146,7 +150,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	j = 0;
 	while (j <= w && data->n_cmd > 1)
 		close(data->pips[j++].fd[1]);
-	if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
+	if (execmd(cmd->ac, cmd->fullpath, cmd->args, data) == -1)
 	{
 		//msh_free(data);
 		if (!cmd->fullpath)
@@ -155,6 +159,35 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	//	else
 		//	perrxit("Error");
 	}
+}
+
+int	execmd(int ac, char *fullpath, char **args, t_data *data)
+{
+	int	ret;
+
+	ret = 1;
+	if (!ft_strncmp(fullpath, "echo", 4))
+	{
+		ft_echo(ac, args + 1);
+		exit(EXIT_SUCCESS);
+	}
+	else if (!ft_strncmp(fullpath, "cd", 2))
+		cd(ac, args + 1);
+	else if (!ft_strncmp(fullpath, "pwd", 3))
+		pwd();
+	else if (!ft_strncmp(fullpath, "export", 6))
+		pwd();
+	else if (!ft_strncmp(fullpath, "unset", 5))
+		pwd();
+	else if (!ft_strncmp(fullpath, "env", 3))
+		pwd();
+	else if (!ft_strncmp(fullpath, "exit", 4))
+		shell_exit(ac, args + 1);
+	else
+	{
+		ret = execve(fullpath, args, data->env_str);
+	}
+	return (ret);
 }
 
 char	*get_path(char *c_name, char **envr)
