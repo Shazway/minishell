@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/18 18:15:51 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:21:30 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,11 +176,15 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 	if (!ft_strncmp(fullpath, "echo", 4))
 	{
 		ft_echo(ac, args + 1);
+		exit(EXIT_SUCCESS);
 	}
 	else if (!ft_strncmp(fullpath, "cd", 2))
 		cd(ac, args + 1);
 	else if (!ft_strncmp(fullpath, "pwd", 3))
+	{
 		pwd();
+		exit(EXIT_SUCCESS);
+	}
 	else if (!ft_strncmp(fullpath, "export", 6))
 	{
 		ft_export(data, ac, args);
