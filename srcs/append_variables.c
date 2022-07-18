@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 23:49:28 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:56:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*get_end(char *str, int index)
 	return (ft_substr(str, i, ft_strlen(str)));
 }
 
-char	*replace_variables(char	*str, t_data *data, int i)
+char	*replace_variables(char	*str, t_data *data)
 {
 	char	*true_var;
 	char	*start;
@@ -86,7 +86,6 @@ char	*replace_variables(char	*str, t_data *data, int i)
 	char	*tmp;
 	char	*name;
 
-	i = 0;
 	printf("STR is : %s\n", str);
 	if (!str)
 		return (str);
@@ -124,7 +123,7 @@ void	append_variables(t_data *data)
 		while (arg->args && arg->args[i])
 		{
 			while (arg->args[i] && ft_strchr(arg->args[i], '$'))
-				arg->args[i] = replace_variables(arg->args[i], data, i);
+				arg->args[i] = replace_variables(arg->args[i], data);
 			i++;
 		}
 		str_arr_display(arg->args);
