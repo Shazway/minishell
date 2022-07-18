@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/18 16:06:45 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:37:17 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	search_cmds(t_data *data)
 	while (i != NULL)
 	{
 		current_cmd = i->content;
+		current_cmd->fullpath = ft_strdup(current_cmd->cmd);
 		if (!is_builtin(current_cmd->cmd))
 		{
 			fullpath = get_path(current_cmd->cmd, data->env_str);
@@ -30,10 +31,6 @@ void	search_cmds(t_data *data)
 				free(current_cmd->fullpath);
 				current_cmd->fullpath = fullpath;
 			}
-		}
-		else
-		{
-			current_cmd->fullpath = ft_strdup(current_cmd->cmd);
 		}
 		i = i->next;
 	}
@@ -71,11 +68,18 @@ void    execute(t_data *data)
 				return ;
 		to_execute = c_idx->content;
 		//str_arr_display(to_execute->args);
-        pid = fork();
-		if (pid == -1)
-			return ;
-		else if (pid == 0)
+		if (nofork_builtin(to_execute->fullpath))
+		{
 			run_cmd(data, to_execute, i, data->n_cmd);
+		}
+		else
+		{
+        	pid = fork();
+			if (pid == -1)
+				return ;
+			else if (pid == 0)
+				run_cmd(data, to_execute, i, data->n_cmd);
+		}
 		c_idx = c_idx->next;
 		i++;
 	}
@@ -94,7 +98,8 @@ void    execute(t_data *data)
 	{
 		//close(to_execute->fin)
 		close(to_execute->fin);
-		wait(NULL);
+		if (!is_builtin(to_execute->cmd))
+			wait(NULL);
 	//	waitpid()
 		c_idx = c_idx->next;
 	}
@@ -124,7 +129,6 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	}
 	else
 	{
-		printf("fin %d\n", cmd->fin);
 		dup2(cmd->fin, STDIN_FILENO);
 		close(cmd->fin);
 	}
@@ -169,18 +173,21 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 	if (!ft_strncmp(fullpath, "echo", 4))
 	{
 		ft_echo(ac, args + 1);
-		exit(EXIT_SUCCESS);
 	}
 	else if (!ft_strncmp(fullpath, "cd", 2))
 		cd(ac, args + 1);
 	else if (!ft_strncmp(fullpath, "pwd", 3))
 		pwd();
 	else if (!ft_strncmp(fullpath, "export", 6))
-		pwd();
+	{
+		ft_export(data, ac, args);
+	}
 	else if (!ft_strncmp(fullpath, "unset", 5))
 		pwd();
 	else if (!ft_strncmp(fullpath, "env", 3))
-		pwd();
+	{
+		ft_env(data, ac);
+	}
 	else if (!ft_strncmp(fullpath, "exit", 4))
 		shell_exit(ac, args + 1);
 	else
@@ -188,6 +195,21 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 		ret = execve(fullpath, args, data->env_str);
 	}
 	return (ret);
+}
+
+int	nofork_builtin(char *fullpath)
+{
+	printf("msh : %s\n", fullpath);
+	if (!ft_strncmp(fullpath, "cd", 2))
+		return (1);
+	else if (!ft_strncmp(fullpath, "export", 6))
+		return (1);
+	else if (!ft_strncmp(fullpath, "unset", 5))
+		return (1);
+	else if (!ft_strncmp(fullpath, "exit", 4))
+		return (1);
+	else
+		return (0);
 }
 
 char	*get_path(char *c_name, char **envr)
@@ -298,24 +320,24 @@ void	heredoc_writer(int fd, char *buf, int expand, char **envr)
 {
 	char	*p;
 	char	*var;
+	int		from;
 
 	p = NULL;
+	from = 0;
 	if (expand)
 	{
 		p = ft_strchr(buf, '$');
-		if (p)
+		while (p)
 		{
-			write(fd, buf, p - buf);
-			//printf("p = %s\n", p);
+			write(fd, buf + from, p - (buf + from));
 			var = extract_var(p + 1);
-			//printf("var = %s\n", var);
+			from += 1 + ft_strlen(var);
 			ft_putstr_fd(find_var(envr, var), fd);
-		//	printf("value %s\n", find_var(envr, var));
-			ft_putendl_fd(p + ft_strlen(var) + 1, fd);
+			p = ft_strchr(buf + from, '$');
 		}
 	}
 	if (!expand || !p)
-		ft_putendl_fd(buf, fd);
+		ft_putendl_fd(buf + from, fd);
 }
 
 char	*extract_var(char *pvar)
@@ -333,3 +355,24 @@ char	*extract_var(char *pvar)
 	return (NULL);
 
 }
+/*
+char	*parse_var(char *s)
+{
+	char	*p;
+	char	*var;
+	int		from;
+	char	*new;
+
+	p = NULL;
+	from = 0;
+	p = ft_strchr(buf, '$');
+	while (p)
+	{
+		write(fd, buf + from, p - (buf + from));
+		var = extract_var(p + 1);
+		from += 1 + ft_strlen(var);
+		ft_putstr_fd(find_var(envr, var), fd);
+		p = ft_strchr(buf + from, '$');
+	}
+}
+*/

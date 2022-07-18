@@ -6,16 +6,16 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 21:43:24 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:34:17 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_data *data, t_cmd *cmd)
+void	ft_env(t_data *data, int ac)
 {
-	(void)data;
-	(void)cmd;
+	if (ac == 1)
+		str_arr_display(data->env_str);
 }
 
 int	set_env(t_data *data)

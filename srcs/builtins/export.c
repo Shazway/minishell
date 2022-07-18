@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 00:35:53 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:49:17 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export(t_data *data, t_cmd *cmd)
+void	ft_export(t_data *data, int ac, char **av)
 {
 	int		i;
 	int		j;
@@ -20,30 +20,34 @@ void	ft_export(t_data *data, t_cmd *cmd)
 	char	*p_eq;
 	char	**entry;
 
-	if (cmd->ac == 1)
-		ft_env(data, cmd);
+	if (ac == 1)
+		ft_env(data, ac);
 	else
 	{
-		entry = malloc((cmd->ac - 1) * sizeof(char *));
+
+		printf("ac = %d\n", ac);
+		entry = malloc(ac * sizeof(char *));
+		entry[ac - 1] = NULL;
 		i = 1;
 		j = 0;
-		while (i < cmd->ac)
+		while (i < ac)
 		{
-			p_eq = ft_strchr(cmd->args[i], '=');
+			p_eq = ft_strchr(av[i], '=');
 			if (!p_eq)
-				len = ft_strlen(cmd->args[i]);
+				len = ft_strlen(av[i]);
 			else
-				len = p_eq - &cmd->args[i][0];
-			if (is_validid(cmd->args[i], len) && p_eq)
+				len = p_eq - &av[i][0];
+			if (is_validid(av[i], len) && p_eq)
 			{
-				entry[j] = cmd->args[i];
+				entry[j] = av[i];
 				j++;
 			}
-			else if (!is_validid(cmd->args[i], len) && p_eq)
-				printf("minishell: export: `%s': not a valid identifier\n", cmd->args[i]);
+			else if (!is_validid(av[i], len) && p_eq)
+				printf("minishell: export: `%s': not a valid identifier\n", av[i]);
 			i++;
 		}
 		update_env(data, entry, j);
+		//str_arr_free(entry);
 	}
 }
 
@@ -67,7 +71,7 @@ int	is_validid(char	*identifier, int len)
 	{
 		while (i < len && identifier[i])
 		{
-			if (!ft_isalnum(identifier[i]) || identifier[i] != '_')
+			if (!(ft_isalnum(identifier[i]) || identifier[i] == '_'))
 			{
 					return (0);
 			}

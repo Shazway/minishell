@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 15:58:53 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:06:44 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ char	*previous_dir(char *str);
 int		ft_echo(int ac, char **av);
 int		check_echo_n(char *str);
 
-void	ft_env(t_data *data, t_cmd *cmd);
+void	ft_env(t_data *data, int ac);
 int		set_env(t_data *data);
 int		update_env(t_data *data, char **entry, int len_entry);
 
 int		shell_exit(int ac, char **av);
 
 void	append_variables(t_data *data);
-void	ft_export(t_data *data, t_cmd *cmd);
+void	ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
 char	*pwd(void);
@@ -135,6 +135,7 @@ char	*extract_var(char *pvar);
 void	heredoc_writer(int fd, char *buf, int expand, char **envr);
  int	here_doc(char *lim, int expand, char **envr);
 char	*get_var(char *str, t_data *data);
-int	execmd(int ac, char *fullpath, char **args, t_data *data);
+int		execmd(int ac, char *fullpath, char **args, t_data *data);
+int		nofork_builtin(char *fullpath);
 
 #endif
