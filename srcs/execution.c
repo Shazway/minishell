@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/18 23:21:30 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:58:56 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void    execute(t_data *data)
 	{
 		//close(to_execute->fin)
 		close(to_execute->fin);
-		if (!is_builtin(to_execute->cmd))
+		if (!nofork_builtin(to_execute->cmd))
 			wait(NULL);
 	//	waitpid()
 		c_idx = c_idx->next;
