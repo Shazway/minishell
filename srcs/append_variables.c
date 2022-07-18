@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 23:30:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:49:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ void	append_variables(t_data *data)
 	int		i;
 	t_cmd	*arg;
 	t_list	*tmp;
-	int j;
-	j = 0;
+
 	tmp = data->cmd;
 	while (tmp)
 	{
@@ -124,11 +123,8 @@ void	append_variables(t_data *data)
 		i = 0;
 		while (arg->args && arg->args[i])
 		{
-			while (ft_strchr(arg->args[i], '$') && j < 5)
-			{
+			while (arg->args[i] && ft_strchr(arg->args[i], '$'))
 				arg->args[i] = replace_variables(arg->args[i], data, i);
-				j++;
-			}
 			i++;
 		}
 		str_arr_display(arg->args);
