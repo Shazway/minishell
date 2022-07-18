@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/17 19:19:07 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/19 00:06:18 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/parsing.c			\
 				$(SRC)/signals.c			\
 				$(SRC)/unquote_split.c		\
-				$(SRC)/append_variables.c	\
+				$(SRC)/expand_variables.c	\
 				$(SRC)/utils.c				\
 				
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
