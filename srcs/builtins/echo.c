@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/13 16:08:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:53:36 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_echo_n(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] != '-' && str[i + 1] != 'n')
+	if (str && str[i] != '-' && str[i + 1] != 'n')
 		return (0);
 	i = 1;
 	while (str && str[i])
