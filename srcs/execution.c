@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/18 17:37:17 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:15:51 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void    execute(t_data *data)
 			if (pid == -1)
 				return ;
 			else if (pid == 0)
+			{
+				printf("msh : %s\n", to_execute->cmd);
 				run_cmd(data, to_execute, i, data->n_cmd);
+			}
 		}
 		c_idx = c_idx->next;
 		i++;
@@ -147,7 +150,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	}
 	else
 	{
-
+		printf("fout %d\n", cmd->fout);
 		dup2(cmd->fout, STDOUT_FILENO);
 		close(cmd->fout);
 	}
@@ -187,6 +190,7 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 	else if (!ft_strncmp(fullpath, "env", 3))
 	{
 		ft_env(data, ac);
+		exit(EXIT_SUCCESS);
 	}
 	else if (!ft_strncmp(fullpath, "exit", 4))
 		shell_exit(ac, args + 1);
@@ -199,7 +203,7 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 
 int	nofork_builtin(char *fullpath)
 {
-	printf("msh : %s\n", fullpath);
+	
 	if (!ft_strncmp(fullpath, "cd", 2))
 		return (1);
 	else if (!ft_strncmp(fullpath, "export", 6))
@@ -321,6 +325,7 @@ void	heredoc_writer(int fd, char *buf, int expand, char **envr)
 	char	*p;
 	char	*var;
 	int		from;
+	char	*value;
 
 	p = NULL;
 	from = 0;
@@ -332,7 +337,10 @@ void	heredoc_writer(int fd, char *buf, int expand, char **envr)
 			write(fd, buf + from, p - (buf + from));
 			var = extract_var(p + 1);
 			from += 1 + ft_strlen(var);
-			ft_putstr_fd(find_var(envr, var), fd);
+			value = find_var(envr, var);
+			ft_putstr_fd(value, fd);
+			free(value);
+			free(var);
 			p = ft_strchr(buf + from, '$');
 		}
 	}
@@ -355,24 +363,28 @@ char	*extract_var(char *pvar)
 	return (NULL);
 
 }
+
 /*
-char	*parse_var(char *s)
+char	*parse_var(char *src)
 {
 	char	*p;
 	char	*var;
 	int		from;
 	char	*new;
+	char	*tmp;
 
 	p = NULL;
 	from = 0;
-	p = ft_strchr(buf, '$');
+	p = ft_strchr(src, '$');
 	while (p)
 	{
-		write(fd, buf + from, p - (buf + from));
-		var = extract_var(p + 1);
-		from += 1 + ft_strlen(var);
+		tmp = ft_substr(src + from, 0, p - (src + from));
+		new = ft_strjoin(new, tmp);
+		new = ft_strjoin(new, find_var(envr, extract_var(p + 1)));
 		ft_putstr_fd(find_var(envr, var), fd);
 		p = ft_strchr(buf + from, '$');
 	}
+	if (!expand || !p)
+		ft_putendl_fd(buf + from, fd);
 }
 */

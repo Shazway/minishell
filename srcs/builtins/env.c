@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 16:34:17 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:48:03 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_env(t_data *data, int ac)
 {
-	if (ac == 1)
+		printf("im ac %d\n", ac);
 		str_arr_display(data->env_str);
 }
 
