@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 00:39:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 00:08:25 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	prompt_loop(t_data *data)
 			if (parsing(data))
 			{
 				open_redirections(data);
-				append_variables(data);
-				//str_arr_display(data->env_str);
+				expand_variables(data);
 				search_cmds(data);
 				print_fullpath(data);
 				execute(data);

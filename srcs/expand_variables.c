@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 00:06:05 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 00:07:59 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*replace_variables(char	*str, t_data *data)
 	return (str);
 }
 
-void	append_variables(t_data *data)
+void	expand_variables(t_data *data)
 {
 	int		i;
 	t_cmd	*arg;

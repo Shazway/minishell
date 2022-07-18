@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 17:06:44 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 00:08:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		update_env(t_data *data, char **entry, int len_entry);
 
 int		shell_exit(int ac, char **av);
 
-void	append_variables(t_data *data);
+void	expand_variables(t_data *data);
 void	ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
