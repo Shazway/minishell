@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 22:33:08 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:48:05 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,10 @@ int		update_env(t_data *data, char **entry, int len_entry);
 int		shell_exit(int ac, char **av);
 
 void	expand_variables(t_data *data);
+char	*get_end(char *str, int index);
+char	*get_start(char *str);
+char	*get_var(char *str, t_data *data);
+char	*get_name(char	*str);
 void	ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
@@ -91,7 +95,7 @@ int		setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data);
 char	**eliminate_redirections(char **args);
 char	**destroy_redirections(char **dest, char **args);
 int		str_arr_size_r(char	**str);
-int	is_redirection(char	*str, int type);
+int		is_redirection(char	*str, int type);
 
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
@@ -137,6 +141,7 @@ void	cmd_notfound(void);
 
 char	*ft_strsetchr(const char *s, char *set);
 char	*find_var(char **envr, char *entry);
+char	*replace_variables(char	*str, t_data *data);
 char	*extract_var(char *pvar);
 void	heredoc_writer(int fd, char *buf, int expand, char **envr);
 int		here_doc(char *lim, int expand, char **envr);

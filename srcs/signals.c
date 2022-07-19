@@ -6,13 +6,13 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 22:34:44 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:47:57 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-struct sigaction g_signals;
+struct sigaction	g_signals;
 
 int	signal_intercept(void)
 {
