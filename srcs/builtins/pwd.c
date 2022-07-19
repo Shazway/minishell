@@ -6,16 +6,16 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 13:29:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:34:02 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*pwd(void)
+char	*pwd(t_data *data)
 {
 	char	*path;
 
-	path = getcwd(NULL, 0);
+	path = get_var("PWD", data);
 	return (path);
 }

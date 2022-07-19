@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 13:30:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:35:00 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 
 int	execmd(int ac, char *fullpath, char **args, t_data *data)
 {
-	int	ret;
+	int		ret;
 	char	*tmp;
 
 	ret = 1;
@@ -183,7 +183,7 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 		cd(ac, args + 1);
 	else if (!ft_strncmp(fullpath, "pwd", 3))
 	{
-		tmp = pwd();
+		tmp = pwd(data);
 		printf("%s\n", tmp);
 		free(tmp);
 		exit(EXIT_SUCCESS);
@@ -193,7 +193,7 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 		ft_export(data, ac, args);
 	}
 	else if (!ft_strncmp(fullpath, "unset", 5))
-		pwd();
+		exit(EXIT_SUCCESS);
 	else if (!ft_strncmp(fullpath, "env", 3))
 	{
 		ft_env(data, ac);

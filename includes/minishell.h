@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 00:08:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:34:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	expand_variables(t_data *data);
 void	ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
-char	*pwd(void);
+char	*pwd(t_data *data);
 
 char	*concat_path(char *s1, char *s2);
 
