@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 21:32:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 23:44:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,14 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	if (execmd(cmd->ac, cmd->fullpath, cmd->args, data) == -1)
 	{
 		//msh_free(data);
-		if (!cmd->fullpath)
+		if (access(cmd->fullpath, X_OK))
+		{
+			ft_putstr_fd("minishell: ", 1);
+			ft_putstr_fd(cmd->fullpath, 1);
+			ft_putstr_fd(": ", 1);
+			perror("");
+		}
+		else
 			cmd_notfound();
 		exit(EXIT_FAILURE);
 	//	else
