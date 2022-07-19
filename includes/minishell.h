@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 15:30:34 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:26:48 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_cmd
 
 typedef struct s_pipex
 {
-	int fd[2];
+	int	fd[2];
 }				t_pipex;
 
 typedef struct s_data
@@ -64,10 +64,13 @@ typedef struct s_data
 	unsigned char		ret;
 }	t_data;
 
+//--------------CD---------------//
 int		cd(int ac, char **str, t_data *data);
 int		is_double_dash(char *str);
-int		directory_exists(char *s);
-char	*previous_dir(char *str);
+int		is_dash(char	*str);
+int		cd_home(char *path, char *name);
+int		cd_dash(char *arg, t_data *data);
+
 
 int		ft_echo(int ac, char **av);
 int		check_echo_n(char *str);
@@ -121,7 +124,7 @@ void	free_pips(t_pipex *pips, int n);
 void	free_cmd(void *vcmd);
 void	search_cmds(t_data *data);
 int		is_builtin(char *c_name);
-void    execute(t_data *data);
+void	execute(t_data *data);
 void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd);
 char	*get_path(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
@@ -132,7 +135,7 @@ char	*ft_strsetchr(const char *s, char *set);
 char	*find_var(char **envr, char *entry);
 char	*extract_var(char *pvar);
 void	heredoc_writer(int fd, char *buf, int expand, char **envr);
- int	here_doc(char *lim, int expand, char **envr);
+int		here_doc(char *lim, int expand, char **envr);
 char	*get_var(char *str, t_data *data);
 int		execmd(int ac, char *fullpath, char **args, t_data *data);
 int		nofork_builtin(char *fullpath);

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 15:28:44 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:22:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,4 @@ int	ft_malloc(void **p, int length)
 	if (*p)
 		return (1);
 	return (0);
-}
-
-int	change_path(char *goal)
-{
-	if (chdir(goal) == -1)
-	{
-		free(goal);
-		printf("cd: %s: No such file or directory\n", goal);
-		return (-1);
-	}
-	else
-		free(goal);
-	return (1);
 }
