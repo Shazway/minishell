@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 22:22:12 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:47:22 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    execute(t_data *data)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
 		to_execute = c_idx->content;
-		if (nofork_builtin(to_execute->fullpath))
+		if (to_execute->no_fork)
 		{
 			run_cmd(data, to_execute, i, data->n_cmd);
 		}
@@ -63,7 +63,6 @@ void    execute(t_data *data)
 		close(to_execute->fin);
 		if (!nofork_builtin(to_execute->name))
 			wait(NULL);
-	//	waitpid()
 		c_idx = c_idx->next;
 	}
 }
@@ -110,7 +109,6 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	}
 	else
 	{
-		printf("fout %d\n", cmd->fout);
 		dup2(cmd->fout, STDOUT_FILENO);
 		close(cmd->fout);
 	}
@@ -120,8 +118,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	if (execmd(cmd->ac, cmd->fullpath, cmd->args, data) == -1)
 	{
 		//msh_free(data);
-		if (!cmd->fullpath)
-			cmd_notfound();
+		cmd_notfound(cmd->name);
 		exit(EXIT_FAILURE);
 	//	else
 		//	perrxit("Error");
@@ -132,6 +129,8 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 {
 	int		ret;
 	char	*tmp;
+
+
 
 	ret = 1;
 	if (!ft_strncmp(fullpath, "echo", 4))
@@ -168,81 +167,9 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 	return (ret);
 }
 
-
-
-char	*get_path(char *c_name, char **envr)
+void	cmd_notfound(char *cmd_name)
 {
-	int		i;
-	char	*path_var;
-	char	**path_array;
-	char	*working_cmd;
-
-	i = 0;
-	if (envr[0])
-	{
-		while (envr[i] != NULL)
-		{
-			path_var = ft_strnstr(envr[i], "PATH=", 5);
-			if (path_var != NULL)
-				break ;
-			i++;
-		}
-		if (!path_var)
-			return (NULL);
-		path_var += 5;
-		path_array = ft_split(path_var, ':');
-		working_cmd = parse_path(path_array, c_name);
-		str_arr_free(path_array);
-		if (working_cmd)
-			return (working_cmd);
-	}
-	return (NULL);
-}
-
-char	*parse_path(char **path_array, char *c_name)
-{
-	int		i;
-	char	*working_cmd;
-	char	*slashcmd;
-	int		found;
-
-	slashcmd = ft_strjoin("/", c_name);
-	found = 0;
-	i = 0;
-	while (!found && path_array && path_array[i] != NULL)
-	{
-		working_cmd = ft_strjoin(path_array[i++], slashcmd);
-		if (access(working_cmd, F_OK) == 0)
-			found = 1;
-		if (!found)
-			free(working_cmd);
-	}
-	free(slashcmd);
-	if (found)
-		return (working_cmd);
-	else
-		return (NULL);
-}
-
-void print_fullpath(t_data *data)
-{
-	t_list *i;
-	t_cmd	*cmd;
-
-	i = data->cmd;
-	cmd = (t_cmd *)i->content;
-	while (i != NULL)
-	{
-		cmd = (t_cmd *) i->content;
-		printf("fullpath: %s\n", cmd->fullpath);
-		i = i->next;
-	}
-}
-
-void	cmd_notfound(void)
-{
-	ft_putendl_fd("Error: command not found", 2);
-	exit(EXIT_FAILURE);
+	printf("%s: command not found\n", cmd_name);
 }
 
  int	here_doc(char *lim, int expand, char **envr)
@@ -308,37 +235,10 @@ char	*extract_var(char *pvar)
 	char	*var;
 
 	to = is_validid(pvar, -1);
-	//printf("to %d %s\n", to, pvar);
 	if (to > 0)
 	{
 		var = ft_substr(pvar, 0, to);
 		return (var);
 	}
 	return (NULL);
-
 }
-
-/*
-char	*parse_var(char *src)
-{
-	char	*p;
-	char	*var;
-	int		from;
-	char	*new;
-	char	*tmp;
-
-	p = NULL;
-	from = 0;
-	p = ft_strchr(src, '$');
-	while (p)
-	{
-		tmp = ft_substr(src + from, 0, p - (src + from));
-		new = ft_strjoin(new, tmp);
-		new = ft_strjoin(new, find_var(envr, extract_var(p + 1)));
-		ft_putstr_fd(find_var(envr, var), fd);
-		p = ft_strchr(buf + from, '$');
-	}
-	if (!expand || !p)
-		ft_putendl_fd(buf + from, fd);
-}
-*/

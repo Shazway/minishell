@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 22:25:16 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:34:44 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_cmd	*init_cmd(void)
 	cmd->fullpath = NULL;
 	cmd->fin = -1;
 	cmd->fout = -1;
-	cmd->tofork = 1;
+	cmd->no_fork = 0;
 	cmd->builtin = 0;
 	return (cmd);
 }

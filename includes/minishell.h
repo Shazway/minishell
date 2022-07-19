@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 22:31:04 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:33:08 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_cmd
 	char	*fullpath;
 	int		fin;
 	int		fout;
-	int		tofork;
+	int		no_fork;
 	int		builtin;
 }	t_cmd;
 
