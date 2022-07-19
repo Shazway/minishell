@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 16:22:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:06:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ int	str_arr_size(char **args)
 	while (args && args[count])
 		count++;
 	return (count);
+}
+
+void	str_arr_display(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		printf("[%s]\n", str[i]);
+		i++;
+	}
 }
 
 char	**str_arr_add(char **sarr, char **entry, int len_entry)
