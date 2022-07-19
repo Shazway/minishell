@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 21:51:38 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:44:18 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_pips(t_pipex *pips, int n)
 
 void	free_cmd(void *vcmd)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = (t_cmd *)vcmd;
 	free(cmd->name);
@@ -49,7 +49,6 @@ void	free_cmd(void *vcmd)
 	if (cmd->fout != -1)
 		close(cmd->fout);
 	free(cmd);
-	
 }
 
 void	prompt_loop(t_data *data)
@@ -58,7 +57,8 @@ void	prompt_loop(t_data *data)
 	{
 		if (signal_intercept())
 			exit(1);
-		data->input = readline("\001\033[1;36m\002""\001➜\002 ""\001\033[1;32m\002"" minishell ""\001\033[0m\002");
+		data->input = readline("\001\033[1;36m\002""\001➜\002 "
+				"\001\033[1;32m\002"" minishell ""\001\033[0m\002");
 		if (!data->input)
 			break ;
 		else
@@ -69,7 +69,6 @@ void	prompt_loop(t_data *data)
 			{
 				open_redirections(data);
 				expand_variables(data);
-				//str_arr_display(data->env_str);
 				search_cmds(data);
 				print_fullpath(data);
 				execute(data);
