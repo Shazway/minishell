@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/18 16:48:27 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:28:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,15 @@ int	ft_malloc(void **p, int length)
 	return (0);
 }
 
-int	change_path(char *str, char *path)
+int	change_path(char *goal)
 {
-	if (!str)
+	if (chdir(goal) == -1)
 	{
-		if (!getenv("HOME"))
-		{
-			free(path);
-			return (printf("minishell: cd: HOME not set\n"));
-		}
-	}
-	if (is_double_dash(str) == -1)
-	{
-		free(path);
-		return (printf("minishell: --: invalid option\n"));
-	}
-	if (chdir(str) == -1)
-	{
-		printf("cd: %s: No such file or directory\n", str);
-		free(path);
-		return (1);
+		free(goal);
+		printf("cd: %s: No such file or directory\n", goal);
+		return (-1);
 	}
 	else
-		free(path);
+		free(goal);
 	return (1);
 }
-

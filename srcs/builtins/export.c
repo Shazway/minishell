@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 16:49:17 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:48:40 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_export(t_data *data, int ac, char **av)
 		ft_env(data, ac);
 	else
 	{
-
 		printf("ac = %d\n", ac);
 		entry = malloc(ac * sizeof(char *));
 		entry[ac - 1] = NULL;
@@ -43,11 +42,11 @@ void	ft_export(t_data *data, int ac, char **av)
 				j++;
 			}
 			else if (!is_validid(av[i], len) && p_eq)
-				printf("minishell: export: `%s': not a valid identifier\n", av[i]);
+				printf("minishell: export: `%s': not a valid identifier\n",
+					av[i]);
 			i++;
 		}
 		update_env(data, entry, j);
-		//str_arr_free(entry);
 	}
 }
 
@@ -73,7 +72,7 @@ int	is_validid(char	*identifier, int len)
 		{
 			if (!(ft_isalnum(identifier[i]) || identifier[i] == '_'))
 			{
-					return (0);
+				return (0);
 			}
 			i++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 17:48:03 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:46:45 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_env(t_data *data, int ac)
 {
-		printf("im ac %d\n", ac);
-		str_arr_display(data->env_str);
+	printf("im ac %d\n", ac);
+	str_arr_display(data->env_str);
 }
 
 int	set_env(t_data *data)

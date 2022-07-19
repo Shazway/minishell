@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 00:25:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:17:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	msh_free(t_data *data)
 	free(data->input);
 	free(data->output);
 	str_arr_free(data->env_str);
+	free(data);
 	return (1);
 }
 
@@ -70,6 +71,7 @@ void	prompt_loop(t_data *data)
 			{
 				open_redirections(data);
 				expand_variables(data);
+				//str_arr_display(data->env_str);
 				search_cmds(data);
 				print_fullpath(data);
 				execute(data);

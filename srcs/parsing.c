@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 23:54:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:44:05 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,14 @@ char	**eliminate_redirections(char **args)
 	return (dest);
 }
 
-int	setup_rfiles(t_cmd	*arg, int type, int i, char **envr)
+int	setup_rfiles(t_cmd	*arg, int type, int i, char **envr, t_data *data)
 {
 	char	*work_path;
 	char	*final_path;
 
 	//if (!arg->args[i + 1])
 	//	return (printf("minishell:syntax error near unexpected token`newline'\n"));
-	work_path = pwd();
+	work_path = pwd(data);
 	final_path = concat_path(work_path, arg->args[i + 1]);
 	if (type == R_DIR)
 		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -150,7 +150,7 @@ int	open_redirections(t_data *data)
 			type = is_redirection(arg->args[i], 0);
 			if (type)
 			{
-				setup_rfiles(arg, type, i, data->env_str);
+				setup_rfiles(arg, type, i, data->env_str, data);
 				i++;
 			}
 			if (arg->args[i])

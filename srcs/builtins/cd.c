@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/16 17:37:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:28:08 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int	is_double_dash(char *str)
 
 /*----------TO DO BEFORE CD:
 CHANGE ENVIRONMENT VARIABLE : SWAP $OLDPWD and $PWD*/
-
-char	*dash_dir(char *str, int ret)
+char	*dash_dir(char *str, int ret, t_data *data)
 {
 	if (ret == 1)
-		return (getenv("OLDPWD"));
+	{
+		return (get_var("OLDPWD", data));
+	}
 	if (ret == 2)
-		return (getenv("HOME"));
+		return (get_var("HOME", data));
 	return (str);
 }
 
@@ -52,47 +53,81 @@ int	is_dash(char	*str)
 	return (ret);
 }
 
-char	*concat_path(char *s1, char *s2)
+/*--CHANGE TO **env--*/
+int	cd_home(char *path, char *name)
+{
+	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
+	{
+		if (chdir(path) == -1)
+			printf("minishell: cd: HOME not set\n");
+		free(path);
+		return (1);
+	}
+	if (!ft_strncmp(name, "OLDPWD", ft_strlen("OLDPWD")))
+	{
+		if (chdir(path) == -1)
+			printf("minishell: cd: OLDPWD not set\n");
+		free(path);
+		return (1);
+	}
+	return (0);
+}
+
+int	cd_dash(char *arg, t_data *data)
+{
+	int		ret;
+
+	ret = is_dash(arg);
+	free(arg);
+	if (ret == -1)
+		printf("minishell: --: invalid option\n");
+	if (ret == 1)
+		return (cd_home(get_var("OLDPWD", data), "OLDPWD"));
+	if (ret == 2)
+		return (cd_home(get_var("OLDPWD", data), "OLDPWD"));
+	return (-1);
+}
+
+char	*concat_path(char *goal, char *folder_name)
 {
 	char	*temp;
 
-	temp = s1;
-	s1 = ft_strjoin(s1, "/");
+	temp = goal;
+	goal = ft_strjoin(goal, "/");
 	free(temp);
-	if (!s1)
+	if (!goal)
 		return (NULL);
-	temp = s1;
-	s1 = ft_strjoin(s1, s2);
+	temp = goal;
+	goal = ft_strjoin(goal, folder_name);
 	free(temp);
-	if (!s1)
+	if (!goal)
 		return (NULL);
-	return (s1);
+	return (goal);
 }
-/*--CHANGE TO **env--*/
-int	cd(int ac, char **str)
+
+int	cd(int ac, char **str, t_data *data)
 {
 	char	*path;
-	char	*temp;
+	char	*arg;
 
-	path = pwd();
-	temp = path;
 	if (ac > 2)
-	{
-		free(path);
 		return (printf("minishell: cd: too many arguments\n"));
-	}
-	printf("Path or folder given is [%s]\n", str[0]);
 	if (ac == 1)
-		return (change_path(getenv("HOME"), temp));
-	if (is_dash(str[0]) != 0)
-		return (change_path(dash_dir(str[0], is_dash(str[0])), temp));
-	if (str[0][0] == '/')
-		return (change_path(str[0], temp));
-	path = concat_path(path, str[0]);
+		return (cd_home(get_var("HOME", data), "HOME"));
+	printf("Path or folder given is [%s]\n", str[0]);
+	arg = ft_strdup(str[0]);
+	if (is_dash(arg) != 0)
+		return (cd_dash(arg, data));
+	if (arg[0] == '/')
+		return (change_path(arg, data));
+	//FOLDER NAME DIRECTLY//
+	path = pwd(data);
+	path = concat_path(path, arg);
+	free(arg);
 	printf("Path to go to is [%s]\n", path);
 	if (!path)
 		return (-1);
-	if (change_path(path, path))
-		return (0);
+	if (change_path(path, data) == -1)
+		return (-1);
 	return (1);
 }

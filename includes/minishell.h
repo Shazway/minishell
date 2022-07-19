@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 13:34:28 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:30:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ typedef struct s_data
 	unsigned char		ret;
 }	t_data;
 
-int		cd(int ac, char **str);
+int		cd(int ac, char **str, t_data *data);
 int		is_double_dash(char *str);
-int		change_path(char *str, char *path);
 int		directory_exists(char *s);
 char	*previous_dir(char *str);
 
@@ -116,7 +115,7 @@ void	str_arr_display(char **str);
 int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
 int		ft_malloc(void **p, int length);
-int		change_path(char *str, char *path);
+int		change_path(char *goal);
 
 void	free_pips(t_pipex *pips, int n);
 void	free_cmd(void *vcmd);

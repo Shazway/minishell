@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 16:04:51 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/17 23:50:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:49:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ char	**unquote_split(char *s, char c)
 	if (!s)
 		return (NULL);
 	count = count_words(s, c);
-	//printf("%d\n", count);
 	if (!ft_malloc((void **)&str, sizeof(char *) * (count + 1)))
 		return (NULL);
 	str[count] = NULL;
