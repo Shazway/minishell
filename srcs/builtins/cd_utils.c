@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 16:39:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 18:13:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	is_dash(char	*str)
 	return (ret);
 }
 
-/*--CHANGE TO **env--*/
 int	cd_home(char *path, char *name)
 {
 	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))

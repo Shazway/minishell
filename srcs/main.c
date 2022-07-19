@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 14:15:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 21:52:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(void)
 	prompt_loop(data);
 	if (!data->input)
 		printf("exit\n");
-	clear_history();
+	rl_clear_history();
 	msh_free(data);
 	return (0);
 }

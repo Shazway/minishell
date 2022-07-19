@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 13:43:19 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 21:32:15 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 void	search_cmds(t_data *data)
 {
-	t_list	*i;
+	t_list	*cmd_idx;
 	t_cmd	*current_cmd;
 	char	*fullpath;
 
-	i = data->cmd;
-	while (i != NULL)
+	cmd_idx = data->cmd;
+	while (cmd_idx != NULL)
 	{
-		current_cmd = i->content;
-		current_cmd->fullpath = ft_strdup(current_cmd->cmd);
-		if (!is_builtin(current_cmd->cmd))
+		current_cmd = cmd_idx->content;
+		current_cmd->fullpath = ft_strdup(current_cmd->name);
+		if (!is_builtin(current_cmd->name))
 		{
-			fullpath = get_path(current_cmd->cmd, data->env_str);
+			fullpath = get_path(current_cmd->name, data->env_str);
 			if (fullpath)
 			{
 				free(current_cmd->fullpath);
 				current_cmd->fullpath = fullpath;
 			}
 		}
-		i = i->next;
+		cmd_idx = cmd_idx->next;
 	}
 }
 
-int	is_builtin(char *c_name)
+int	is_builtin(char *cmd_name)
 {
 	char	*builtins[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 	int		i;
@@ -44,7 +44,7 @@ int	is_builtin(char *c_name)
 	i = 0;
 	while (i < 7)
 	{
-		if (!ft_strncmp(builtins[i], c_name, ft_strlen(c_name)))
+		if (!ft_strncmp(builtins[i], cmd_name, ft_strlen(cmd_name)))
 			return (1);
 		i++;
 	}
@@ -79,7 +79,7 @@ void    execute(t_data *data)
 				return ;
 			else if (pid == 0)
 			{
-				printf("msh : %s\n", to_execute->cmd);
+				printf("msh : %s\n", to_execute->name);
 				run_cmd(data, to_execute, i, data->n_cmd);
 			}
 		}
@@ -101,7 +101,7 @@ void    execute(t_data *data)
 	{
 		//close(to_execute->fin)
 		close(to_execute->fin);
-		if (!nofork_builtin(to_execute->cmd))
+		if (!nofork_builtin(to_execute->name))
 			wait(NULL);
 	//	waitpid()
 		c_idx = c_idx->next;

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 16:46:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 21:40:03 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
 typedef struct s_cmd
 {
-	char	*cmd;
+	char	*name;
 	char	**args;
 	int		ac;
 	char	*fullpath;
@@ -51,11 +51,7 @@ typedef struct s_pipex
 
 typedef struct s_data
 {
-	int					read_ret;
-	char				*buf_trash;
 	char				*input;
-	char				*output;
-	char				**commands;
 	char				**env_str;
 	struct termios		termios;
 	t_list				*cmd;
@@ -71,7 +67,7 @@ int		is_dash(char	*str);
 int		cd_home(char *path, char *name);
 int		cd_dash(char *arg, t_data *data);
 char	*concat_path(char *s1, char *s2);
-int		change_path(char *goal, char *foldername);
+int		change_path(char *goal, char *foldername, t_data *data);
 
 int		ft_echo(int ac, char **av);
 int		check_echo_n(char *str);
@@ -97,6 +93,7 @@ int		parsing(t_data *data);
 void	print_result(t_cmd *token);
 void	split_spaces(t_cmd *token, char *content);
 void	del_token(void *content);
+t_cmd	*init_cmd(void);
 
 char	*concat_redir(char *str, char *redir, int *i, int is_double);
 char	*check_redir(char *str, int *i);

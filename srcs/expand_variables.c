@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 00:07:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 18:19:58 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ char	*get_var(char *str, t_data *data)
 
 	i = 0;
 	len = ft_strlen(str);
-	printf("Variable to search is %s\n", str);
 	while (data->env_str && data->env_str[i])
 	{
 		if (!ft_strncmp(str, data->env_str[i], len))
 		{
 			dest = ft_strdup(ft_strchr(data->env_str[i], '=') + 1);
-			printf("found var, %s\n", dest);
 			return (dest);
 		}
 		i++;

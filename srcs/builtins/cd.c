@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 17:12:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 20:23:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /*----------TO DO BEFORE CD:
 CHANGE ENVIRONMENT VARIABLE : SWAP $OLDPWD and $PWD*/
+
 char	*concat_path(char *goal, char *folder_name)
 {
 	char	*temp;
@@ -30,9 +31,61 @@ char	*concat_path(char *goal, char *folder_name)
 		return (NULL);
 	return (goal);
 }
-
-int	change_path(char *goal, char *foldername)
+/*
+char	*previous_folder(char *path)
 {
+	int		i;
+	char	*path;
+
+	i = 0;
+	while (path && path[i])
+		i++;
+	while (i > 0 && path[i] != '/')
+		i--;
+	if (i == 0)
+		return (ft_strdup("/"));
+	path = ft_substr(path, 0, i);
+	i = 0;
+	while (path && path[i])
+		i++;
+	if (!path[i] && path[i - 1] == '/')
+	{
+		
+	}
+	return (path);
+}
+
+char	*new_pwd(char	*next_pwd, t_data *data)
+{
+	char	*path;
+	char	*folder;
+	char	*tmp;
+
+	path = pwd(data);
+	folder = ft_substr(next_pwd, 0, ft_strchr('/'));
+	if (!folder)
+	{
+		if (path)
+		{
+			free(path);
+			return (concat_path(path, next_pwd));
+		}
+		return (NULL);
+	}
+	if (!ft_strncmp(folder, "..", 3))
+	{
+		tmp = path;
+		path = previous_folder(path);
+		free(temp);
+	}
+}
+*/
+int	change_path(char *goal, char *foldername, t_data *data)
+{
+	char	*exp[2];
+
+	exp[1] = NULL;
+	exp[0] = goal;
 	if (chdir(goal) == -1)
 	{
 		printf("cd: %s: No such file or directory\n", foldername);
@@ -42,6 +95,9 @@ int	change_path(char *goal, char *foldername)
 	}
 	else
 	{
+		printf("Path has been changed to : \n");
+		str_arr_display(exp);
+		ft_export(data, 2, exp);
 		free(foldername);
 		free(goal);
 	}
@@ -62,13 +118,13 @@ int	cd(int ac, char **str, t_data *data)
 	if (is_dash(arg) != 0)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')
-		return (change_path(arg, arg));
+		return (change_path(arg, arg, data));
 	path = pwd(data);
 	path = concat_path(path, arg);
 	printf("Path to go to is [%s]\n", path);
 	if (!path)
 		return (-1);
-	if (change_path(path, arg) == -1)
+	if (change_path(path, arg, data) == -1)
 		return (-1);
 	return (1);
 }

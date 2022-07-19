@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 16:58:48 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 21:40:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int	open_redirections(t_data *data)
 		arg->args = eliminate_redirections(arg->args);
 
 		if (arg->args)
-			arg->cmd = ft_strdup(arg->args[0]);
+			arg->name = ft_strdup(arg->args[0]);
 		tmp = tmp->next;
 	}
 	return (1);
@@ -168,7 +168,7 @@ int	open_redirections(t_data *data)
 int	parsing(t_data *data)
 {
 	int		i;
-	t_cmd	*temp;
+	t_cmd	*token;
 	char	**pipe_split;
 
 	i = 0;
@@ -178,17 +178,11 @@ int	parsing(t_data *data)
 	pipe_split = unquote_split(data->input, '|');
 	while (pipe_split && pipe_split[i])
 	{
-		temp = malloc(sizeof(t_cmd));
-		if (!temp)
+		token = init_cmd();
+		if (!token)
 			return (1);
-		ft_lstadd_back(&(data->cmd), ft_lstnew((void *)temp));
-		temp->fin = -1;
-		temp->fout = -1;
-		temp->cmd = NULL;
-		temp->args = NULL;
-		temp->ac = 0;
-		temp->fullpath = NULL;
-		split_spaces(temp, pipe_split[i]);
+		ft_lstadd_back(&(data->cmd), ft_lstnew((void *)token));
+		split_spaces(token, pipe_split[i]);
 		if (pipe_split[i + 1])
 			printf("New command (cmd->next)\n");
 		i++;

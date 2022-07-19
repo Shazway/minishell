@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 14:10:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 21:45:45 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	sig_info(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGINT)
 	{
 		printf("^C\n");
-		printf("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	if (signal == SIGQUIT)
 		return ;
@@ -53,15 +55,29 @@ int	termios_setup(t_data *data)
 int	msh_init(t_data *data)
 {
 	g_signals.sa_sigaction = sig_info;
-	data->read_ret = -1;
-	data->buf_trash = NULL;
 	data->input = NULL;
-	data->output = NULL;
-	data->commands = NULL;
 	data->env_str = NULL;
-	data->pips = NULL;
 	data->cmd = NULL;
+	data->n_cmd = 0;
+	data->pips = NULL;
+	data->ret = -1;
 	if (set_env(data))
 		return (1);
 	return (0);
+}
+
+t_cmd	*init_cmd(void)
+{
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->fin = -1;
+	cmd->fout = -1;
+	cmd->name = NULL;
+	cmd->args = NULL;
+	cmd->ac = 0;
+	cmd->fullpath = NULL;
+	return (cmd);
 }

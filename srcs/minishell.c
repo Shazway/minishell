@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 14:17:27 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 21:51:38 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	msh_free(t_data *data)
 {
-	free(data->buf_trash);
 	free(data->input);
-	free(data->output);
 	str_arr_free(data->env_str);
 	free(data);
 	return (1);
@@ -43,7 +41,7 @@ void	free_cmd(void *vcmd)
 	t_cmd *cmd;
 
 	cmd = (t_cmd *)vcmd;
-	free(cmd->cmd);
+	free(cmd->name);
 	str_arr_free(cmd->args);
 	free(cmd->fullpath);
 	if (cmd->fin != -1)
@@ -60,10 +58,10 @@ void	prompt_loop(t_data *data)
 	{
 		if (signal_intercept())
 			exit(1);
-		data->input = readline("\033[1;32m""➜ ""\033[1;36m"" minishell ""\033[0m");
+		data->input = readline("\001\033[1;36m\002""\001➜\002 ""\001\033[1;32m\002"" minishell ""\001\033[0m\002");
 		if (!data->input)
 			break ;
-		else if (!(data->input[0] == 0))
+		else
 		{
 			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
@@ -80,6 +78,5 @@ void	prompt_loop(t_data *data)
 			}
 		}
 		free(data->input);
-		
 	}
 }
