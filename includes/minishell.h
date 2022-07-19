@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 16:26:48 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:46:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int		is_double_dash(char *str);
 int		is_dash(char	*str);
 int		cd_home(char *path, char *name);
 int		cd_dash(char *arg, t_data *data);
-
+char	*concat_path(char *s1, char *s2);
+int		change_path(char *goal, char *foldername);
 
 int		ft_echo(int ac, char **av);
 int		check_echo_n(char *str);
@@ -87,7 +88,6 @@ int		is_validid(char	*identifier, int len);
 
 char	*pwd(t_data *data);
 
-char	*concat_path(char *s1, char *s2);
 
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
@@ -118,7 +118,6 @@ void	str_arr_display(char **str);
 int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
 int		ft_malloc(void **p, int length);
-int		change_path(char *goal);
 
 void	free_pips(t_pipex *pips, int n);
 void	free_cmd(void *vcmd);
