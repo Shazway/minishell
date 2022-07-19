@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 22:43:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 01:37:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*get_var(char *str, t_data *data)
 		if (!ft_strncmp(str, data->env_str[i], len))
 		{
 			dest = ft_strdup(ft_strchr(data->env_str[i], '=') + 1);
+			printf("dest is %s\n", dest);
 			return (dest);
 		}
 		i++;
@@ -57,7 +58,6 @@ char	*get_start(char *str)
 	i = 0;
 	while (str[i] && str[i] != '$')
 		i++;
-	printf("END OF START IS %c\n", str[i]);
 	if (!str[i])
 		return (NULL);
 	if (i > 0 && str[i] == '$')
@@ -93,6 +93,7 @@ void	expand_variables(t_data *data)
 		{
 			while (arg->args[i] && ft_strchr(arg->args[i], '$'))
 				arg->args[i] = replace_variables(arg->args[i], data);
+			printf("DEBUG EXPAND : args[i] %s\n", arg->args[i]);
 			i++;
 		}
 		str_arr_display(arg->args);
