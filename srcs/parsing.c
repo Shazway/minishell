@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 13:44:05 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:58:48 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	str_arr_display(char **str)
 	i = 0;
 	while (str && str[i])
 	{
-		printf("Args[%d] = [%s]\n", i, str[i]);
+		printf("[%s]\n", str[i]);
 		i++;
 	}
 }

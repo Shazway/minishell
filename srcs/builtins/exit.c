@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 16:42:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 17:05:10 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ int	shell_exit(int ac, char **av)
 {
 	unsigned char	ret;
 
-	if (ac == 0)
-		exit(printf("exit\n"));
+	if (ac == 1)
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
 	if (check_digits(av))
 	{
 		printf("exit\nbash: exit: %s: numeric argument required", av[0]);

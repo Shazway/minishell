@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 13:46:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 17:00:18 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_env(t_data *data, int ac)
 {
-	printf("im ac %d\n", ac);
+	(void)ac;
 	str_arr_display(data->env_str);
 }
 
