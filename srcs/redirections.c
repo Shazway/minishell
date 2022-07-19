@@ -6,11 +6,26 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/16 18:30:11 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:08:47 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_redirection(char	*str, int type)
+{
+	if (!str || (str && (str[0] == '"' || str[0] == 39)))
+		return (type);
+	if (!ft_strncmp(str, ">", 2))
+		type = R_DIR;
+	if (!ft_strncmp(str, ">>", 3))
+		type = R_DDIR;
+	if (!ft_strncmp(str, "<", 2))
+		type = L_DIR;
+	if (!ft_strncmp(str, "<<", 3))
+		type = L_DDIR;
+	return (type);
+}
 
 char	*concat_redir(char *str, char *redir, int *i, int is_double)
 {

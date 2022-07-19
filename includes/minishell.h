@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 21:40:03 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:25:14 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ int		is_validid(char	*identifier, int len);
 
 char	*pwd(t_data *data);
 
+int		open_redirections(t_data *data);
+int		setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data);
+char	**eliminate_redirections(char **args);
+char	**destroy_redirections(char **dest, char **args);
+int		str_arr_size_r(char	**str);
+int	is_redirection(char	*str, int type);
 
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
