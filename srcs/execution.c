@@ -3,53 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 21:32:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/19 22:22:12 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	search_cmds(t_data *data)
-{
-	t_list	*cmd_idx;
-	t_cmd	*current_cmd;
-	char	*fullpath;
-
-	cmd_idx = data->cmd;
-	while (cmd_idx != NULL)
-	{
-		current_cmd = cmd_idx->content;
-		current_cmd->fullpath = ft_strdup(current_cmd->name);
-		if (!is_builtin(current_cmd->name))
-		{
-			fullpath = get_path(current_cmd->name, data->env_str);
-			if (fullpath)
-			{
-				free(current_cmd->fullpath);
-				current_cmd->fullpath = fullpath;
-			}
-		}
-		cmd_idx = cmd_idx->next;
-	}
-}
-
-int	is_builtin(char *cmd_name)
-{
-	char	*builtins[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
-	int		i;
-
-	i = 0;
-	while (i < 7)
-	{
-		if (!ft_strncmp(builtins[i], cmd_name, ft_strlen(cmd_name)))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void    execute(t_data *data)
 {
@@ -67,7 +28,6 @@ void    execute(t_data *data)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
 		to_execute = c_idx->content;
-		//str_arr_display(to_execute->args);
 		if (nofork_builtin(to_execute->fullpath))
 		{
 			run_cmd(data, to_execute, i, data->n_cmd);
@@ -208,20 +168,7 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 	return (ret);
 }
 
-int	nofork_builtin(char *fullpath)
-{
-	
-	if (!ft_strncmp(fullpath, "cd", 2))
-		return (1);
-	else if (!ft_strncmp(fullpath, "export", 6))
-		return (1);
-	else if (!ft_strncmp(fullpath, "unset", 5))
-		return (1);
-	else if (!ft_strncmp(fullpath, "exit", 4))
-		return (1);
-	else
-		return (0);
-}
+
 
 char	*get_path(char *c_name, char **envr)
 {
