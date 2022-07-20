@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 15:39:13 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:19:34 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,9 @@ char	*get_pwd(t_data *data)
 	char	*path;
 
 	path = get_var("PWD", data);
-	return (path);
+	if (!path)
+		return (-1);
+	printf("%s\n", path);
+	free(path);
+	return (0);
 }

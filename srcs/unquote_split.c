@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 16:04:51 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 15:38:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:56:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_quote(char *type, char c)
 {
-	if (*type == -1 && (c == '"' || c == '\''))
+	if (*type == -1 && (c == '"'))
 		*type = c;
 	else if (c == *type)
 		*type = -1;

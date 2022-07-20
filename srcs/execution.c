@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:13:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:19:21 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	wait_cmds(t_data *data)
 		i = i->next;
 	}
 }
-
-
 
 void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 {

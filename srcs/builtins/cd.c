@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 15:38:46 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:20:01 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*new_pwd(char	*next_pwd, t_data *data)
 	char	*folder;
 	char	*tmp;
 
-	path = pwd(data);
+	path = get_var("PWD", data);
 	folder = ft_substr(next_pwd, 0, ft_strchr('/'));
 	if (!folder)
 	{
