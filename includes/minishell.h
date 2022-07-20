@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:21:40 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:27:40 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@
 # define L_DIR 3
 # define L_DDIR 4
 
-typedef struct s_cmd
-{
-	char	*name;
-	char	**args;
-	int		ac;
-	char	*fullpath;
-	int		fin;
-	int		fout;
-}	t_cmd;
-
 typedef struct s_pipex
 {
 	int	fd[2];
@@ -61,8 +51,23 @@ typedef struct s_data
 	t_list				*cmd;
 }	t_data;
 
+typedef int (*FP)(t_data *, int, char **);
+
+typedef struct s_cmd
+{
+	char	*name;
+	char	**args;
+	int		ac;
+	char	*fullpath;
+	int		fin;
+	int		fout;
+	int		no_fork;
+	int		builtin;
+	FP		func;
+}	t_cmd;
+
 //--------------CD---------------//
-int		cd(int ac, char **str, t_data *data);
+int		cd(t_data *data, int ac, char **str);
 int		is_double_dash(char *str);
 int		is_dash(char	*str);
 int		cd_home(char *path, char *name);
@@ -70,21 +75,21 @@ int		cd_dash(char *arg, t_data *data);
 char	*concat_path(char *s1, char *s2);
 int		change_path(char *goal, char *foldername, t_data *data);
 
-int		ft_echo(int ac, char **av);
+int		ft_echo(t_data *data, int ac, char **av);
 int		check_echo_n(char *str);
 
-void	ft_env(t_data *data, int ac);
+int		ft_env(t_data *data, int ac, char **av);
 int		set_env(t_data *data);
 int		update_env(t_data *data, char **entry, int len_entry);
 
-int		shell_exit(int ac, char **av);
+int		shell_exit(t_data *data, int ac, char **av);
 
 void	expand_variables(t_data *data);
 char	*get_end(char *str, int index);
 char	*get_start(char *str);
 char	*get_var(char *str, t_data *data);
 char	*get_name(char	*str);
-void	ft_export(t_data *data, int ac, char **av);
+int		ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
 int		pwd(t_data *data);
@@ -127,16 +132,19 @@ int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
 int		ft_malloc(void **p, int length);
 
-void	free_pips(t_pipex *pips, int n);
+void	free_pipes(t_data *data);
+void	close_pipes(t_pipex *pips, int n);
+void	close_cmd_files(t_cmd *cmd);
+
 void	free_cmd(void *vcmd);
 void	search_cmds(t_data *data);
-int		is_builtin(char *c_name);
+int		is_builtin(t_cmd *cmd);
 void	execute(t_data *data);
 void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd);
 char	*get_path(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
 void	print_fullpath(t_data *data);
-void	cmd_notfound(void);
+void	cmd_notfound(char *cmd_name);
 
 char	*ft_strsetchr(const char *s, char *set);
 char	*find_var(char **envr, char *entry);
@@ -145,7 +153,12 @@ char	*extract_var(char *pvar);
 void	heredoc_writer(int fd, char *buf, int expand, char **envr);
 int		here_doc(char *lim, int expand, char **envr);
 char	*get_var(char *str, t_data *data);
-int		execmd(int ac, char *fullpath, char **args, t_data *data);
+void	exec_builtin(t_data *data, t_cmd *cmd);
 int		nofork_builtin(char *fullpath);
+int		ft_unset(t_data *data, int ac, char **av);
+
+char	*get_pwd(t_data *data);
+void	wait_cmds(t_data *data);
+void	msh_exit(t_data *data);
 
 #endif

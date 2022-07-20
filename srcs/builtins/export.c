@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 18:23:00 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:43:51 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export(t_data *data, int ac, char **av)
+int	ft_export(t_data *data, int ac, char **av)
 {
 	int		i;
 	int		j;
@@ -21,7 +21,7 @@ void	ft_export(t_data *data, int ac, char **av)
 	char	**entry;
 
 	if (ac == 1)
-		ft_env(data, ac);
+		ft_env(data, ac, av);
 	else
 	{
 		printf("ac = %d\n", ac);
@@ -48,6 +48,7 @@ void	ft_export(t_data *data, int ac, char **av)
 		}
 		update_env(data, entry, j);
 	}
+	return (0);
 }
 
 int	is_validid(char	*identifier, int len)

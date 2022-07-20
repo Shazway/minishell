@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:25:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:27:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	return (1);
 }
 
-int	cd(int ac, char **str, t_data *data)
+int	cd(t_data *data, int ac, char **str)
 {
 	char	*path;
 	char	*arg;

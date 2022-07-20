@@ -6,54 +6,15 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:23:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:27:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	search_cmds(t_data *data)
-{
-	t_list	*cmd_idx;
-	t_cmd	*current_cmd;
-	char	*fullpath;
-
-	cmd_idx = data->cmd;
-	while (cmd_idx != NULL)
-	{
-		current_cmd = cmd_idx->content;
-		current_cmd->fullpath = ft_strdup(current_cmd->name);
-		if (!is_builtin(current_cmd->name))
-		{
-			fullpath = get_path(current_cmd->name, data->env_str);
-			if (fullpath)
-			{
-				free(current_cmd->fullpath);
-				current_cmd->fullpath = fullpath;
-			}
-		}
-		cmd_idx = cmd_idx->next;
-	}
-}
-
-int	is_builtin(char *cmd_name)
-{
-	char	*builtins[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
-	int		i;
-
-	i = 0;
-	while (i < 7)
-	{
-		if (!ft_strncmp(builtins[i], cmd_name, ft_strlen(cmd_name)))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void    execute(t_data *data)
 {
-    t_cmd   *to_execute;
+    t_cmd   *cmd;
     t_list  *c_idx;
 	int		i;
 	int		pid;
@@ -61,50 +22,44 @@ void    execute(t_data *data)
 	i = 0;
     c_idx = data->cmd;
 	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
+	if (!data->pips)
+		msh_exit(data);
     while (c_idx != NULL)
     {
 		if (c_idx->next != NULL)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
-		to_execute = c_idx->content;
-		//str_arr_display(to_execute->args);
-		if (nofork_builtin(to_execute->fullpath))
-		{
-			run_cmd(data, to_execute, i, data->n_cmd);
-		}
+		cmd = c_idx->content;
+		if (cmd->no_fork)
+			run_cmd(data, cmd, i, data->n_cmd);
 		else
 		{
         	pid = fork();
 			if (pid == -1)
 				return ;
 			else if (pid == 0)
-			{
-				printf("msh : %s\n", to_execute->name);
-				run_cmd(data, to_execute, i, data->n_cmd);
-			}
+				run_cmd(data, cmd, i, data->n_cmd);
 		}
 		c_idx = c_idx->next;
 		i++;
 	}
-	i = 0;
-	c_idx = data->cmd;
-	while (c_idx->next != NULL)
+	close_pipes(data->pips, data->n_cmd - 1);
+	wait_cmds(data);
+}
+
+void	wait_cmds(t_data *data)
+{
+	t_list	*i;
+	t_cmd	*cmd;
+
+	i = data->cmd;
+	cmd = i->content;
+	while (i)
 	{
-		close(data->pips[i].fd[0]);
-		close(data->pips[i].fd[1]);
-		c_idx = c_idx->next;
-		i++;
-	}
-	c_idx = data->cmd;
-	to_execute = c_idx->content;
-	while (c_idx != NULL)
-	{
-		//close(to_execute->fin)
-		close(to_execute->fin);
-		if (!nofork_builtin(to_execute->name))
-			wait(NULL);
-	//	waitpid()
-		c_idx = c_idx->next;
+		close_cmd_files(cmd);
+		if (!cmd->no_fork)
+			wait(&data->ret);
+		i = i->next;
 	}
 }
 
@@ -122,13 +77,10 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		w = c_idx - 1;
 	else
 		w = c_idx;
-	
 	if (cmd->fin == -1)
 	{
 		if (c_idx != 0 && data->n_cmd > 1)
-		{
 			dup2(data->pips[r].fd[0], STDIN_FILENO);
-		}
 	}
 	else
 	{
@@ -140,169 +92,43 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		close(data->pips[j++].fd[0]);
 	if (cmd->fout == -1)
 	{
-		
 		if (c_idx != n_cmd - 1 && data->n_cmd > 1)
-		{
-			
 			dup2(data->pips[w].fd[1], STDOUT_FILENO);
-			
-		}
 	}
 	else
 	{
-		printf("fout %d\n", cmd->fout);
 		dup2(cmd->fout, STDOUT_FILENO);
 		close(cmd->fout);
 	}
 	j = 0;
 	while (j <= w && data->n_cmd > 1)
 		close(data->pips[j++].fd[1]);
-	if (execmd(cmd->ac, cmd->fullpath, cmd->args, data) == -1)
+	if (cmd->builtin)
+		exec_builtin(data, cmd);
+	else
 	{
-		//msh_free(data);
-		if (access(cmd->fullpath, X_OK))
+		if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 		{
-			ft_putstr_fd("minishell: ", 1);
-			ft_putstr_fd(cmd->fullpath, 1);
-			ft_putstr_fd(": ", 1);
-			perror("");
+			cmd_notfound(cmd->name);
+			exit(EXIT_FAILURE);
 		}
-		else
-			cmd_notfound();
-		exit(EXIT_FAILURE);
-	//	else
-		//	perrxit("Error");
 	}
 }
 
-int	execmd(int ac, char *fullpath, char **args, t_data *data)
+void	exec_builtin(t_data *data, t_cmd *cmd)
 {
-	int		ret;
-	char	*tmp;
+	int	ret;
 
-	ret = 1;
-	if (!ft_strncmp(fullpath, "echo", 4))
-	{
-		ft_echo(ac, args + 1);
-		exit(EXIT_SUCCESS);
-	}
-	else if (!ft_strncmp(fullpath, "cd", 2))
-		cd(ac, args + 1, data);
-	else if (!ft_strncmp(fullpath, "pwd", 3))
-	{
-		tmp = ft_strdup(data->relative_path);
-		printf("%s\n", tmp);
-		free(tmp);
-		exit(EXIT_SUCCESS);
-	}
-	else if (!ft_strncmp(fullpath, "export", 6))
-	{
-		ft_export(data, ac, args);
-	}
-	else if (!ft_strncmp(fullpath, "unset", 5))
-		exit(EXIT_SUCCESS);
-	else if (!ft_strncmp(fullpath, "env", 3))
-	{
-		ft_env(data, ac);
-		exit(EXIT_SUCCESS);
-	}
-	else if (!ft_strncmp(fullpath, "exit", 4))
-		shell_exit(ac, args + 1);
+	ret = cmd->func(data, cmd->ac, cmd->args);
+	if (!cmd->no_fork)
+		exit(ret);
 	else
-	{
-		ret = execve(fullpath, args, data->env_str);
-	}
-	return (ret);
+		data->ret = ret;
 }
 
-int	nofork_builtin(char *fullpath)
+void	cmd_notfound(char *cmd_name)
 {
-	
-	if (!ft_strncmp(fullpath, "cd", 2))
-		return (1);
-	else if (!ft_strncmp(fullpath, "export", 6))
-		return (1);
-	else if (!ft_strncmp(fullpath, "unset", 5))
-		return (1);
-	else if (!ft_strncmp(fullpath, "exit", 4))
-		return (1);
-	else
-		return (0);
-}
-
-char	*get_path(char *c_name, char **envr)
-{
-	int		i;
-	char	*path_var;
-	char	**path_array;
-	char	*working_cmd;
-
-	i = 0;
-	if (envr[0])
-	{
-		while (envr[i] != NULL)
-		{
-			path_var = ft_strnstr(envr[i], "PATH=", 5);
-			if (path_var != NULL)
-				break ;
-			i++;
-		}
-		if (!path_var)
-			return (NULL);
-		path_var += 5;
-		path_array = ft_split(path_var, ':');
-		working_cmd = parse_path(path_array, c_name);
-		str_arr_free(path_array);
-		if (working_cmd)
-			return (working_cmd);
-	}
-	return (NULL);
-}
-
-char	*parse_path(char **path_array, char *c_name)
-{
-	int		i;
-	char	*working_cmd;
-	char	*slashcmd;
-	int		found;
-
-	slashcmd = ft_strjoin("/", c_name);
-	found = 0;
-	i = 0;
-	while (!found && path_array && path_array[i] != NULL)
-	{
-		working_cmd = ft_strjoin(path_array[i++], slashcmd);
-		if (access(working_cmd, F_OK) == 0)
-			found = 1;
-		if (!found)
-			free(working_cmd);
-	}
-	free(slashcmd);
-	if (found)
-		return (working_cmd);
-	else
-		return (NULL);
-}
-
-void print_fullpath(t_data *data)
-{
-	t_list *i;
-	t_cmd	*cmd;
-
-	i = data->cmd;
-	cmd = (t_cmd *)i->content;
-	while (i != NULL)
-	{
-		cmd = (t_cmd *) i->content;
-		printf("fullpath: %s\n", cmd->fullpath);
-		i = i->next;
-	}
-}
-
-void	cmd_notfound(void)
-{
-	ft_putendl_fd("Error: command not found", 2);
-	exit(EXIT_FAILURE);
+	printf("%s: command not found\n", cmd_name);
 }
 
  int	here_doc(char *lim, int expand, char **envr)
@@ -368,37 +194,10 @@ char	*extract_var(char *pvar)
 	char	*var;
 
 	to = is_validid(pvar, -1);
-	//printf("to %d %s\n", to, pvar);
 	if (to > 0)
 	{
 		var = ft_substr(pvar, 0, to);
 		return (var);
 	}
 	return (NULL);
-
 }
-
-/*
-char	*parse_var(char *src)
-{
-	char	*p;
-	char	*var;
-	int		from;
-	char	*new;
-	char	*tmp;
-
-	p = NULL;
-	from = 0;
-	p = ft_strchr(src, '$');
-	while (p)
-	{
-		tmp = ft_substr(src + from, 0, p - (src + from));
-		new = ft_strjoin(new, tmp);
-		new = ft_strjoin(new, find_var(envr, extract_var(p + 1)));
-		ft_putstr_fd(find_var(envr, var), fd);
-		p = ft_strchr(buf + from, '$');
-	}
-	if (!expand || !p)
-		ft_putendl_fd(buf + from, fd);
-}
-*/

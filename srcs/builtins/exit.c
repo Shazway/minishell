@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 17:05:10 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:33:33 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ int	check_digits(char **str)
 	return (0);
 }
 
-int	shell_exit(int ac, char **av)
+int	shell_exit(t_data *data, int ac, char **av)
 {
 	unsigned char	ret;
 
+	(void)data;
 	if (ac == 1)
 	{
 		printf("exit\n");

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:22:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:27:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ t_cmd	*init_cmd(void)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->fin = -1;
-	cmd->fout = -1;
 	cmd->name = NULL;
 	cmd->args = NULL;
 	cmd->ac = 0;
 	cmd->fullpath = NULL;
+	cmd->fin = -1;
+	cmd->fout = -1;
+	cmd->no_fork = 0;
+	cmd->builtin = 0;
 	return (cmd);
 }
