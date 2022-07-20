@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 18:10:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:30:30 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_name(char	*str);
 int		ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
-int	pwd(t_data *data, int ac, char **av);
+int		pwd(t_data *data, int ac, char **av);
 
 
 int		open_redirections(t_data *data);
@@ -165,5 +165,7 @@ void	msh_exit(t_data *data);
 
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);
+
+void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
 
 #endif

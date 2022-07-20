@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 18:08:56 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:45:33 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,9 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 {
 	int		r;
 	int		w;
-	int		j;
 
-	if (i == 0)
-		r = i;
-	else
-		r = i - 1;
-	if (i == n - 1)
-		w = i - 1;
-	else
-		w = i;
+	r = i - 1 * (i > 0);
+	w = i - 1 * (i == n - 1);
 	if (cmd->fin == -1)
 	{
 		if (i != 0 && n > 1)
@@ -81,9 +74,6 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 		dup2(cmd->fin, STDIN_FILENO);
 		close(cmd->fin);
 	}
-	j = 0;
-	while (j <= r && n > 1)
-		close(data->pips[j++].fd[0]);
 	if (cmd->fout == -1)
 	{
 		if (i != n - 1 && n > 1)
@@ -94,9 +84,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 		dup2(cmd->fout, STDOUT_FILENO);
 		close(cmd->fout);
 	}
-	j = 0;
-	while (j <= w && n > 1)
-		close(data->pips[j++].fd[1]);
+	close_unused_pipes(data->pips, r, w, n);
 	if (cmd->builtin)
 		exec_builtin(data, cmd);
 	else
@@ -104,9 +92,22 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 		if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 		{
 			cmd_notfound(cmd->name);
+			//perror("minishell: ");
 			exit(EXIT_FAILURE);
 		}
 	}
+}
+
+void	close_unused_pipes(t_pipex *pips, int r, int w, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i <= r && n > 1)
+		close(pips[i++].fd[0]);
+	i = 0;
+	while (i <= w && n > 1)
+		close(pips[i++].fd[1]);
 }
 
 void	exec_builtin(t_data *data, t_cmd *cmd)
