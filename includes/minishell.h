@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:10:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:21:40 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ typedef struct s_data
 {
 	char				*input;
 	char				**env_str;
+	char				*relative_path;
 	struct termios		termios;
-	t_list				*cmd;
 	int					n_cmd;
-	t_pipex				*pips;
 	unsigned char		ret;
+	t_pipex				*pips;
+	t_list				*cmd;
 }	t_data;
 
 //--------------CD---------------//
@@ -86,7 +87,7 @@ char	*get_name(char	*str);
 void	ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
-int	pwd(t_data *data);
+int		pwd(t_data *data);
 
 int		open_redirections(t_data *data);
 int		setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data);

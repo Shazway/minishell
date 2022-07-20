@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 01:26:53 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:23:10 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	msh_free(t_data *data)
 {
 	free(data->input);
+	free(data->relative_path);
 	str_arr_free(data->env_str);
 	free(data);
 	return (1);

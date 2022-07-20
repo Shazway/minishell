@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:11:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:25:02 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*new_pwd(char	*next_pwd, t_data *data)
 	char	*folder;
 	char	*tmp;
 
-	path = get_var("PWD", data);
+	path = ft_strdup(data->relative_path);
 	folder = ft_substr(next_pwd, 0, ft_strchr('/'));
 	if (!folder)
 	{
@@ -119,7 +119,7 @@ int	cd(int ac, char **str, t_data *data)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')
 		return (change_path(arg, arg, data));
-	path = get_var("PWD", data);
+	path = data->relative_path;
 	path = concat_path(path, arg);
 	printf("Path to go to is [%s]\n", path);
 	if (!path)

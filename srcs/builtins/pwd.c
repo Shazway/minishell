@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:09:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:22:52 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 int	pwd(t_data *data)
 {
-	char	*path;
-
-	path = get_var("PWD", data);
-	if (!path)
+	if (!data->relative_path)
 		return (-1);
-	printf("%s\n", path);
-	free(path);
+	printf("%s\n", data->relative_path);
 	return (0);
 }
