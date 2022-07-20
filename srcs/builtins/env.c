@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 01:37:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:59:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	*replace_variables(char	*str, t_data *data)
 	name = get_name(str);
 	true_var = get_var(name, data);
 	end = get_end(str, ft_strlen(start) + ft_strlen(name));
-	printf("DEBUG EXPAND : We need to join the [%s] [%s][%s][%s]\n", name, start, true_var, end);
 	tmp = str;
 	str = ft_strjoin(start, true_var);
 	free(tmp);

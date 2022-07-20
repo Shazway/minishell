@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 22:26:37 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:12:40 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 	int		type;
 
 	type = is_redirection(arg->args[i], 0);
-	work_path = pwd(data);
+	work_path = get_var("PWD", data);
 	final_path = concat_path(work_path, arg->args[i + 1]);
 	if (type == R_DIR)
 		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);

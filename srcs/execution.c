@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 23:44:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:11:05 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int	execmd(int ac, char *fullpath, char **args, t_data *data)
 		cd(ac, args + 1, data);
 	else if (!ft_strncmp(fullpath, "pwd", 3))
 	{
-		tmp = pwd(data);
+		tmp = get_var("PWD", data);
 		printf("%s\n", tmp);
 		free(tmp);
 		exit(EXIT_SUCCESS);

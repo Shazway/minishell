@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 01:37:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:57:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_name(char	*str)
 		end++;
 	if (end > 0)
 		end--;
-	return (ft_substr(str, start, end));
+	return (ft_substr(str, start, (end - start + 1)));
 }
 
 char	*get_var(char *str, t_data *data)
@@ -93,7 +93,6 @@ void	expand_variables(t_data *data)
 		{
 			while (arg->args[i] && ft_strchr(arg->args[i], '$'))
 				arg->args[i] = replace_variables(arg->args[i], data);
-			printf("DEBUG EXPAND : args[i] %s\n", arg->args[i]);
 			i++;
 		}
 		str_arr_display(arg->args);
