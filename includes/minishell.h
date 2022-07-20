@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 18:09:08 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:10:00 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 	char				*relative_path;
 	struct termios		termios;
 	int					n_cmd;
-	unsigned char		ret;
+	int					ret;
 	t_pipex				*pips;
 	t_list				*cmd;
 }	t_data;

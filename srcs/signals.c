@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 18:08:42 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:11:07 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	termios_setup(t_data *data)
 int	msh_init(t_data *data)
 {
 	g_signals.sa_sigaction = sig_info;
-	data->relative_path = get_var("PWD", data);
 	data->input = NULL;
 	data->env_str = NULL;
 	data->cmd = NULL;
@@ -64,6 +63,7 @@ int	msh_init(t_data *data)
 	data->ret = -1;
 	if (set_env(data))
 		return (1);
+	data->relative_path = get_var("PWD", data);
 	return (0);
 }
 
