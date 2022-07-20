@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:19:34 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:22:43 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int	pwd(t_data *data, int ac, char **av)
 {
+	char *path;
+
 	(void)ac;
 	(void)av;
-	printf("%s\n", get_pwd(data));
+	path = get_pwd(data);
+	printf("%s\n", path);
+	free(path);
 	return (0);
 }
 
@@ -26,8 +30,6 @@ char	*get_pwd(t_data *data)
 
 	path = get_var("PWD", data);
 	if (!path)
-		return (-1);
-	printf("%s\n", path);
-	free(path);
-	return (0);
+		return (NULL);
+	return (path);
 }
