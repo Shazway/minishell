@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/18 21:53:36 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:31:33 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ int	check_echo_n(char *str)
 	return (1);
 }
 
-int	ft_echo(int ac, char **av)
+int	ft_echo(t_data *data, int ac, char **av)
 {
 	int	i;
 	int	new_line;
 
+	(void)data;
 	new_line = 1;
 	i = 0;
 	if (ac == 1)

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 22:47:22 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:13:32 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    execute(t_data *data)
 {
-    t_cmd   *to_execute;
+    t_cmd   *cmd;
     t_list  *c_idx;
 	int		i;
 	int		pid;
@@ -22,50 +22,48 @@ void    execute(t_data *data)
 	i = 0;
     c_idx = data->cmd;
 	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
+	if (!data->pips)
+		msh_exit(data);
     while (c_idx != NULL)
     {
 		if (c_idx->next != NULL)
 			if (pipe(data->pips[i].fd) == (-1))
 				return ;
-		to_execute = c_idx->content;
-		if (to_execute->no_fork)
-		{
-			run_cmd(data, to_execute, i, data->n_cmd);
-		}
+		cmd = c_idx->content;
+		if (cmd->no_fork)
+			run_cmd(data, cmd, i, data->n_cmd);
 		else
 		{
         	pid = fork();
 			if (pid == -1)
 				return ;
 			else if (pid == 0)
-			{
-				printf("msh : %s\n", to_execute->name);
-				run_cmd(data, to_execute, i, data->n_cmd);
-			}
+				run_cmd(data, cmd, i, data->n_cmd);
 		}
 		c_idx = c_idx->next;
 		i++;
 	}
-	i = 0;
-	c_idx = data->cmd;
-	while (c_idx->next != NULL)
+	close_pipes(data->pips, data->n_cmd - 1);
+	wait_cmds(data);
+}
+
+void	wait_cmds(t_data *data)
+{
+	t_list	*i;
+	t_cmd	*cmd;
+
+	i = data->cmd;
+	cmd = i->content;
+	while (i)
 	{
-		close(data->pips[i].fd[0]);
-		close(data->pips[i].fd[1]);
-		c_idx = c_idx->next;
-		i++;
-	}
-	c_idx = data->cmd;
-	to_execute = c_idx->content;
-	while (c_idx != NULL)
-	{
-		//close(to_execute->fin)
-		close(to_execute->fin);
-		if (!nofork_builtin(to_execute->name))
-			wait(NULL);
-		c_idx = c_idx->next;
+		close_cmd_files(cmd);
+		if (!cmd->no_fork)
+			wait(&data->ret);
+		i = i->next;
 	}
 }
+
+
 
 void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 {
@@ -81,13 +79,10 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		w = c_idx - 1;
 	else
 		w = c_idx;
-	
 	if (cmd->fin == -1)
 	{
 		if (c_idx != 0 && data->n_cmd > 1)
-		{
 			dup2(data->pips[r].fd[0], STDIN_FILENO);
-		}
 	}
 	else
 	{
@@ -99,13 +94,8 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		close(data->pips[j++].fd[0]);
 	if (cmd->fout == -1)
 	{
-		
 		if (c_idx != n_cmd - 1 && data->n_cmd > 1)
-		{
-			
 			dup2(data->pips[w].fd[1], STDOUT_FILENO);
-			
-		}
 	}
 	else
 	{
@@ -115,56 +105,27 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 	j = 0;
 	while (j <= w && data->n_cmd > 1)
 		close(data->pips[j++].fd[1]);
-	if (execmd(cmd->ac, cmd->fullpath, cmd->args, data) == -1)
+	if (cmd->builtin)
+		exec_builtin(data, cmd);
+	else
 	{
-		//msh_free(data);
-		cmd_notfound(cmd->name);
-		exit(EXIT_FAILURE);
-	//	else
-		//	perrxit("Error");
+		if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
+		{
+			cmd_notfound(cmd->name);
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
-int	execmd(int ac, char *fullpath, char **args, t_data *data)
+void	exec_builtin(t_data *data, t_cmd *cmd)
 {
-	int		ret;
-	char	*tmp;
+	int	ret;
 
-
-
-	ret = 1;
-	if (!ft_strncmp(fullpath, "echo", 4))
-	{
-		ft_echo(ac, args + 1);
-		exit(EXIT_SUCCESS);
-	}
-	else if (!ft_strncmp(fullpath, "cd", 2))
-		cd(ac, args + 1, data);
-	else if (!ft_strncmp(fullpath, "pwd", 3))
-	{
-		tmp = pwd(data);
-		printf("%s\n", tmp);
-		free(tmp);
-		exit(EXIT_SUCCESS);
-	}
-	else if (!ft_strncmp(fullpath, "export", 6))
-	{
-		ft_export(data, ac, args);
-	}
-	else if (!ft_strncmp(fullpath, "unset", 5))
-		exit(EXIT_SUCCESS);
-	else if (!ft_strncmp(fullpath, "env", 3))
-	{
-		ft_env(data, ac);
-		exit(EXIT_SUCCESS);
-	}
-	else if (!ft_strncmp(fullpath, "exit", 4))
-		shell_exit(ac, args + 1);
+	ret = cmd->func(data, cmd->ac, cmd->args);
+	if (!cmd->no_fork)
+		exit(ret);
 	else
-	{
-		ret = execve(fullpath, args, data->env_str);
-	}
-	return (ret);
+		data->ret = ret;
 }
 
 void	cmd_notfound(char *cmd_name)

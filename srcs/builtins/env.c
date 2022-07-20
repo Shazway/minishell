@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 22:33:04 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:43:10 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_data *data, int ac)
+int	ft_env(t_data *data, int ac, char **av)
 {
 	(void)ac;
+	(void)av;
 	str_arr_display(data->env_str);
+	return (0);
 }
 
 int	set_env(t_data *data)

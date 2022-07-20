@@ -3,10 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:56 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/10 20:27:58 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:35:24 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+int ft_unset(t_data *data, int ac, char **av)
+{
+    (void)data;
+    (void)ac;
+    (void)av;
+    return (1);
+}

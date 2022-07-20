@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 13:34:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:39:13 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*pwd(t_data *data)
+int	pwd(t_data *data, int ac, char **av)
+{
+	(void)ac;
+	(void)av;
+	printf("%s\n", get_pwd(data));
+	return (0);
+}
+
+char	*get_pwd(t_data *data)
 {
 	char	*path;
 

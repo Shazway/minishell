@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 22:44:18 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:13:34 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,51 @@ int	msh_free(t_data *data)
 {
 	free(data->input);
 	str_arr_free(data->env_str);
+	ft_lstclear(&data->cmd, &free_cmd);
+	free_pipes(data);
 	free(data);
 	return (1);
 }
 
-void	free_pips(t_pipex *pips, int n)
+void	msh_exit(t_data *data)
+{
+	perror("minishell: ");
+	msh_free(data);
+	exit(EXIT_FAILURE);
+}
+
+void	free_pipes(t_data *data)
+{
+	close_pipes(data->pips, data->n_cmd - 1);
+	free(data->pips);
+	data->pips = NULL;
+}
+
+void	close_pipes(t_pipex *pips, int n)
 {
 	int	i;
 
 	if (!pips)
 		return ;
 	i = 0;
-	while (i < n - 1)
+	while (i < n)
 	{
-		close(pips[i].fd[0]);
-		close(pips[i].fd[1]);
+		if (pips[i].fd[0] != -1)
+			close(pips[i].fd[0]);
+		if (pips[i].fd[1] != -1)
+			close(pips[i].fd[1]);
 		i++;
 	}
-	free(pips);
+}
+
+void	close_cmd_files(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	if (cmd->fin != -1)
+		close(cmd->fin);
+	if (cmd->fout != -1)
+		close(cmd->fout);
 }
 
 void	free_cmd(void *vcmd)
@@ -44,10 +71,7 @@ void	free_cmd(void *vcmd)
 	free(cmd->name);
 	str_arr_free(cmd->args);
 	free(cmd->fullpath);
-	if (cmd->fin != -1)
-		close(cmd->fin);
-	if (cmd->fout != -1)
-		close(cmd->fout);
+	close_cmd_files(cmd);
 	free(cmd);
 }
 
@@ -70,10 +94,9 @@ void	prompt_loop(t_data *data)
 				open_redirections(data);
 				expand_variables(data);
 				search_cmds(data);
-				print_fullpath(data);
 				execute(data);
 				ft_lstclear(&data->cmd, &free_cmd);
-				free_pips(data->pips, data->n_cmd);
+				free_pipes(data);
 			}
 		}
 		free(data->input);

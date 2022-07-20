@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/19 22:23:42 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/20 15:40:58 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/builtins/pwd.c		\
 				$(SRC)/builtins/unset.c		\
 				$(SRC)/setup_redirections.c	\
+				$(SRC)/cmd.c			\
 				$(SRC)/execution.c			\
 				$(SRC)/main.c				\
 				$(SRC)/minishell.c			\
