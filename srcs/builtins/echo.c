@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 15:31:33 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:07:07 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	ft_echo(t_data *data, int ac, char **av)
 
 	(void)data;
 	new_line = 1;
-	i = 0;
+	i = 1;
 	if (ac == 1)
 		return (write(1, "\n", 1));
-	if (check_echo_n(av[0]))
+	if (check_echo_n(av[1]))
 	{
 		new_line = 0;
 		while (av[i] && check_echo_n(av[i]))
