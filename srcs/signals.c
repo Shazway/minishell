@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 22:47:57 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:32:47 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ int	msh_init(t_data *data)
 	return (0);
 }
 
-t_cmd	*init_cmd(void)
+t_cmd	*init_cmd(int i)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
+	cmd->i = i;
 	cmd->name = NULL;
 	cmd->args = NULL;
 	cmd->ac = 0;

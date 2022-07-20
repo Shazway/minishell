@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:19:11 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:50:44 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ void	msh_exit(t_data *data)
 	perror("minishell: ");
 	msh_free(data);
 	exit(EXIT_FAILURE);
+}
+
+void	alloc_pipes(t_data *data)
+{
+	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
+	if (!data->pips)
+		msh_exit(data);
+}
+
+void	init_pipe(t_data *data, int i)
+{
+	if (pipe(data->pips[i].fd) == (-1))
+		msh_exit(data);
 }
 
 void	free_pipes(t_data *data)

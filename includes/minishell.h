@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:20:14 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:50:53 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ typedef int (*FP)(t_data *, int, char **);
 
 typedef struct s_cmd
 {
+	int		i;
 	char	*name;
 	char	**args;
 	int		ac;
-	char	*fullpath;
+	char	*fullpath;	
 	int		fin;
 	int		fout;
 	int		no_fork;
@@ -108,7 +109,7 @@ int		parsing(t_data *data);
 void	print_result(t_cmd *token);
 void	split_spaces(t_cmd *token, char *content);
 void	del_token(void *content);
-t_cmd	*init_cmd(void);
+t_cmd	*init_cmd(int i);
 
 char	*concat_redir(char *str, char *redir, int *i, int is_double);
 char	*check_redir(char *str, int *i);
@@ -139,7 +140,7 @@ void	free_cmd(void *vcmd);
 void	search_cmds(t_data *data);
 int		is_builtin(t_cmd *cmd);
 void	execute(t_data *data);
-void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd);
+void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 char	*get_path(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
 void	print_fullpath(t_data *data);
@@ -159,5 +160,8 @@ int		ft_unset(t_data *data, int ac, char **av);
 char	*get_pwd(t_data *data);
 void	wait_cmds(t_data *data);
 void	msh_exit(t_data *data);
+
+void	alloc_pipes(t_data *data);
+void	init_pipe(t_data *data, int i);
 
 #endif

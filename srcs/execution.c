@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:19:21 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:08:16 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,26 @@ void    execute(t_data *data)
 {
     t_cmd   *cmd;
     t_list  *c_idx;
-	int		i;
 	int		pid;
 
-	i = 0;
+	alloc_pipes(data);
     c_idx = data->cmd;
-	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
-	if (!data->pips)
-		msh_exit(data);
     while (c_idx != NULL)
     {
-		if (c_idx->next != NULL)
-			if (pipe(data->pips[i].fd) == (-1))
-				return ;
 		cmd = c_idx->content;
+		if (c_idx->next != NULL)
+			init_pipe(data, cmd->i);
 		if (cmd->no_fork)
-			run_cmd(data, cmd, i, data->n_cmd);
+			run_cmd(data, cmd, cmd->i, data->n_cmd);
 		else
 		{
         	pid = fork();
 			if (pid == -1)
 				return ;
 			else if (pid == 0)
-				run_cmd(data, cmd, i, data->n_cmd);
+				run_cmd(data, cmd, cmd->i, data->n_cmd);
 		}
 		c_idx = c_idx->next;
-		i++;
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
 	wait_cmds(data);
@@ -63,23 +57,23 @@ void	wait_cmds(t_data *data)
 	}
 }
 
-void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
+void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 {
 	int		r;
 	int		w;
 	int		j;
 
-	if (c_idx == 0)
-		r = c_idx;
+	if (i == 0)
+		r = i;
 	else
-		r = c_idx - 1;
-	if (c_idx == n_cmd - 1)
-		w = c_idx - 1;
+		r = i - 1;
+	if (i == n - 1)
+		w = i - 1;
 	else
-		w = c_idx;
+		w = i;
 	if (cmd->fin == -1)
 	{
-		if (c_idx != 0 && data->n_cmd > 1)
+		if (i != 0 && n > 1)
 			dup2(data->pips[r].fd[0], STDIN_FILENO);
 	}
 	else
@@ -88,11 +82,11 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		close(cmd->fin);
 	}
 	j = 0;
-	while (j <= r && data->n_cmd > 1)
+	while (j <= r && n > 1)
 		close(data->pips[j++].fd[0]);
 	if (cmd->fout == -1)
 	{
-		if (c_idx != n_cmd - 1 && data->n_cmd > 1)
+		if (i != n - 1 && n > 1)
 			dup2(data->pips[w].fd[1], STDOUT_FILENO);
 	}
 	else
@@ -101,7 +95,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int c_idx, int n_cmd)
 		close(cmd->fout);
 	}
 	j = 0;
-	while (j <= w && data->n_cmd > 1)
+	while (j <= w && n > 1)
 		close(data->pips[j++].fd[1]);
 	if (cmd->builtin)
 		exec_builtin(data, cmd);
