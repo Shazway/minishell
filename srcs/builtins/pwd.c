@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:29:40 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:31:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	pwd(t_data *data, int ac, char **av)
 {
-	char *path;
-
 	(void)ac;
 	(void)av;
 	if (!data->relative_path)

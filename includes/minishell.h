@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:27:40 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:31:18 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ char	*get_name(char	*str);
 int		ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
-int		pwd(t_data *data);
+int	pwd(t_data *data, int ac, char **av);
+
 
 int		open_redirections(t_data *data);
 int		setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data);
