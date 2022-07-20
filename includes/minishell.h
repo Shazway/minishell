@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 18:10:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:17:05 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_cmd
 	char	*name;
 	char	**args;
 	int		ac;
-	char	*fullpath;	
+	char	*fullpath;
 	int		fin;
 	int		fout;
 	int		no_fork;

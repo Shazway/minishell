@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 15:42:13 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:03:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	search_cmds(t_data *data)
 	{
 		current_cmd = cmd_idx->content;
 		current_cmd->fullpath = ft_strdup(current_cmd->name);
-        current_cmd->builtin = is_builtin(current_cmd);
+		current_cmd->builtin = is_builtin(current_cmd);
 		if (!current_cmd->builtin)
 		{
 			fullpath = get_path(current_cmd->name, data->env_str);

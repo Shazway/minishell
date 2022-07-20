@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:27:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:18:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,13 @@ int	cd(t_data *data, int ac, char **str)
 		return (printf("minishell: cd: too many arguments\n"));
 	if (ac == 1)
 		return (cd_home(get_var("HOME", data), "HOME"));
-	printf("Path or folder given is [%s]\n", str[0]);
-	arg = ft_strdup(str[0]);
+	printf("Path or folder given is [%s]\n", str[1]);
+	arg = ft_strdup(str[1]);
 	if (is_dash(arg) != 0)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')
 		return (change_path(arg, arg, data));
-	path = data->relative_path;
+	path = ft_strdup(data->relative_path);
 	path = concat_path(path, arg);
 	printf("Path to go to is [%s]\n", path);
 	if (!path)
