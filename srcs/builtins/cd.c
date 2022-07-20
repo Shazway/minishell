@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 17:20:01 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:27:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*new_pwd(char	*next_pwd, t_data *data)
 	char	*folder;
 	char	*tmp;
 
-	path = get_var("PWD", data);
+	path = ft_strdup(data->relative_path);
 	folder = ft_substr(next_pwd, 0, ft_strchr('/'));
 	if (!folder)
 	{
@@ -119,7 +119,7 @@ int	cd(t_data *data, int ac, char **str)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')
 		return (change_path(arg, arg, data));
-	path = get_pwd(data);
+	path = data->relative_path;
 	path = concat_path(path, arg);
 	printf("Path to go to is [%s]\n", path);
 	if (!path)

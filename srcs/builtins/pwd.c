@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:22:43 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:31:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	pwd(t_data *data, int ac, char **av)
 {
-	char *path;
-
 	(void)ac;
 	(void)av;
-	path = get_pwd(data);
-	printf("%s\n", path);
-	free(path);
+	if (!data->relative_path)
+		return (-1);
+	printf("%s\n", data->relative_path);
 	return (0);
 }
 
