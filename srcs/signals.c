@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 22:24:29 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:21:27 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ struct sigaction	g_signals;
 
 int	signal_intercept(void)
 {
+	if (sigaction(SIGCHLD, &(g_signals), NULL) == -1)
+		return (1);
 	if (sigaction(SIGINT, &(g_signals), NULL) == -1)
 		return (1);
 	if (sigaction(SIGQUIT, &(g_signals), NULL) == -1)
@@ -23,10 +25,20 @@ int	signal_intercept(void)
 	return (0);
 }
 
-void	sig_info(int signal, siginfo_t *s, void *trash)
+void	secondary_handler(int signal, siginfo_t *s, void *trash)
 {
-	(void)trash;
 	(void)s;
+	(void)trash;
+	if (signal == SIGINT)
+		return ;
+	if (signal == SIGQUIT)
+		return ;
+}
+
+void	sig_info_main(int signal, siginfo_t *s, void *trash)
+{
+	(void)s;
+	(void)trash;
 	if (signal == SIGINT)
 	{
 		printf("^C\n");
@@ -54,7 +66,7 @@ int	termios_setup(t_data *data)
 
 int	msh_init(t_data *data)
 {
-	g_signals.sa_sigaction = sig_info;
+	g_signals.sa_sigaction = sig_info_main;
 	data->input = NULL;
 	data->env_str = NULL;
 	data->cmd = NULL;

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/21 22:03:34 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:21:57 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define R_DDIR 2
 # define L_DIR 3
 # define L_DDIR 4
+
+extern struct sigaction	g_signals;
 
 typedef struct s_pipex
 {
@@ -119,8 +121,9 @@ char	*check_redir(char *str, int *i);
 int		open_redirections(t_data *data);
 char	*separate_redir(char *str);
 
+void	secondary_handler(int signal, siginfo_t *s, void *trash);
 int		signal_intercept(void);
-void	sig_info(int signal, siginfo_t *s, void *trash);
+void	sig_info_main(int signal, siginfo_t *s, void *trash);
 int		termios_setup(t_data *data);
 
 void	check_quote(char *type, char c);

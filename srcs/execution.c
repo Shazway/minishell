@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 21:34:50 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:21:39 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    execute(t_data *data)
 			run_cmd(data, cmd, cmd->i, data->n_cmd);
 		else
 		{
-        	pid = fork();
+			pid = fork();
 			if (pid == -1)
 				return ;
 			else if (pid == 0)
