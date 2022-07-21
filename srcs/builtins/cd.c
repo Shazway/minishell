@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/22 00:20:08 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 01:54:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*previous_dir(char *path)
 	while (path && i > 0 && path[i] != '/')
 		i--;
 	if (i == 0)
-		return (path);
+		return (ft_strdup("/"));
 	tmp = path;
 	path = ft_substr(path, 0, i);
 	free(tmp);
@@ -53,7 +53,6 @@ char	*previous_dir(char *path)
 char	*next_dir(char *foldername)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	if (foldername && foldername[i] && foldername[i] == '/')
@@ -64,9 +63,7 @@ char	*next_dir(char *foldername)
 		return (NULL);
 	if (foldername[i] == '/')
 		i++;
-	tmp = foldername;
 	foldername = ft_substr(foldername, i, ft_strlen(foldername));
-	free(tmp);
 	return (foldername);
 }
 
@@ -103,9 +100,13 @@ void	new_pwd(char *foldername, char **new_path)
 
 	if (foldername && foldername[0] == '/')
 	{
+		//--PAS TOUCHER, ICI IL N'Y A PAS DE LEAK NI DE DOUBLE FREE è_é !!!--//
+		tmp = *new_path;
 		*new_path = ft_strdup(foldername);
-		//free(foldername);
+		free(tmp);
+		free(foldername);
 		return ;
+		//-------------------------------------------------------------------//
 	}
 	if (ft_strlen(foldername) > 0
 		&& foldername[ft_strlen(foldername) - 1] != '/')
@@ -113,11 +114,14 @@ void	new_pwd(char *foldername, char **new_path)
 	printf("FOLDERNAME is : %s\n", foldername);
 	while (foldername && ft_strchr(foldername, '/'))
 	{
+		printf("cd .. TEST\n");
 		tmp = foldername;
 		foldername = find_new_pwd(foldername, new_path);
 		free(tmp);
+		if (!ft_strchr(foldername, '/'))
+			return ;
 	}
-	//free(foldername);
+	free(tmp);
 }
 
 
@@ -137,8 +141,8 @@ int	change_path(char *goal, char *foldername, t_data *data)
 		tmp = ft_strdup(foldername);
 		new_pwd(tmp, &(data->relative_path));
 		printf("NEW PWD[%s]\n", data->relative_path);
+		//free(tmp);
 		free(goal);
-		free(tmp);
 		free(foldername);
 	}
 	return (1);
