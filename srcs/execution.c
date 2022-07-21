@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/22 00:21:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 01:10:26 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    execute(t_data *data)
+void	execute(t_data *data)
 {
-    t_cmd   *cmd;
-    t_list  *c_idx;
+	t_cmd	*cmd;
+	t_list	*c_idx;
 	int		pid;
 
 	alloc_pipes(data);
-    c_idx = data->cmd;
-    while (c_idx != NULL)
-    {
+	c_idx = data->cmd;
+	while (c_idx != NULL)
+	{
 		cmd = c_idx->content;
 		if (c_idx->next != NULL)
 			init_pipe(data, cmd->i);
