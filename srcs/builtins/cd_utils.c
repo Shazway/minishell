@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:24:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:10:20 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ int	is_dash(char	*str)
 	return (ret);
 }
 
-int	cd_home(char *path, char *name)
+int	cd_home(char *path, char *name, t_data *data)
 {
 	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
 	{
 		if (chdir(path) == -1)
 			printf("minishell: cd: HOME not set\n");
+		else
+			data->relative_path = ft_strdup(path);
 		free(path);
 		return (1);
 	}
@@ -53,6 +55,8 @@ int	cd_home(char *path, char *name)
 	{
 		if (chdir(path) == -1)
 			printf("minishell: cd: OLDPWD not set\n");
+		else
+			data->relative_path = get_var("OLDPWD", data);
 		free(path);
 		return (1);
 	}
@@ -72,9 +76,9 @@ int	cd_dash(char *arg, t_data *data)
 	{
 		tmp = ft_strdup(data->relative_path);
 		printf("%s\n", tmp);
-		return (cd_home(tmp, "HOME"));
+		return (cd_home(tmp, "HOME", data));
 	}
 	if (ret == 2)
-		return (cd_home(get_var("OLDPWD", data), "OLDPWD"));
+		return (cd_home(get_var("OLDPWD", data), "OLDPWD", data));
 	return (-1);
 }

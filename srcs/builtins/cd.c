@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 02:21:48 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 16:32:15 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	*concat_path(char *goal, char *folder_name)
 char	*previous_dir(char *path)
 {
 	int		i;
+	char	*tmp;
 
-	printf("[%s]\n", path);
 	i = ft_strlen(path);
 	while (path && i > 0 && path[i] == '/')
 		i--;
@@ -44,15 +44,16 @@ char	*previous_dir(char *path)
 		i--;
 	if (i == 0)
 		return (path);
-	printf("PREVIOUS PATH before change %s\n", path);
+	tmp = path;
 	path = ft_substr(path, 0, i);
-	printf("PREVIOUS PATH after change %s\n", path);
+	free(tmp);
 	return (path);
 }
 
 char	*next_dir(char *foldername)
 {
 	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (foldername && foldername[i] && foldername[i] == '/')
@@ -63,7 +64,9 @@ char	*next_dir(char *foldername)
 		return (NULL);
 	if (foldername[i] == '/')
 		i++;
+	tmp = foldername;
 	foldername = ft_substr(foldername, i, ft_strlen(foldername));
+	free(tmp);
 	return (foldername);
 }
 
@@ -82,13 +85,11 @@ char	*find_new_pwd(char *foldername, char **goal)
 	free(tmp);
 	if (!ft_strncmp(to_go, "..", 3))
 	{
-		printf("PREVIOUS\n");
 		*goal = previous_dir(*goal);
 		foldername = next_dir(foldername);
 	}
 	else
 	{
-		printf("NEXT\n");
 		*goal = concat_path(*goal, to_go);
 		foldername = next_dir(foldername);
 	}
@@ -96,31 +97,32 @@ char	*find_new_pwd(char *foldername, char **goal)
 	return (foldername);
 }
 
-char	*new_pwd(char *foldername, char **new_path)
+void	new_pwd(char *foldername, char **new_path)
 {
 	char	*tmp;
 
 	if (foldername && foldername[0] == '/')
-		return (ft_strdup(foldername));
-	tmp = foldername;
-	if (!ft_strchr(foldername, '/'))
+	{
+		*new_path = ft_strdup(foldername);
+		free(foldername);
+		return ;
+	}
+	if (ft_strlen(foldername) > 0
+		&& foldername[ft_strlen(foldername) - 1] != '/')
 		foldername = ft_strjoin(foldername, "/");
-	free(tmp);
-	tmp = foldername;
+	printf("FOLDERNAME is : %s\n", foldername);
 	while (foldername && ft_strchr(foldername, '/'))
 	{
-		printf("DEBUG CD : Foldername is [%s]\n", foldername);
+		tmp = foldername;
 		foldername = find_new_pwd(foldername, new_path);
+		free(tmp);
 	}
-	free(tmp);
-	return (*new_path);
+	free(foldername);
 }
 
 
 int	change_path(char *goal, char *foldername, t_data *data)
 {
-	//char	*old_path;
-
 	if (chdir(goal) == -1)
 	{
 		printf("cd: %s: No such file or directory\n", foldername);
@@ -130,11 +132,10 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	else
 	{
 		printf("OLD PWD[%s]\n", data->relative_path);
-		//old_path = data->relative_path;
-		data->relative_path = new_pwd(foldername, &(data->relative_path));
-		//free(old_path);
+		new_pwd(ft_strdup(foldername), &(data->relative_path));
 		printf("NEW PWD[%s]\n", data->relative_path);
 		free(goal);
+		free(foldername);
 	}
 	return (1);
 }
@@ -147,16 +148,14 @@ int	cd(t_data *data, int ac, char **str)
 	if (ac > 2)
 		return (printf("minishell: cd: too many arguments\n"));
 	if (ac == 1)
-		return (cd_home(get_var("HOME", data), "HOME"));
-	printf("Path or folder given is [%s]\n", str[1]);
+		return (cd_home(get_var("HOME", data), "HOME", data));
 	arg = ft_strdup(str[1]);
 	if (is_dash(arg) != 0)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')
-		return (change_path(arg, arg, data));
+		return (change_path(arg, ft_strdup(arg), data));
 	path = ft_strdup(data->relative_path);
 	path = concat_path(path, arg);
-	printf("Path to go to is [%s]\n", path);
 	if (!path)
 		return (-1);
 	if (change_path(path, arg, data) == -1)

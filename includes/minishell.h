@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 23:46:43 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:10:10 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ typedef struct s_cmd
 //--------------CD---------------//
 int		cd(t_data *data, int ac, char **str);
 int		is_double_dash(char *str);
-int		is_dash(char	*str);
-int		cd_home(char *path, char *name);
+int		is_dash(char	*str);int
+cd_home(char *path, char *name, t_data *data);
 int		cd_dash(char *arg, t_data *data);
 char	*concat_path(char *s1, char *s2);
 int		change_path(char *goal, char *foldername, t_data *data);
