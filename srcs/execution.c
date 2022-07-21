@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 21:26:22 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/21 21:34:50 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 			fdtest = -1;
 			if (!cmd->fullpath)
 				cmd_notfound(cmd->name);
-			else if (access(cmd->fullpath, X_OK) == -1)
-				perror("minishell: ");
 			else if (open(cmd->fullpath, O_WRONLY | O_APPEND) == -1)
+				perror("minishell: ");
+			else if (access(cmd->fullpath, X_OK) == -1)
 				perror("minishell: ");
 			if (fdtest != -1)
 				close(fdtest);

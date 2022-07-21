@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 16:32:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:20:08 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	new_pwd(char *foldername, char **new_path)
 	if (foldername && foldername[0] == '/')
 	{
 		*new_path = ft_strdup(foldername);
-		free(foldername);
+		//free(foldername);
 		return ;
 	}
 	if (ft_strlen(foldername) > 0
@@ -117,12 +117,14 @@ void	new_pwd(char *foldername, char **new_path)
 		foldername = find_new_pwd(foldername, new_path);
 		free(tmp);
 	}
-	free(foldername);
+	//free(foldername);
 }
 
 
 int	change_path(char *goal, char *foldername, t_data *data)
 {
+	char	*tmp;
+
 	if (chdir(goal) == -1)
 	{
 		printf("cd: %s: No such file or directory\n", foldername);
@@ -132,9 +134,11 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	else
 	{
 		printf("OLD PWD[%s]\n", data->relative_path);
-		new_pwd(ft_strdup(foldername), &(data->relative_path));
+		tmp = ft_strdup(foldername);
+		new_pwd(tmp, &(data->relative_path));
 		printf("NEW PWD[%s]\n", data->relative_path);
 		free(goal);
+		free(tmp);
 		free(foldername);
 	}
 	return (1);
@@ -145,6 +149,7 @@ int	cd(t_data *data, int ac, char **str)
 	char	*path;
 	char	*arg;
 
+	arg = NULL;
 	if (ac > 2)
 		return (printf("minishell: cd: too many arguments\n"));
 	if (ac == 1)
@@ -160,5 +165,6 @@ int	cd(t_data *data, int ac, char **str)
 		return (-1);
 	if (change_path(path, arg, data) == -1)
 		return (-1);
+	//free(arg);
 	return (1);
 }

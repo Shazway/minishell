@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/21 15:10:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 23:39:56 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,18 @@ int	is_dash(char	*str)
 
 int	cd_home(char *path, char *name, t_data *data)
 {
+	char	*tmp;
+
 	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
 	{
 		if (chdir(path) == -1)
 			printf("minishell: cd: HOME not set\n");
 		else
+		{
+			tmp = data->relative_path;
 			data->relative_path = ft_strdup(path);
+			free(tmp);
+		}
 		free(path);
 		return (1);
 	}
@@ -56,7 +62,11 @@ int	cd_home(char *path, char *name, t_data *data)
 		if (chdir(path) == -1)
 			printf("minishell: cd: OLDPWD not set\n");
 		else
+		{
+			tmp = data->relative_path;
 			data->relative_path = get_var("OLDPWD", data);
+			free(tmp);
+		}
 		free(path);
 		return (1);
 	}

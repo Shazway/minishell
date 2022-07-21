@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/21 17:19:09 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:15:48 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	msh_free(t_data *data)
 	str_arr_free(data->env_str);
 	ft_lstclear(&data->cmd, &free_cmd);
 	free_pipes(data);
+	free(data->prompt);
 	free(data);
 	return (1);
 }
@@ -89,14 +90,33 @@ void	free_cmd(void *vcmd)
 	free(cmd);
 }
 
+void	set_prompt_string(t_data *data)
+{
+	char	*tmp;
+	char	*current_folder;
+	char	*crf_dolar;
+
+	current_folder = NULL;
+	crf_dolar = NULL;
+	tmp = NULL;
+	current_folder = ft_strrchr(data->relative_path, '/');
+	crf_dolar = ft_strjoin(current_folder + 1, " ▶\002 \001\033[1;34m\002""\001\033[0m\002");
+	tmp = data->prompt;
+	data->prompt = ft_strjoin("\001\033[1;32m\002""\001╔\002 "
+				"\001\033[1;32m\002"" minishell \001╝\002 \001\033[1;30m\002""\001"
+				, crf_dolar);
+	free(crf_dolar);
+	free(tmp);
+}
+
 void	prompt_loop(t_data *data)
 {
 	while (1)
 	{
 		if (signal_intercept())
 			exit(1);
-		data->input = readline("\001\033[1;36m\002""\001➜\002 "
-				"\001\033[1;32m\002"" minishell ""\001\033[0m\002");
+		set_prompt_string(data);
+		data->input = readline(data->prompt);
 		if (!data->input)
 			break ;
 		else

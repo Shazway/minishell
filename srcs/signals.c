@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 18:11:07 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/21 22:24:29 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	msh_init(t_data *data)
 	if (set_env(data))
 		return (1);
 	data->relative_path = get_var("PWD", data);
+	data->prompt = NULL;
 	return (0);
 }
 

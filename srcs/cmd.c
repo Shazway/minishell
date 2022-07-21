@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 21:28:15 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:12:20 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
+int		is_path(char *s)
+{
+	(void)s;
+	return (0);
+}
+
 char	*get_path(char *c_name, char **envr)
 {
 	int		i;
@@ -105,7 +111,6 @@ char	*parse_path(char **path_array, char *c_name)
 	while (!found && path_array && path_array[i] != NULL)
 	{
 		working_cmd = ft_strjoin(path_array[i++], slashcmd);
-		printf("working_cmd : %s\n", working_cmd);
 		if (access(working_cmd, F_OK) == 0)
 			found = 1;
 		if (!found)
