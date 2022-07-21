@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/21 15:10:10 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 17:30:49 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define R_DDIR 2
 # define L_DIR 3
 # define L_DDIR 4
+
+extern struct sigaction	g_signals;
 
 typedef struct s_pipex
 {
@@ -70,8 +72,8 @@ typedef struct s_cmd
 //--------------CD---------------//
 int		cd(t_data *data, int ac, char **str);
 int		is_double_dash(char *str);
-int		is_dash(char	*str);int
-cd_home(char *path, char *name, t_data *data);
+int		is_dash(char	*str);
+int		cd_home(char *path, char *name, t_data *data);
 int		cd_dash(char *arg, t_data *data);
 char	*concat_path(char *s1, char *s2);
 int		change_path(char *goal, char *foldername, t_data *data);
@@ -118,8 +120,9 @@ char	*check_redir(char *str, int *i);
 int		open_redirections(t_data *data);
 char	*separate_redir(char *str);
 
+void	secondary_handler(int signal, siginfo_t *s, void *trash);
 int		signal_intercept(void);
-void	sig_info(int signal, siginfo_t *s, void *trash);
+void	sig_info_main(int signal, siginfo_t *s, void *trash);
 int		termios_setup(t_data *data);
 
 void	check_quote(char *type, char c);

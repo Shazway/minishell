@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/21 02:46:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 17:19:45 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 	char	*work_path;
 	char	*final_path;
 	int		type;
-	//char	*tmp;
 
 	type = is_redirection(arg->args[i], 0);
 	work_path = ft_strdup(data->relative_path);

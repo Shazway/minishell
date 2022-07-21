@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 02:48:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:15:32 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    execute(t_data *data)
 			run_cmd(data, cmd, cmd->i, data->n_cmd);
 		else
 		{
-        	pid = fork();
+			pid = fork();
 			if (pid == -1)
 				return ;
 			else if (pid == 0)
@@ -61,7 +61,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 {
 	int		r;
 	int		w;
-
+	
 	r = i - 1 * (i > 0);
 	w = i - 1 * (i == n - 1);
 	if (cmd->fin == -1)
