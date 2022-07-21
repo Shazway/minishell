@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 16:57:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:05:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*get_var(char *str, t_data *data)
 		if (!ft_strncmp(str, data->env_str[i], len))
 		{
 			dest = ft_strdup(ft_strchr(data->env_str[i], '=') + 1);
-			printf("dest is %s\n", dest);
 			return (dest);
 		}
 		i++;

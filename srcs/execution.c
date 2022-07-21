@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/20 23:46:11 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/21 02:48:59 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,12 @@ void	cmd_notfound(char *cmd_name)
 		}
 		p = ft_strnstr(buf, lim, len_lim);
 		if (p && p == buf && p[len_lim] == '\0')
+		{
+			free(buf);
 			break ;
+		}
 		heredoc_writer(fd, buf, expand, envr);
+		free(buf);
 	}
 	close(fd);
 	fd = open("/tmp/msh_here_doc", O_RDONLY);
