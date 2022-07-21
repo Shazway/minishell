@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/21 02:48:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/21 21:26:22 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 {
 	int		r;
 	int		w;
+	int		fdtest;
 
 	r = i - 1 * (i > 0);
 	w = i - 1 * (i == n - 1);
@@ -91,8 +92,15 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 	{
 		if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 		{
-			cmd_notfound(cmd->name);
-			//perror("minishell: ");
+			fdtest = -1;
+			if (!cmd->fullpath)
+				cmd_notfound(cmd->name);
+			else if (access(cmd->fullpath, X_OK) == -1)
+				perror("minishell: ");
+			else if (open(cmd->fullpath, O_WRONLY | O_APPEND) == -1)
+				perror("minishell: ");
+			if (fdtest != -1)
+				close(fdtest);
 			exit(EXIT_FAILURE);
 		}
 	}
