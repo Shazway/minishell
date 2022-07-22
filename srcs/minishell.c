@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/22 16:12:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/22 22:45:09 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,12 @@ void	prompt_loop(t_data *data)
 		{
 			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
+			if (ft_strchr(data->input, '$'))
+				data->input = expand_variables(data, data->input);
+			printf("After expand : %s\n", data->input);
 			if (parsing(data))
 			{
 				open_redirections(data);
-				expand_variables(data);
 				search_cmds(data);
 				execute(data);
 				ft_lstclear(&data->cmd, &free_cmd);
