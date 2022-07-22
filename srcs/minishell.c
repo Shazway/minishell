@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/22 00:21:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:39:53 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ void	set_prompt_string(t_data *data)
 	crf_dolar = NULL;
 	tmp = NULL;
 	current_folder = ft_strrchr(data->relative_path, '/');
-	crf_dolar = ft_strjoin(current_folder + 1, " ▶\002 \001\033[1;34m\002""\001\033[0m\002");
+	crf_dolar = ft_strjoin(current_folder + 1, "\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
 	tmp = data->prompt;
 	data->prompt = ft_strjoin("\001\033[1;32m\002""\001╔\002 "
-				"\001\033[1;32m\002"" minishell \001╝\002 \001\033[1;30m\002""\001"
+				"\001\033[1;32m\002"" minishell \001╝\002 \001\033[1;30m\002"""
 				, crf_dolar);
 	free(crf_dolar);
 	free(tmp);
