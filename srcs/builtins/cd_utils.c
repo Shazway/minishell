@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/21 23:39:56 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/23 00:49:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ int	is_dash(char	*str)
 	return (ret);
 }
 
+void	swap_paths(t_data *data)
+{
+	char	*tmp;
+
+	tmp = data->old_path;
+	data->old_path = data->relative_path;
+	data->relative_path = tmp;
+}
+
 int	cd_home(char *path, char *name, t_data *data)
 {
 	char	*tmp;
@@ -50,6 +59,7 @@ int	cd_home(char *path, char *name, t_data *data)
 			printf("minishell: cd: HOME not set\n");
 		else
 		{
+			swap_paths(data);
 			tmp = data->relative_path;
 			data->relative_path = ft_strdup(path);
 			free(tmp);
@@ -63,6 +73,7 @@ int	cd_home(char *path, char *name, t_data *data)
 			printf("minishell: cd: OLDPWD not set\n");
 		else
 		{
+			swap_paths(data);
 			tmp = data->relative_path;
 			data->relative_path = get_var("OLDPWD", data);
 			free(tmp);
@@ -76,7 +87,6 @@ int	cd_home(char *path, char *name, t_data *data)
 int	cd_dash(char *arg, t_data *data)
 {
 	int		ret;
-	char	*tmp;
 
 	ret = is_dash(arg);
 	free(arg);
@@ -84,11 +94,10 @@ int	cd_dash(char *arg, t_data *data)
 		printf("minishell: --: invalid option\n");
 	if (ret == 1)
 	{
-		tmp = ft_strdup(data->relative_path);
-		printf("%s\n", tmp);
-		return (cd_home(tmp, "HOME", data));
+		printf("%s\n", data->old_path);
+		return (cd_home(ft_strdup(data->old_path), "OLDPWD", data));
 	}
 	if (ret == 2)
-		return (cd_home(get_var("OLDPWD", data), "OLDPWD", data));
+		return (cd_home(get_var("HOME", data), "HOME", data));
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/22 22:31:37 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 00:25:14 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_data
 	char				*input;
 	char				**env_str;
 	char				*relative_path;
+	char				*old_path;
 	struct termios		termios;
 	int					n_cmd;
 	int					ret;

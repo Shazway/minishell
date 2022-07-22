@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/22 01:12:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 00:26:10 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	msh_init(t_data *data)
 	if (set_env(data))
 		return (1);
 	data->relative_path = get_var("PWD", data);
+	data->old_path = ft_strdup(data->relative_path);
 	data->prompt = NULL;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/22 17:10:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 00:40:37 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	}
 	else
 	{
+		free(data->old_path);
+		data->old_path = ft_strdup(data->relative_path);
 		printf("OLD PWD[%s]\n", data->relative_path);
 		if (!foldername)
 		{
