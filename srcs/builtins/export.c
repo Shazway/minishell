@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 22:23:41 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/23 23:01:31 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	ft_export(t_data *data, int ac, char **av)
 				entry[j] = ft_strdup(av[i]);
 				j++;
 			}
-			else if (!is_validid(av[i], len) && p_eq)
+			else if (p_eq)
 				printf("minishell: export: `%s': not a valid identifier\n",
 					av[i]);
 			i++;
 		}
 		update_env(data, entry, j);
-		printf("ENTRY IS ac %d\n", ac);
+		printf("ENTRY IS ac %s\n", entry[0]);
 		str_arr_display(entry);
 		printf("ENTRY END\n");
 		str_arr_free(entry);

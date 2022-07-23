@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 22:47:19 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 00:19:07 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,11 +154,13 @@ int	change_path(char *goal, char *foldername, t_data *data)
 
 void	export_paths(t_data *data)
 {
-	char	*arg[3];
+	char	**arg;
 
-	arg[2] = NULL;
-	arg[0] = ft_strjoin("PWD=", data->relative_path);
-	arg[1] = ft_strjoin("OLDPWD=", data->old_path);
+	arg = malloc(4 * sizeof(char *));
+	arg[3] = NULL;
+	arg[0] = ft_strdup("export");
+	arg[1] = ft_strjoin("PWD=", data->relative_path);
+	arg[2] = ft_strjoin("OLDPWD=", data->old_path);
 	ft_export(data, 3, arg);
 	str_arr_free(arg);
 }

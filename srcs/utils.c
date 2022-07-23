@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/24 00:01:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 00:19:17 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,33 @@ char	**str_arr_add(char **sarr, char **entry, int len_entry)
 		j++;
 		i++;
 	}
+	//free(sarr);
+	return (new);
+}
+
+char	**str_arr_del(char **sarr, char **entry, int len_entry)
+{
+	int		len_sarr;
+	char	**new;
+	int		i;
+	int		j;
+
+	len_sarr = str_arr_size(sarr);
+	new = malloc(sizeof(char *) * (len_sarr - len_entry + 1));
+	if (!new)
+		return (NULL);
+	new[len_sarr - len_entry] = NULL;
+	i = 0;
+	j = 0;
+	while (i < len_sarr)
+	{
+		if (strncmp(sarr[i], entry[j], ft_strlen(entry[j])))
+			new[i - j] = ft_strdup(sarr[i]);
+		else if (j < len_entry)
+			j++;
+		i++;
+	}
+	//free(sarr);
 	return (new);
 }
 
