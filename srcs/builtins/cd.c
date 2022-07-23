@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 22:27:37 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/23 22:47:19 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,6 @@ int	cd(t_data *data, int ac, char **str)
 		return (-1);
 	if (change_path(path, arg, data) == -1)
 		return (-1);
-	export_paths(data);
+	//export_paths(data);
 	return (1);
 }

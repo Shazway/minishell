@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 14:30:34 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 00:07:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,19 @@ void	del_token(void *content)
 	free(token);
 }
 
-int	odd_quotes(char	*str)
+int	is_opened_quotes(char	*str)
 {
-	int	i;
-	int	nb_simple;
-	int	nb_double;
+	char	type;
+	int		i;
 
 	i = 0;
-	nb_simple = 0;
-	nb_double = 0;
+	type = -1;
 	while (str && str[i])
 	{
-		if (str[i] == '\'')
-			nb_simple++;
-		if (str[i] == '"')
-			nb_double++;
+		check_quote(&type, str[i]);
 		i++;
 	}
-	if (nb_double % 2 == 0 && nb_simple % 2 == 0)
-		return (0);
-	return (1);
+	if (type == -1)
+		return (1);
+	return (0);
 }

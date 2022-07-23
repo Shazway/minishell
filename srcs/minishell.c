@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 19:25:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 00:10:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	set_prompt_string(t_data *data)
 	crf_dolar = ft_strjoin(current_folder + 1, "\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
 	tmp = data->prompt;
 	data->prompt = ft_strjoin("\001\033[1;32m\002""╔\002"
-				"\001\033[1;32m\002"" minishell" " " "\001╝\002" " " "\001\033[1;30m\002"""
+				"\001\033[1;32m\002"" minishell" " " "\001╝\002" " " "\001\033[1;31m\002"""
 				, crf_dolar);
 	free(crf_dolar);
 	free(tmp);
@@ -124,7 +124,7 @@ void	prompt_loop(t_data *data)
 		{
 			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
-			if (odd_quotes(data->input))
+			if (!is_opened_quotes(data->input))
 			{
 				printf("Unclosed quote, try closing the \" or \'\n");
 				free(data->input);

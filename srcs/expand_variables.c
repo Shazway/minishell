@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 00:14:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 23:53:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,14 @@ void	check_quote_2(char *type, char c)
 		*type = -1;
 }
 
+void	check_quote_double(char	*type, char c)
+{
+	if (*type == -1 && c == '"')
+		*type = c;
+	else if (c == *type)
+		*type = -1;
+}
+
 char	*get_start_unquote(char *str)
 {
 	int		i;
@@ -92,10 +100,10 @@ char	*get_start_unquote(char *str)
 
 	type = -1;
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
-		check_quote_2(&type, str[i]);
-		if (str[i] == '$' && type == -1)
+		check_quote(&type, str[i]);
+		if ((str[i] == '$' && type != '\''))
 			break ;
 		i++;
 	}
@@ -118,8 +126,8 @@ char	*expand_variables(t_data *data, char *str)
 	type = -1;
 	while (str && str[i])
 	{
-		check_quote_2(&type, str[i]);
-		if (str[i] =='$' && type == -1)
+		check_quote(&type, str[i]);
+		if ((str[i] == '$' && type != '\''))
 		{
 			start = get_start_unquote(str);
 			end = replace_variables(ft_substr(str, i, ft_strlen(str) - i), data);
