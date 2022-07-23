@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 17:04:43 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 22:27:37 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,15 +154,13 @@ int	change_path(char *goal, char *foldername, t_data *data)
 
 void	export_paths(t_data *data)
 {
-	char	*arg[2];
+	char	*arg[3];
 
-	arg[1] = NULL;
+	arg[2] = NULL;
 	arg[0] = ft_strjoin("PWD=", data->relative_path);
-	ft_export(data, 2, arg);
-	free(arg[0]);
-	arg[0] = ft_strjoin("OLDPWD=", data->old_path);
-	ft_export(data, 2, arg);
-	free(arg[0]);
+	arg[1] = ft_strjoin("OLDPWD=", data->old_path);
+	ft_export(data, 3, arg);
+	str_arr_free(arg);
 }
 
 int	cd(t_data *data, int ac, char **str)
@@ -186,6 +184,6 @@ int	cd(t_data *data, int ac, char **str)
 		return (-1);
 	if (change_path(path, arg, data) == -1)
 		return (-1);
-	//export_paths(data);
+	export_paths(data);
 	return (1);
 }

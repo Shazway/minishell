@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 20:40:40 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 22:08:04 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash);
 int		termios_setup(t_data *data);
 
 void	check_quote(char *type, char c);
+char	*del_quote(char *str);
 int		count_words(char *s, char c);
 int		malloc_words(char *s, char c, char **str, int count);
 char	**fill(char *s, char c, char **str);

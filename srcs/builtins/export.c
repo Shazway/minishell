@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 16:55:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 22:23:41 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ int	ft_export(t_data *data, int ac, char **av)
 		ft_env(data, ac, av);
 	else
 	{
-		printf("ac = %d\n", ac);
-		entry = malloc((ac + 1)* sizeof(char *));
-		entry[ac] = NULL;
+		entry = malloc((ac)* sizeof(char *));
+		entry[ac - 1] = NULL;
 		i = 1;
 		j = 0;
 		while (i < ac)
@@ -38,7 +37,7 @@ int	ft_export(t_data *data, int ac, char **av)
 				len = p_eq - &av[i][0];
 			if (is_validid(av[i], len) && p_eq)
 			{
-				entry[j] = av[i];
+				entry[j] = ft_strdup(av[i]);
 				j++;
 			}
 			else if (!is_validid(av[i], len) && p_eq)
@@ -47,7 +46,10 @@ int	ft_export(t_data *data, int ac, char **av)
 			i++;
 		}
 		update_env(data, entry, j);
-		//str_arr_free(entry);
+		printf("ENTRY IS ac %d\n", ac);
+		str_arr_display(entry);
+		printf("ENTRY END\n");
+		str_arr_free(entry);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 21:19:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 22:12:58 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,11 @@ void	cmd_notfound(char *cmd_name)
 	int		len_lim;
 	int		stdin_copy = dup(0);
 
+	expand = 1;
+	if (ft_strchr(lim, '"') || ft_strchr(lim, '\''))
+		expand = 0;
+	if (!expand)
+		lim = del_quote(lim);
 	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
 		perror("open");
