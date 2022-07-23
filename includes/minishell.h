@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 14:48:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 20:40:40 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ typedef struct s_cmd
 {
 	int		i;
 	char	*name;
+	char	heredocs;
+	char	*lim;
 	char	**args;
+	char	*h_exp;
 	int		ac;
 	char	*fullpath;
 	int		fin;
@@ -99,6 +102,7 @@ int		is_validid(char	*identifier, int len);
 
 int		pwd(t_data *data, int ac, char **av);
 
+void	heredoc_handler(int signal, siginfo_t *s, void *trash);
 
 int		open_redirections(t_data *data);
 int		setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data);
@@ -111,6 +115,7 @@ int		msh_init(t_data *data);
 int		msh_free(t_data *data);
 void	prompt_loop(t_data *data);
 
+void	delete_quotes(t_data *data);
 int		parsing(t_data *data);
 int		odd_quotes(char	*str);
 void	print_result(t_cmd *token);

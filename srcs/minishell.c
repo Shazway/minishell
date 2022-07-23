@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 17:03:40 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 19:25:45 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	prompt_loop(t_data *data)
 			if (parsing(data))
 			{
 				open_redirections(data);
+				delete_quotes(data);
 				search_cmds(data);
 				execute(data);
 				ft_lstclear(&data->cmd, &free_cmd);

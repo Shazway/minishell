@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 23:07:07 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/23 19:42:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_echo_n(char *str)
 	int	i;
 
 	i = 0;
-	if (str && str[i] != '-' && str[i + 1] != 'n')
+	if (str && (!str[i] || (str[i] != '-' && str[i + 1] != 'n')))
 		return (0);
 	i = 1;
 	while (str && str[i])

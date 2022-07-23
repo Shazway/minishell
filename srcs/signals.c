@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 17:27:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:05:11 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,23 @@ int	signal_intercept(void)
 	return (0);
 }
 
+void	heredoc_handler(int signal, siginfo_t *s, void *trash)
+{
+	(void)trash;
+	(void)s;
+	if (signal == SIGINT)
+	{
+		printf("^C\n");
+		close(0);
+		printf("Un printf special comme ca on fait la difference\n");
+		
+	}
+	if (signal == SIGQUIT)
+		return ;
+	if (signal == SIGCHLD)
+		return ;
+}
+
 void	secondary_handler(int signal, siginfo_t *s, void *trash)
 {
 	(void)s;
@@ -37,7 +54,7 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGQUIT)
 		return ;
 	if (signal == SIGCHLD)
-		printf("A child has died secondary handler\n");
+		return ;
 }
 
 void	sig_info_main(int signal, siginfo_t *s, void *trash)
@@ -54,7 +71,7 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGQUIT)
 		return ;
 	if (signal == SIGCHLD)
-		printf("A child has died main handler\n");
+		return ;
 }
 
 int	termios_setup(t_data *data)
@@ -96,13 +113,15 @@ t_cmd	*init_cmd(int i)
 	if (!cmd)
 		return (NULL);
 	cmd->i = i;
-	cmd->name = NULL;
-	cmd->args = NULL;
+	cmd->heredocs = 0;
 	cmd->ac = 0;
-	cmd->fullpath = NULL;
-	cmd->fin = -1;
-	cmd->fout = -1;
 	cmd->no_fork = 0;
 	cmd->builtin = 0;
+	cmd->fin = -1;
+	cmd->fout = -1;
+	cmd->name = NULL;
+	cmd->args = NULL;
+	cmd->fullpath = NULL;
+	//cmd->lim = NULL;
 	return (cmd);
 }

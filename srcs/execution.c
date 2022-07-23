@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 17:13:58 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:01:38 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,7 @@ void	wait_cmds(t_data *data)
 	pid_t	wpid;
 
 	wpid = 1;
-	do
-	{
-		//printf("wpid = %d\n", wpid);
-	} while ((wpid = wait(&data->ret)) > 0);
-//	printf("wpid = %d\n", wpid);
+	while ((wpid = wait(&data->ret)) > 0);
 }
 
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
@@ -68,8 +64,9 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 	int		w;
 	int		fdtest;
 
-	r = i - 1 * (i > 0);
+	r = i - 1 + 1 * ((n - i) / n);
 	w = i - 1 * (i == n - 1);
+	//printf("i = %d\tr = %d\n", i, r);
 	if (cmd->fin == -1)
 	{
 		if (i != 0 && n > 1)

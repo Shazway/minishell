@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/19 22:06:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 19:31:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,58 @@ int	ft_malloc(void **p, int length)
 	if (*p)
 		return (1);
 	return (0);
+}
+
+char	*del_quote(char *str)
+{
+	char	*new;
+	int		i;
+	int		size;
+	int		j;
+
+	size = 0;
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] != '\'' && str[i] != '"')
+			size++;
+		i++;
+	}
+	new = malloc(sizeof(char) * (size + 1));
+	new[size] = '\0';
+	i = 0;
+	j = 0;
+	while (j < size)
+	{
+		if (str[i] != '\'' && str[i] != '"')
+			new[j++] = str[i];
+		i++;
+	}
+	free(str);
+	return (new);
+}
+
+void	delete_quotes(t_data *data)
+{
+	int		i;
+	int		j;
+	t_cmd	*cmd;
+	t_list	*cmd_idx;
+
+	i = 0;
+	j = 0;
+	cmd_idx = data->cmd;
+	while (cmd_idx)
+	{
+		cmd = cmd_idx->content;
+		while (cmd->args && cmd->args[i])
+		{
+			if (ft_strchr(cmd->args[i], '"') || ft_strchr(cmd->args[i], '\''))
+				cmd->args[i] = del_quote(cmd->args[i]);
+			i++;
+		}
+		if (cmd->args)
+			cmd->name = ft_strdup(cmd->args[0]);
+		cmd_idx = cmd_idx->next;
+	}
 }
