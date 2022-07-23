@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/20 17:31:29 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/23 14:30:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,26 @@ void	del_token(void *content)
 	token = (t_cmd *)content;
 	str_arr_free(token->args);
 	free(token);
+}
+
+int	odd_quotes(char	*str)
+{
+	int	i;
+	int	nb_simple;
+	int	nb_double;
+
+	i = 0;
+	nb_simple = 0;
+	nb_double = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '\'')
+			nb_simple++;
+		if (str[i] == '"')
+			nb_double++;
+		i++;
+	}
+	if (nb_double % 2 == 0 && nb_simple % 2 == 0)
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 00:26:53 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 14:32:03 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,14 @@ void	prompt_loop(t_data *data)
 		{
 			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
+			if (odd_quotes(data->input))
+			{
+				printf("Unclosed quote, try closing the \" or \'\n");
+				free(data->input);
+				continue ;
+			}
 			if (ft_strchr(data->input, '$'))
 				data->input = expand_variables(data, data->input);
-			printf("After expand : %s\n", data->input);
 			if (parsing(data))
 			{
 				open_redirections(data);

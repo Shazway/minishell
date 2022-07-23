@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 00:25:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 14:31:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int		msh_free(t_data *data);
 void	prompt_loop(t_data *data);
 
 int		parsing(t_data *data);
+int		odd_quotes(char	*str);
 void	print_result(t_cmd *token);
 void	split_spaces(t_cmd *token, char *content);
 void	del_token(void *content);
