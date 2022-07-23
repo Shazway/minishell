@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 21:05:11 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:16:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	heredoc_handler(int signal, siginfo_t *s, void *trash)
 {
 	(void)trash;
 	(void)s;
+
 	if (signal == SIGINT)
 	{
 		printf("^C\n");

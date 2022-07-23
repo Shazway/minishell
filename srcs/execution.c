@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 21:01:38 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:19:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void	cmd_notfound(char *cmd_name)
 	char	*buf;
 	char	*p;
 	int		len_lim;
+	int		stdin_copy = dup(0);
 
 	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
@@ -164,6 +165,8 @@ void	cmd_notfound(char *cmd_name)
 		heredoc_writer(fd, buf, expand, envr);
 		free(buf);
 	}
+	dup2(stdin_copy, 0);
+	close(stdin_copy);
 	close(fd);
 	fd = open("/tmp/msh_here_doc", O_RDONLY);
 	return (fd);
