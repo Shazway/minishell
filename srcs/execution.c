@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 17:08:05 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 17:13:58 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void	execute(t_data *data)
 		c_idx = c_idx->next;
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
-	printf("is waiting\n");
 	wait_cmds(data);
-	printf("done waiting\n");
 	memset(&g_signals, 0, sizeof(struct sigaction));
 	g_signals.sa_sigaction = sig_info_main;
 	signal_intercept();
@@ -59,9 +57,9 @@ void	wait_cmds(t_data *data)
 	wpid = 1;
 	do
 	{
-		printf("wpid = %d\n", wpid);
-	} while ((wpid = waitpid(-1, &data->ret, WNOHANG)) > 0);
-	printf("wpid = %d\n", wpid);
+		//printf("wpid = %d\n", wpid);
+	} while ((wpid = wait(&data->ret)) > 0);
+//	printf("wpid = %d\n", wpid);
 }
 
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)

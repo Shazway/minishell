@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 16:45:44 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 17:27:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 	(void)trash;
 	if (signal == SIGINT)
 	{
-		printf("\n");
+		wait(NULL);
 		return ;
 	}
 	if (signal == SIGQUIT)
@@ -47,7 +47,6 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGINT)
 	{
 		printf("^C\n");
-		printf("SIGINT main\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
