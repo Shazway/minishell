@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 00:26:10 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 16:45:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 	(void)s;
 	(void)trash;
 	if (signal == SIGINT)
+	{
+		printf("\n");
 		return ;
+	}
 	if (signal == SIGQUIT)
 		return ;
+	if (signal == SIGCHLD)
+		printf("A child has died secondary handler\n");
 }
 
 void	sig_info_main(int signal, siginfo_t *s, void *trash)
@@ -42,12 +47,15 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGINT)
 	{
 		printf("^C\n");
+		printf("SIGINT main\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	if (signal == SIGQUIT)
 		return ;
+	if (signal == SIGCHLD)
+		printf("A child has died main handler\n");
 }
 
 int	termios_setup(t_data *data)

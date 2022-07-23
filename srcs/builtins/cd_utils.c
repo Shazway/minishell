@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 00:49:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 15:58:08 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,12 @@ void	swap_paths(t_data *data)
 
 int	cd_home(char *path, char *name, t_data *data)
 {
-	char	*tmp;
-
 	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
 	{
 		if (chdir(path) == -1)
 			printf("minishell: cd: HOME not set\n");
 		else
-		{
 			swap_paths(data);
-			tmp = data->relative_path;
-			data->relative_path = ft_strdup(path);
-			free(tmp);
-		}
 		free(path);
 		return (1);
 	}
@@ -72,12 +65,7 @@ int	cd_home(char *path, char *name, t_data *data)
 		if (chdir(path) == -1)
 			printf("minishell: cd: OLDPWD not set\n");
 		else
-		{
 			swap_paths(data);
-			tmp = data->relative_path;
-			data->relative_path = get_var("OLDPWD", data);
-			free(tmp);
-		}
 		free(path);
 		return (1);
 	}

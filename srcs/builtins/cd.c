@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 14:18:06 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 17:04:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ char	*previous_dir(char *path)
 		i--;
 	tmp = path;
 	if (i == 0)
+	{
+		free(path);
 		return (ft_strdup("/"));
+	}
 	path = ft_substr(path, 0, i);
 	free(tmp);
 	return (path);
@@ -120,8 +123,6 @@ void	new_pwd(char *foldername, char **new_path)
 
 int	change_path(char *goal, char *foldername, t_data *data)
 {
-	char	*tmp;
-
 	if (chdir(goal) == -1)
 	{
 		printf("cd: %s: No such file or directory\n", foldername);
@@ -136,9 +137,9 @@ int	change_path(char *goal, char *foldername, t_data *data)
 		printf("OLD PWD[%s]\n", data->relative_path);
 		if (!foldername)
 		{
-			tmp = data->relative_path;
-			data->relative_path = ft_strdup(goal);
-			free(tmp);
+			free(data->relative_path);
+			data->relative_path = goal;
+			return (1);
 		}
 		else
 		{
@@ -149,6 +150,19 @@ int	change_path(char *goal, char *foldername, t_data *data)
 		free(foldername);
 	}
 	return (1);
+}
+
+void	export_paths(t_data *data)
+{
+	char	*arg[2];
+
+	arg[1] = NULL;
+	arg[0] = ft_strjoin("PWD=", data->relative_path);
+	ft_export(data, 2, arg);
+	free(arg[0]);
+	arg[0] = ft_strjoin("OLDPWD=", data->old_path);
+	ft_export(data, 2, arg);
+	free(arg[0]);
 }
 
 int	cd(t_data *data, int ac, char **str)
@@ -172,5 +186,6 @@ int	cd(t_data *data, int ac, char **str)
 		return (-1);
 	if (change_path(path, arg, data) == -1)
 		return (-1);
+	//export_paths(data);
 	return (1);
 }

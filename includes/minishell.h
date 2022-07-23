@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 14:31:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/23 14:48:56 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void	exec_builtin(t_data *data, t_cmd *cmd);
 int		nofork_builtin(char *fullpath);
 int		ft_unset(t_data *data, int ac, char **av);
 
-char	*get_pwd(t_data *data);
 void	wait_cmds(t_data *data);
 void	msh_exit(t_data *data);
 
