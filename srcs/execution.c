@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/24 11:25:30 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 14:25:10 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void	cmd_notfound(char *cmd_name)
 		heredoc_writer(fd, buf, expand, envr);
 		free(buf);
 	}
+	free(lim);
 	dup2(stdin_copy, 0);
 	close(stdin_copy);
 	close(fd);

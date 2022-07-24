@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 19:23:36 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 14:26:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	search_cmds(t_data *data)
 	while (cmd_idx != NULL)
 	{
 		current_cmd = cmd_idx->content;
-		str_arr_display(current_cmd->args);
         current_cmd->builtin = is_builtin(current_cmd);
 		if (!current_cmd->builtin)
 		{

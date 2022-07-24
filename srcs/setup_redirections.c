@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 11:26:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 14:27:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	**destroy_redirections(char **dest, char **args)
 			break ;
 		i++;
 	}
-	str_arr_display(dest);
 	return (dest);
 }
 
@@ -114,7 +113,6 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 		g_signals.sa_sigaction = sig_info_main;
 		signal_intercept();
 	}
-	str_arr_display(arg->args);
 	free(final_path);
 	return (1);
 }

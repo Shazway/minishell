@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/24 11:26:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 13:08:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*concat_path(char *goal, char *folder_name)
 {
 	char	*temp;
 
+	if (!goal)
+		return(NULL);
 	temp = goal;
 	goal = ft_strjoin(goal, "/");
 	free(temp);
@@ -121,6 +123,7 @@ void	new_pwd(char *foldername, char **new_path)
 
 int	change_path(char *goal, char *foldername, t_data *data)
 {
+
 	if (chdir(goal) == -1)
 	{
 		printf("cd: %s: No such file or directory\n", foldername);
@@ -170,6 +173,8 @@ int	cd(t_data *data, int ac, char **str)
 	if (ac == 1)
 		return (cd_home(get_var("HOME", data), "HOME", data));
 	arg = ft_strdup(str[1]);
+	if (!arg)
+		return (-1);
 	if (is_dash(arg) != 0)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')
