@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 22:14:54 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:26:02 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	str_arr_size_r(char	**str)
 	int	type;
 
 	size = str_arr_size(str);
-	printf("size of args = %d\n", size);
 	i = 0;
 	type = 0;
 	while (str && str[i])
@@ -31,7 +30,6 @@ int	str_arr_size_r(char	**str)
 			size--;
 		if (str[i + 1] && (type == L_DIR || type == L_DDIR))
 			size--;
-		printf("size minus = %d\n", size);
 		i++;
 	}
 	return (size);
@@ -56,7 +54,6 @@ char	**destroy_redirections(char **dest, char **args)
 		}
 		else if (args[i])
 		{
-			printf("args[%d] = %d\n", i, j);
 			dest[j] = ft_strdup(args[i]);
 			j++;
 		}
@@ -64,9 +61,7 @@ char	**destroy_redirections(char **dest, char **args)
 			break ;
 		i++;
 	}
-	printf("destination %d:\n", j);
 	str_arr_display(dest);
-	printf("destination:\n");
 	return (dest);
 }
 
@@ -78,12 +73,10 @@ char	**eliminate_redirections(char **args)
 	size = str_arr_size_r(args);
 	if (size <= 0)
 		return (NULL);
-	printf("size = %d\n", size);
 	dest = malloc(sizeof(char *) * (size + 1));
 	if (!dest)
 		return (NULL);
 	dest[size] = NULL;
-	printf("\nsize %d\n", size);
 	dest = destroy_redirections(dest, args);
 	str_arr_free(args);
 	return (dest);

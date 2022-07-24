@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 23:01:31 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:26:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int	ft_export(t_data *data, int ac, char **av)
 			i++;
 		}
 		update_env(data, entry, j);
-		printf("ENTRY IS ac %s\n", entry[0]);
 		str_arr_display(entry);
-		printf("ENTRY END\n");
 		str_arr_free(entry);
 	}
 	return (0);

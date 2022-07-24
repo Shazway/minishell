@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 22:12:58 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:25:30 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,7 @@ void	cmd_notfound(char *cmd_name)
 	{
 		buf = readline("> ");
 		if (!buf)
-		{
-			printf("signal\n");
 			break ;
-		}
 		p = ft_strnstr(buf, lim, len_lim);
 		if (p && p == buf && p[len_lim] == '\0')
 		{

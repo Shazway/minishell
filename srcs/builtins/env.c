@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 00:12:44 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:22:37 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,21 @@ int	ft_env(t_data *data, int ac, char **av)
 
 int	set_env(t_data *data)
 {
-	data->env_str = str_arr_add(__environ, NULL, 0);
+	int	i;
+	int	size;
+
+	i = 0;
+	size = str_arr_size(__environ);
+	data->env_str = malloc(sizeof(char *) * (size + 1));
 	if (!data->env_str)
 		return (1);
-	else
-		return (0);
+	data->env_str[size] = NULL;
+	while (__environ && __environ[i])
+	{
+		data->env_str[i] = ft_strdup(__environ[i]);
+		i++;
+	}
+	return (0);
 }
 
 int	update_env(t_data *data, char **entry, int len_entry)

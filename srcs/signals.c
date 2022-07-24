@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/23 21:16:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:26:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	heredoc_handler(int signal, siginfo_t *s, void *trash)
 	{
 		printf("^C\n");
 		close(0);
-		printf("Un printf special comme ca on fait la difference\n");
 		
 	}
 	if (signal == SIGQUIT)

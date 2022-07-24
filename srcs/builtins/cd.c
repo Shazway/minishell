@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/24 00:19:07 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:26:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,8 @@ void	new_pwd(char *foldername, char **new_path)
 		foldername = ft_strjoin(foldername, "/");
 		free(tmp);
 	}
-	printf("FOLDERNAME is : %s\n", foldername);
 	while (foldername && ft_strchr(foldername, '/'))
 	{
-		printf("cd .. TEST\n");
 		tmp = foldername;
 		foldername = find_new_pwd(foldername, new_path);
 		free(tmp);
@@ -134,7 +132,6 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	{
 		free(data->old_path);
 		data->old_path = ft_strdup(data->relative_path);
-		printf("OLD PWD[%s]\n", data->relative_path);
 		if (!foldername)
 		{
 			free(data->relative_path);
@@ -142,10 +139,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 			return (1);
 		}
 		else
-		{
 			new_pwd(ft_strdup(foldername), &(data->relative_path));
-			printf("NEW PWD[%s]\n", data->relative_path);
-		}
 		free(goal);
 		free(foldername);
 	}
@@ -186,6 +180,6 @@ int	cd(t_data *data, int ac, char **str)
 		return (-1);
 	if (change_path(path, arg, data) == -1)
 		return (-1);
-	//export_paths(data);
+	export_paths(data);
 	return (1);
 }
