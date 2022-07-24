@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 00:19:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/24 12:49:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int		nofork_builtin(char *fullpath);
 int		ft_unset(t_data *data, int ac, char **av);
 
 void	wait_cmds(t_data *data);
-void	msh_exit(t_data *data);
+void	msh_exit(t_data *data, t_list *trash);
 
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);
