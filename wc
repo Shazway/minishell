@@ -1,9 +1,0 @@
-total 1396
-drwxr-xr-x 2 mdkhissi 2020_paris    4096 Jul 20 18:08 includes
-drwxr-xr-x 3 mdkhissi 2020_paris    4096 Jul 20 23:14 libft
--rw-r--r-- 1 mdkhissi 2020_paris    3172 Jul 20 15:40 Makefile
--rwxr-xr-x 1 mdkhissi 2020_paris 1399120 Jul 20 23:14 minishell
--rw-r--r-- 1 mdkhissi 2020_paris    8073 Jul 11 19:29 Notes for project
-drwxr-xr-x 3 mdkhissi 2020_paris    4096 Jul 20 23:14 objs
-drwxr-xr-x 3 mdkhissi 2020_paris    4096 Jul 20 23:04 srcs
--rw-r--r-- 1 mdkhissi 2020_paris       0 Jul 20 23:14 wc

@@ -6,11 +6,47 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 14:27:28 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:07:10 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
+{
+	char	*work_path;
+	char	*final_path;
+	int		type;
+
+	type = is_redirection(arg->args[i], 0);
+	work_path = ft_strdup(data->relative_path);
+	final_path = concat_path(work_path, arg->args[i + 1]);
+	if (arg->fout != -1)
+		close(arg->fout);
+	if (arg->fin != -1)
+		close(arg->fin);
+	if (type == R_DIR)
+		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (type == R_DDIR)
+		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (type == L_DIR)
+		arg->fin = open(final_path, O_RDONLY);
+	if (type == L_DDIR)
+	{
+		//arg->heredocs = 1;
+		/*arg->lim = arg->args[i + 1];
+		//arg->lim = check_quote_lim(arg->args[i + 1]);*/
+		memset(&g_signals, 0, sizeof(struct sigaction));
+		g_signals.sa_sigaction = heredoc_handler;
+		signal_intercept();
+		arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr);
+		memset(&g_signals, 0, sizeof(struct sigaction));
+		g_signals.sa_sigaction = sig_info_main;
+		signal_intercept();
+	}
+	free(final_path);
+	return (1);
+}
 
 int	str_arr_size_r(char	**str)
 {
@@ -81,41 +117,6 @@ char	**eliminate_redirections(char **args)
 	return (dest);
 }
 
-int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
-{
-	char	*work_path;
-	char	*final_path;
-	int		type;
-
-	type = is_redirection(arg->args[i], 0);
-	work_path = ft_strdup(data->relative_path);
-	final_path = concat_path(work_path, arg->args[i + 1]);
-	if (arg->fout != -1)
-		close(arg->fout);
-	if (arg->fin != -1)
-		close(arg->fin);
-	if (type == R_DIR)
-		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (type == R_DDIR)
-		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (type == L_DIR)
-		arg->fin = open(final_path, O_RDONLY);
-	if (type == L_DDIR)
-	{
-		//arg->heredocs = 1;
-		/*arg->lim = arg->args[i + 1];
-		//arg->lim = check_quote_lim(arg->args[i + 1]);*/
-		memset(&g_signals, 0, sizeof(struct sigaction));
-		g_signals.sa_sigaction = heredoc_handler;
-		signal_intercept();
-		arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr);
-		memset(&g_signals, 0, sizeof(struct sigaction));
-		g_signals.sa_sigaction = sig_info_main;
-		signal_intercept();
-	}
-	free(final_path);
-	return (1);
-}
 
 int	open_redirections(t_data *data)
 {

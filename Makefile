@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/23 16:47:23 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/25 14:55:23 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/builtins/pwd.c		\
 				$(SRC)/builtins/unset.c		\
 				$(SRC)/setup_redirections.c	\
-				$(SRC)/cmd.c			\
+				$(SRC)/cmd.c				\
 				$(SRC)/execution.c			\
 				$(SRC)/main.c				\
 				$(SRC)/minishell.c			\
@@ -46,6 +46,7 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/unquote_split.c		\
 				$(SRC)/expand_variables.c	\
 				$(SRC)/utils.c				\
+				$(SRC)/quotes_parsing.c		\
 				
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 

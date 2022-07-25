@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 12:49:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:58:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,10 @@ void	check_quote(char *type, char c);
 char	*del_quote(char *str);
 int		count_words(char *s, char c);
 int		malloc_words(char *s, char c, char **str, int count);
+int		trim_quote_size(char *str);
 char	**fill(char *s, char c, char **str);
+char	*trim_quotes_fill(char *dest, char *str, int size);
+char	*trim_quotes(t_data *data, char *str);
 char	**unquote_split(char *s, char c);
 
 void	str_arr_free(char **str);

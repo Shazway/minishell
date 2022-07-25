@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 14:26:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/24 14:29:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void	print_result(t_cmd *token)
 void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
-	printf("Result of parsing is :\n");
-	str_arr_display(token->args);
 	token->ac = str_arr_size(token->args);
 	print_result(token);
 }

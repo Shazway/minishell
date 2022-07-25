@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 23:53:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 02:47:20 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ char	*expand_variables(t_data *data, char *str)
 	char	*start;
 	char	*end;
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	type = -1;
@@ -131,9 +130,8 @@ char	*expand_variables(t_data *data, char *str)
 		{
 			start = get_start_unquote(str);
 			end = replace_variables(ft_substr(str, i, ft_strlen(str) - i), data);
-			tmp = str;
+			free(str);
 			str = ft_strjoin(start, end);
-			free(tmp);
 			free(start);
 			free(end);
 		}
