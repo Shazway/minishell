@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:58:13 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 23:01:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:45:48 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ void	delete_quotes(t_data *data)
 			if (ft_strchr(cmd->args[i], '"') || ft_strchr(cmd->args[i], '\''))
 				cmd->args[i] = trim_quotes(data, cmd->args[i]);
 			i++;
-		}
-		if (cmd->args)
-		{
-			free(cmd->name);
-			cmd->name = ft_strdup(cmd->args[0]);
 		}
 		cmd_idx = cmd_idx->next;
 	}

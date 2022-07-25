@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/24 14:26:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:35:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	search_cmds(t_data *data)
 	while (cmd_idx != NULL)
 	{
 		current_cmd = cmd_idx->content;
-        current_cmd->builtin = is_builtin(current_cmd);
+		current_cmd->builtin = is_builtin(current_cmd);
 		if (!current_cmd->builtin)
 		{
 			fullpath = get_path(current_cmd->name, data->env_str);
@@ -38,22 +38,22 @@ void	search_cmds(t_data *data)
 
 int	is_builtin(t_cmd *cmd)
 {
-	char        *builtins[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
-    const FP    farr[7]= {&ft_echo, &cd, &pwd, &ft_export, &ft_unset, &ft_env, &shell_exit};
+	char		*builtins[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
+	const FP	farr[7]= {&ft_echo, &cd, &pwd, &ft_export, &ft_unset, &ft_env, &shell_exit};
 	int		i;
 
 	i = 0;
 	while (i < 7)
 	{
 		if (!ft_strncmp(builtins[i], cmd->name, ft_strlen(cmd->name)))
-        {
+		{
 			cmd->builtin = 1;
 			cmd->func = farr[i];
-            if (i == 1 || i == 3 || i == 4 || i == 6)
-            	cmd->no_fork = 1;
+			if (i == 1 || i == 3 || i == 4 || i == 6)
+				cmd->no_fork = 1;
 			return (1);
-        }
-        i++;
+		}
+		i++;
 	}
 	return (0);
 }

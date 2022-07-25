@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 17:15:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:30:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_cmd
 {
 	int		i;
 	char	*name;
-	char	heredocs;
 	char	*lim;
 	char	**args;
 	char	*h_exp;

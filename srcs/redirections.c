@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/19 22:08:47 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:06:38 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*concat_redir(char *str, char *redir, int *i, int is_double)
 
 char	*check_redir(char *str, int *i)
 {
-	if (str[*i + 1] && str[*i] == '>')
+	if (str && str[*i] && str[*i + 1] && str[*i] == '>')
 	{
 		if (str[*i + 1] != '>')
 			str = concat_redir(str, " > ", i, 1);
@@ -62,7 +62,7 @@ char	*check_redir(char *str, int *i)
 		if (!str)
 			return (NULL);
 	}
-	if (str[*i + 1] && str[*i] == '<')
+	if (str && str[*i] && str[*i + 1] && str[*i] == '<')
 	{
 		if (str[*i + 1] != '<')
 			str = concat_redir(str, " < ", i, 1);

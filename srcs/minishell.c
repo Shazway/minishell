@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 23:01:44 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:39:52 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ void	prompt_loop(t_data *data)
 			break ;
 		else
 		{
-			ft_printf("Input is :\n---------\n%s\n", data->input);
 			add_history(data->input);
 			if (!is_opened_quotes(data->input))
 			{

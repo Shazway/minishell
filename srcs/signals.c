@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 22:39:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:34:11 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ t_cmd	*init_cmd(int i)
 	if (!cmd)
 		return (NULL);
 	cmd->i = i;
-	cmd->heredocs = 0;
 	cmd->ac = 0;
 	cmd->no_fork = 0;
 	cmd->builtin = 0;
@@ -122,6 +121,5 @@ t_cmd	*init_cmd(int i)
 	cmd->name = NULL;
 	cmd->args = NULL;
 	cmd->fullpath = NULL;
-	//cmd->lim = NULL;
 	return (cmd);
 }
