@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 14:58:28 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:12:56 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int		nofork_builtin(char *fullpath);
 int		ft_unset(t_data *data, int ac, char **av);
 
 void	wait_cmds(t_data *data);
-void	msh_exit(t_data *data, t_list *trash);
+void	msh_exit(t_data *data);
 
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);

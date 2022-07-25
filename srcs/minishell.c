@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 15:03:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:17:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,15 @@ int	msh_free(t_data *data)
 	free(data->prompt);
 	free(data->relative_path);
 	free(data->old_path);
-	ft_lstclear(&data->cmd, &free_cmd);
+	ft_lstclear	(&data->cmd, &free_cmd);
 	free_pipes(data);
 	str_arr_free(data->env_str);
 	free(data);
 	return (1);
 }
 
-void	msh_exit(t_data *data, t_list *trash)
+void	msh_exit(t_data *data)
 {
-	if (trash)
-		ft_lstclear(&(trash), &(free));
 	perror("minishell: ");
 	msh_free(data);
 	exit(EXIT_FAILURE);
@@ -39,13 +37,13 @@ void	alloc_pipes(t_data *data)
 {
 	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
 	if (!data->pips)
-		msh_exit(data, NULL);
+		msh_exit(data);
 }
 
 void	init_pipe(t_data *data, int i)
 {
 	if (pipe(data->pips[i].fd) == (-1))
-		msh_exit(data, NULL);
+		msh_exit(data);
 }
 
 void	free_pipes(t_data *data)
