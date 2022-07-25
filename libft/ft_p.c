@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_p.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 22:33:08 by tmoragli         ###   ########.fr       */
+/*   Created: 2021/08/10 23:55:50 by tmoragli          #+#    #+#             */
+/*   Updated: 2022/07/25 22:25:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_printf.h"
 
-int	main(void)
+void	ft_p(t_parsing *parsing, long unsigned int p)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	if (termios_setup(data) || msh_init(data))
+	write(1, "0", 1);
+	write(1, "x", 1);
+	if (p == 0)
 	{
-		free(data);
-		return (1);
+		write(1, "0", 1);
+		parsing->count += 3;
+		return ;
 	}
-	prompt_loop(data);
-	if (!data->input)
-		ft_printf("exit\n");
-	msh_free(data);
-	return (0);
+	parsing->count += 3;
+	ft_putnbr_base_2(p, "0123456789abcdef", parsing);
+	parsing->type = 0;
 }

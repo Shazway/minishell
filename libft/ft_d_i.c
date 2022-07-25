@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_d_i.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 22:33:08 by tmoragli         ###   ########.fr       */
+/*   Created: 2021/08/11 18:32:58 by tmoragli          #+#    #+#             */
+/*   Updated: 2022/07/25 22:41:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_printf.h"
 
-int	main(void)
+void	ft_d(t_parsing *parsing, int nb)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	if (termios_setup(data) || msh_init(data))
+	(void)parsing;
+	if (nb == -2147483648)
 	{
-		free(data);
-		return (1);
+		ft_s(parsing, "-2147483648");
+		return ;
 	}
-	prompt_loop(data);
-	if (!data->input)
-		ft_printf("exit\n");
-	msh_free(data);
-	return (0);
+	if (nb == 0)
+	{
+		write(1, "0", 1);
+		parsing->count++;
+		return ;
+	}
+	if (nb < 0)
+		parsing->count++;
+	parsing->count++;
+	ft_putnbr_base_2(nb, "0123456789", parsing);
 }

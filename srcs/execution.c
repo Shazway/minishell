@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 15:47:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 22:32:53 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	exec_builtin(t_data *data, t_cmd *cmd)
 
 void	cmd_notfound(char *cmd_name)
 {
-	printf("%s: command not found\n", cmd_name);
+	ft_printf("%s: command not found\n", cmd_name);
 }
 
  int	here_doc(char *lim, int expand, char **envr)
@@ -193,7 +193,7 @@ void	heredoc_writer(int fd, char *buf, int expand, char **envr)
 			var = extract_var(p + 1);
 			from += 1 + ft_strlen(var);
 			value = find_var(envr, var);
-			ft_putstr_fd(value, fd);
+			ft_printf("%s\n", value);
 			free(value);
 			free(var);
 			p = ft_strchr(buf + from, '$');

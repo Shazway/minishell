@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 15:12:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 17:15:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ typedef struct s_pipex
 typedef struct s_data
 {
 	char				*input;
-	char				*relative_path;
-	char				*old_path;
-	struct termios		termios;
+	t_list				*cmd;
 	int					n_cmd;
 	int					ret;
 	char				**env_str;
-	t_pipex				*pips;
-	t_list				*cmd;
+	char				*old_path;
+	char				*relative_path;
+	struct termios		termios;
 	char				*prompt;
+	t_pipex				*pips;
 }	t_data;
 
 typedef int (*FP)(t_data *, int, char **);

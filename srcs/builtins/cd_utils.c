@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 15:58:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 22:37:05 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	cd_home(char *path, char *name, t_data *data)
 	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
 	{
 		if (chdir(path) == -1)
-			printf("minishell: cd: HOME not set\n");
+			ft_printf("minishell: cd: HOME not set\n");
 		else
 			swap_paths(data);
 		free(path);
@@ -63,7 +63,7 @@ int	cd_home(char *path, char *name, t_data *data)
 	if (!ft_strncmp(name, "OLDPWD", ft_strlen("OLDPWD")))
 	{
 		if (chdir(path) == -1)
-			printf("minishell: cd: OLDPWD not set\n");
+			ft_printf("minishell: cd: OLDPWD not set\n");
 		else
 			swap_paths(data);
 		free(path);
@@ -79,10 +79,10 @@ int	cd_dash(char *arg, t_data *data)
 	ret = is_dash(arg);
 	free(arg);
 	if (ret == -1)
-		printf("minishell: --: invalid option\n");
+		ft_printf("minishell: --: invalid option\n");
 	if (ret == 1)
 	{
-		printf("%s\n", data->old_path);
+		ft_printf("%s\n", data->old_path);
 		return (cd_home(ft_strdup(data->old_path), "OLDPWD", data));
 	}
 	if (ret == 2)
