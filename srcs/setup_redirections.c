@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 15:11:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 16:27:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,10 @@ char	**eliminate_redirections(char **args)
 
 	size = str_arr_size_r(args);
 	if (size <= 0)
+	{
+		str_arr_free(args);
 		return (NULL);
+	}
 	if (size == str_arr_size(args))
 		return (args);
 	dest = malloc(sizeof(char *) * (size + 1));
