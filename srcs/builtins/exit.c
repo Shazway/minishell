@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 20:53:27 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 21:04:02 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	check_digits(char *str)
 		count++;
 		i++;
 	}
-	printf("count = %d\n", count);
+
 	if (str[i] != '\0')
 		return (1);
 	if (count > 19)
@@ -97,18 +97,18 @@ int	shell_exit(t_data *data, int ac, char **av)
 		write(1, "exit\n", 6);
 		exit(EXIT_SUCCESS);
 	}
-	if (check_digits(av[0]))
+	if (check_digits(av[1]))
 	{
 		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", av[0]);
 		exit(2);
 	}
-	if (ac > 1)
+	if (ac > 2)
 	{
-		write(1, "bash: exit: too many arguments\n", 32);
+		ft_printf("minishell: exit: too many arguments\n");
 		return (1);
 	}
 	write(1, "exit\n", 6);
-	arg = ft_atol(av[0]);
+	arg = ft_atol(av[1]);
 	exit(arg % 256);
 	return (1);
 }
