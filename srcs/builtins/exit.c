@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 22:38:38 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:45:35 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,6 @@ int	shell_exit(t_data *data, int ac, char **av)
 	}
 	write(1, "exit\n", 6);
 	arg = ft_atol(av[0]);
-	if (arg > 255)
-		exit(arg % 256);
-	if (arg < 0)
-		exit(256 + arg);
-	exit(arg);
+	exit(arg % 256);
 	return (1);
 }

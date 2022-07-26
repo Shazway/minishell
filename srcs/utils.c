@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 15:38:07 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:55:21 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	str_arr_display(char **str)
 	i = 0;
 	while (str && str[i])
 	{
-		ft_printf("[%s]\n", str[i]);
+		ft_printf("%s\n", str[i]);
 		i++;
 	}
 }
@@ -85,6 +85,8 @@ char	**str_arr_del(char **sarr, char **entry, int len_entry)
 
 	to_del = sarrdel_worker(sarr, entry, len_entry, &len_new);
 	new = malloc((len_new + 1) * sizeof(char *));
+	if (!new)
+		return (NULL);
 	new[len_new] = NULL;
 	i = 0;
 	j = 0;
@@ -93,7 +95,7 @@ char	**str_arr_del(char **sarr, char **entry, int len_entry)
 		if (i == to_del[j])
 			j++;
 		else
-			new[i - j] = ft_strdup(sarr[i]);
+			new[i - j] = ft_strdup(sarr[i]); 
 		i++;
 	}
 	free(to_del);
@@ -112,6 +114,8 @@ int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new)
 	i = -1;
 	j = 0;
 	to_del = malloc((len_sarr + 1) * sizeof(int));
+	if (!to_del)
+		return (NULL);
 	while (sarr[++i])
 	{
 		k = -1;

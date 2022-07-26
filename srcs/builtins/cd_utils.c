@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 22:37:05 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:02:32 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_double_dash(char *str)
 	return (0);
 }
 
-int	is_dash(char	*str)
+int	is_dash(char *str)
 {
 	int	i;
 	int	ret;

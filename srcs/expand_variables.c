@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 16:14:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:18:09 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	check_quote_double(char	*type, char c)
 		*type = -1;
 }
 
-char	*get_start_unquote(char *str)
+int	get_start_unquote(char *str, char **start)
 {
 	int		i;
 	char	type;
@@ -118,11 +118,15 @@ char	*get_start_unquote(char *str)
 			break ;
 		i++;
 	}
-	if (!str[i])
-		return (NULL);
-	if (i > 0 && str[i] == '$')
-		return (ft_substr(str, 0, i));
-	return (NULL);
+	if (str[i] && i > 0 && str[i] == '$')
+	{
+		*start = ft_substr(str, 0, i);
+		if (!*start)
+			return (0);
+		return (1);
+	}
+	*start = ft_strdup("");
+	return (1);
 }
 
 char	*expand_variables(t_data *data, char *str)
@@ -139,7 +143,8 @@ char	*expand_variables(t_data *data, char *str)
 		check_quote(&type, str[i]);
 		if ((str[i] == '$' && type != '\''))
 		{
-			start = get_start_unquote(str);
+			if (!get_start_unquote(str, &start))
+				msh_exit(data);
 			end = replace_variables(ft_substr(str, i, ft_strlen(str) - i), data);
 			free(str);
 			str = ft_strjoin(start, end);

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 15:36:26 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:28:46 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,6 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 		}
 		i++;
 	}
-	return (0);
-}
-
-int		is_path(char *s)
-{
-	(void)s;
 	return (0);
 }
 
