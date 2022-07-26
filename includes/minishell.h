@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 15:05:23 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:35:52 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ typedef struct s_pipex
 typedef struct s_data
 {
 	char				*input;
-	char				*relative_path;
-	char				*old_path;
-	struct termios		termios;
+	t_list				*cmd;
 	int					n_cmd;
 	int					ret;
 	char				**env_str;
-	t_pipex				*pips;
-	t_list				*cmd;
+	char				*old_path;
+	char				*relative_path;
+	struct termios		termios;
 	char				*prompt;
+	t_pipex				*pips;
 }	t_data;
 
 typedef int (*FP)(t_data *, int, char **);
@@ -61,7 +61,6 @@ typedef struct s_cmd
 {
 	int		i;
 	char	*name;
-	char	heredocs;
 	char	*lim;
 	char	**args;
 	char	*h_exp;
@@ -155,7 +154,7 @@ void	close_cmd_files(t_cmd *cmd);
 
 void	free_cmd(void *vcmd);
 void	search_cmds(t_data *data);
-int		is_builtin(t_cmd *cmd);
+int		is_builtin(t_data *data, t_cmd *cmd);
 void	execute(t_data *data);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 char	*get_path(char *c_name, char **envr);

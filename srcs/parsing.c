@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 15:05:55 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:36:49 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	parsing(t_data *data)
 		ft_lstadd_back(&(data->cmd), ft_lstnew((void *)token));
 		split_spaces(token, pipe_split[i]);
 		if (pipe_split[i + 1])
-			printf("New command (cmd->next)\n");
+			ft_printf("New command (cmd->next)\n", 1);
 		i++;
 	}
 	data->n_cmd = i;
@@ -46,7 +46,7 @@ void	print_result(t_cmd *token)
 	i = 0;
 	while (token->args && token->args[i])
 	{
-		printf("[%s]\n", token->args[i]);
+		ft_printf("[%s]\n", token->args[i]);
 		i++;
 	}
 }

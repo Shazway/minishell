@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/24 11:26:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:34:11 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	heredoc_handler(int signal, siginfo_t *s, void *trash)
 
 	if (signal == SIGINT)
 	{
-		printf("^C\n");
+		write(1, "^C\n", 4);
 		close(0);
 		
 	}
@@ -63,7 +63,7 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 	(void)trash;
 	if (signal == SIGINT)
 	{
-		printf("^C\n");
+		write(1, "^C\n", 4);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -113,7 +113,6 @@ t_cmd	*init_cmd(int i)
 	if (!cmd)
 		return (NULL);
 	cmd->i = i;
-	cmd->heredocs = 0;
 	cmd->ac = 0;
 	cmd->no_fork = 0;
 	cmd->builtin = 0;
@@ -122,6 +121,5 @@ t_cmd	*init_cmd(int i)
 	cmd->name = NULL;
 	cmd->args = NULL;
 	cmd->fullpath = NULL;
-	//cmd->lim = NULL;
 	return (cmd);
 }

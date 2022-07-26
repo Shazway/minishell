@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 15:06:17 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:36:10 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 
 	if (chdir(goal) == -1)
 	{
-		printf("cd: %s: No such file or directory\n", foldername);
+		ft_printf("cd: %s: No such file or directory\n", foldername);
 		free(goal);
 		free(foldername);
 		return (-1);
@@ -169,7 +169,7 @@ int	cd(t_data *data, int ac, char **str)
 
 	arg = NULL;
 	if (ac > 2)
-		return (printf("minishell: cd: too many arguments\n"));
+		return (ft_printf("minishell: cd: too many arguments\n"));
 	if (ac == 1)
 		return (cd_home(get_var("HOME", data), "HOME", data));
 	arg = ft_strdup(str[1]);

@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_u.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 22:33:08 by tmoragli         ###   ########.fr       */
+/*   Created: 2021/08/10 23:56:58 by tmoragli          #+#    #+#             */
+/*   Updated: 2022/07/25 22:28:15 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_printf.h"
 
-int	main(void)
+void	ft_u(t_parsing *parsing, unsigned int u)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	if (termios_setup(data) || msh_init(data))
+	if (u == 0)
 	{
-		free(data);
-		return (1);
+		write(1, "0", 1);
+		parsing->count++;
+		return ;
 	}
-	prompt_loop(data);
-	if (!data->input)
-		ft_printf("exit\n");
-	msh_free(data);
-	return (0);
+	parsing->count++;
+	ft_putnbr_base_2(u, "0123456789", parsing);
 }

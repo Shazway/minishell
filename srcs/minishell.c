@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 15:05:46 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:36:41 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,10 @@ void	prompt_loop(t_data *data)
 			break ;
 		else
 		{
-			printf("Input is :%s\n---------\n", data->input);
 			add_history(data->input);
 			if (!is_opened_quotes(data->input))
 			{
-				printf("Unclosed quote, try closing the \" or \'\n");
+				ft_printf("Unclosed quote, try closing the \" or \'\n");
 				free(data->input);
 				continue ;
 			}
@@ -135,12 +134,12 @@ void	prompt_loop(t_data *data)
 				data->input = expand_variables(data, data->input);
 			if (parsing(data))
 			{
-				open_redirections(data);
 				delete_quotes(data);
+				open_redirections(data);
 				search_cmds(data);
 				execute(data);
 				free_pipes(data);
-				ft_lstclear	(&data->cmd, &free_cmd);
+				ft_lstclear(&data->cmd, &free_cmd);
 			}
 		}
 		free(data->input);

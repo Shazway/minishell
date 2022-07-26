@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 15:06:05 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:37:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 		arg->fin = open(final_path, O_RDONLY);
 	if (type == L_DDIR)
 	{
-		//arg->heredocs = 1;
-		/*arg->lim = arg->args[i + 1];
-		//arg->lim = check_quote_lim(arg->args[i + 1]);*/
-		memset(&g_signals, 0, sizeof(struct sigaction));
-		g_signals.sa_sigaction = heredoc_handler;
-		signal_intercept();
-		arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr);
-		memset(&g_signals, 0, sizeof(struct sigaction));
-		g_signals.sa_sigaction = sig_info_main;
-		signal_intercept();
+		if (arg->args[i + 1])
+		{
+			memset(&g_signals, 0, sizeof(struct sigaction));
+			g_signals.sa_sigaction = heredoc_handler;
+			signal_intercept();
+			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr);
+			memset(&g_signals, 0, sizeof(struct sigaction));
+			g_signals.sa_sigaction = sig_info_main;
+			signal_intercept();
+		}
 	}
 	free(final_path);
 	return (1);
@@ -122,7 +122,6 @@ char	**eliminate_redirections(char **args)
 	return (dest);
 }
 
-
 int	open_redirections(t_data *data)
 {
 	int		i;
@@ -145,6 +144,11 @@ int	open_redirections(t_data *data)
 				i++;
 		}
 		arg->args = eliminate_redirections(arg->args);
+		if (arg->args)
+		{
+			free(arg->name);
+			arg->name = ft_strdup(arg->args[0]);
+		}
 		tmp = tmp->next;
 	}
 	return (1);

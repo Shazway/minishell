@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 02:47:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 01:19:09 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,24 @@ char	*get_name(char	*str)
 {
 	int		start;
 	int		end;
+	char	type;
 
+	type = -1;
 	start = 0;
 	while (str && str[start] && str[start] != '$')
+	{
+		check_quote(&type, str[start]);
 		start++;
+	}
 	if (str[start] == '$')
 		start++;
 	end = start;
 	while (str && ft_isalnum(str[end]))
 		end++;
+	if (end == start && type == -1)
+		return (NULL);
+	if (end == start && type == '"')
+		return (ft_strdup("$"));
 	if (end > 0)
 		end--;
 	return (ft_substr(str, start, (end - start + 1)));
@@ -37,6 +46,8 @@ char	*get_var(char *str, t_data *data)
 	int		len;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	len = ft_strlen(str);
 	while (data->env_str && data->env_str[i])
 	{

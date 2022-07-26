@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 15:51:18 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 22:38:38 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,20 @@ int	shell_exit(t_data *data, int ac, char **av)
 	(void)data;
 	if (ac == 1)
 	{
-		printf("exit\n");
+		write(1, "exit\n", 6);
 		exit(EXIT_SUCCESS);
 	}
 	if (check_digits(av))
 	{
-		printf("exit\nbash: exit: %s: numeric argument required", av[0]);
+		ft_printf("exit\nbash: exit: %s: numeric argument required\n", av[0]);
 		exit(2);
 	}
-	//Here exit value is set to 1//
 	if (ac > 1)
-		return (printf("bash: exit: too many arguments\n"));
-	//---------------------------//
-	printf("exit\n");
+	{
+		write(1, "bash: exit: too many arguments\n", 32);
+		return (1);
+	}
+	write(1, "exit\n", 6);
 	arg = ft_atol(av[0]);
 	if (arg > 255)
 		exit(arg % 256);

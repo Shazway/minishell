@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 19:42:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 22:40:09 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_echo(t_data *data, int ac, char **av)
 	new_line = 1;
 	i = 1;
 	if (ac == 1)
-		return (write(1, "\n", 1));
+		return (ft_printf("\n"));
 	if (check_echo_n(av[1]))
 	{
 		new_line = 0;
@@ -47,7 +47,7 @@ int	ft_echo(t_data *data, int ac, char **av)
 	}
 	while (av && av[i])
 	{
-		ft_putstr_fd(av[i], 1);
+		ft_printf("%s", av[i]);
 		i++;
 		if (av[i])
 			write(1, " ", 1);

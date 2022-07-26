@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 22:33:08 by tmoragli         ###   ########.fr       */
+/*   Created: 2021/08/11 18:31:41 by tmoragli          #+#    #+#             */
+/*   Updated: 2022/07/25 22:28:38 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_printf.h"
 
-int	main(void)
+void	ft_printchar(char c, t_parsing *parsing)
+{	
+	write(1, &c, 1);
+	parsing->count++;
+}
+
+void	ft_printarray(char *str, t_parsing *parsing)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	if (termios_setup(data) || msh_init(data))
+	while (str && *str)
 	{
-		free(data);
-		return (1);
+		write(1, str, 1);
+		str++;
+		parsing->count++;
 	}
-	prompt_loop(data);
-	if (!data->input)
-		ft_printf("exit\n");
-	msh_free(data);
-	return (0);
 }
