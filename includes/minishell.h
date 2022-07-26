@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 17:03:02 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 19:27:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		check_echo_n(char *str);
 
 int		ft_env(t_data *data, int ac, char **av);
 int		set_env(t_data *data);
-int		update_env(t_data *data, char **entry, int len_entry);
+void	update_env(t_data *data, char **entry, int len_entry);
 
 int		shell_exit(t_data *data, int ac, char **av);
 
@@ -142,7 +142,7 @@ char	*trim_quotes_fill(char *dest, char *str, int size);
 char	*trim_quotes(t_data *data, char *str);
 char	**unquote_split(char *s, char c);
 
-void	str_arr_free(char **str);
+char	**str_arr_free(char **str);
 void	str_arr_display(char **str);
 int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
@@ -184,5 +184,7 @@ void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
 int		is_path(char *s);
 char	**str_arr_del(char **sarr, char **entry, int len_entry);
 int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
+
+void	update_pwd(t_data *data);
 
 #endif

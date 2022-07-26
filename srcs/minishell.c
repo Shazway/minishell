@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 15:36:41 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 18:44:37 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	msh_free(t_data *data)
 
 void	msh_exit(t_data *data)
 {
-	perror("minishell: ");
+	//perror("minishell: ");
 	msh_free(data);
 	exit(EXIT_FAILURE);
 }

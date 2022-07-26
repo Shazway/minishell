@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 22:33:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 20:23:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(void)
 		return (1);
 	if (termios_setup(data) || msh_init(data))
 	{
-		free(data);
+		msh_free(data);
 		return (1);
 	}
 	prompt_loop(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 17:45:35 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 20:53:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,33 @@ int	ft_atol(const char *str)
 	return ((long)(x * sign));
 }
 
-int	check_digits(char **str)
+int	check_digits(char *str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		count;
+	char	sign;
 
 	i = 0;
-	while (str && str[i])
+	sign = '+';
+	count = 0;
+	if (str[i] && (str[i] == '-' || str[i] == '+'))
 	{
-		j = 0;
-		if (str[i][j] && (str[i][j] == '-' || str[i][j] == '+'))
-			i++;
-		while (str[i][j] && str[i][j] >= '0' && str[i][j] <= '9')
-			j++;
-		if (str[i][j] != '\0')
-			return (1);
+		sign = str[i];
 		i++;
 	}
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		count++;
+		i++;
+	}
+	printf("count = %d\n", count);
+	if (str[i] != '\0')
+		return (1);
+	if (count > 19)
+		return (1);
+	if ((sign == '+' && i > 0 && count == 19 && str[i - 1] > '7') ||
+		(sign == '-' && i > 0 && count == 19 && str[i - 1] > '8'))
+		return (1);
 	return (0);
 }
 
@@ -87,9 +97,9 @@ int	shell_exit(t_data *data, int ac, char **av)
 		write(1, "exit\n", 6);
 		exit(EXIT_SUCCESS);
 	}
-	if (check_digits(av))
+	if (check_digits(av[0]))
 	{
-		ft_printf("exit\nbash: exit: %s: numeric argument required\n", av[0]);
+		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", av[0]);
 		exit(2);
 	}
 	if (ac > 1)

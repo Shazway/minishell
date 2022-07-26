@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 15:36:10 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 20:46:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	*find_new_pwd(char *foldername, char **goal)
 	tmp = to_go;
 	to_go = ft_strtrim(to_go, "/");
 	free(tmp);
+	if (!to_go)
+		return (NULL);
 	if (!ft_strncmp(to_go, "..", 3))
 	{
 		*goal = previous_dir(*goal);
@@ -96,37 +98,52 @@ char	*find_new_pwd(char *foldername, char **goal)
 		foldername = next_dir(foldername);
 	}
 	free(to_go);
+	if (!*goal || !foldername)
+	{
+		free(*goal);
+		free(foldername);
+		return (NULL);
+	}
 	return (foldername);
 }
 
-void	new_pwd(char *foldername, char **new_path)
+int	new_pwd(char *foldername, char **new_path)
 {
 	char	*tmp;
 
+	if (!foldername)
+		return (0);
 	if (ft_strlen(foldername) > 0
 		&& foldername[ft_strlen(foldername) - 1] != '/')
 	{
 		tmp = foldername;
 		foldername = ft_strjoin(foldername, "/");
 		free(tmp);
+		if (!foldername)
+			return (0);
 	}
 	while (foldername && ft_strchr(foldername, '/'))
 	{
 		tmp = foldername;
 		foldername = find_new_pwd(foldername, new_path);
 		free(tmp);
+		if (!foldername)
+			return (0);
 		if (!ft_strchr(foldername, '/'))
-			return ;
+			return (1);
 	}
+	return (1);
 }
-
 
 int	change_path(char *goal, char *foldername, t_data *data)
 {
+	int	ret;
 
+	if (!goal)
+		msh_exit(data);
 	if (chdir(goal) == -1)
 	{
-		ft_printf("cd: %s: No such file or directory\n", foldername);
+		perror("cd");
 		free(goal);
 		free(foldername);
 		return (-1);
@@ -135,6 +152,12 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	{
 		free(data->old_path);
 		data->old_path = ft_strdup(data->relative_path);
+		if (!data->old_path)
+		{
+			free(goal);
+			free(foldername);
+			msh_exit(data);
+		}
 		if (!foldername)
 		{
 			free(data->relative_path);
@@ -142,9 +165,11 @@ int	change_path(char *goal, char *foldername, t_data *data)
 			return (1);
 		}
 		else
-			new_pwd(ft_strdup(foldername), &(data->relative_path));
+			ret = new_pwd(ft_strdup(foldername), &(data->relative_path));
 		free(goal);
 		free(foldername);
+		if (!ret)
+			msh_exit(data);
 	}
 	return (1);
 }
@@ -154,10 +179,19 @@ void	export_paths(t_data *data)
 	char	**arg;
 
 	arg = malloc(4 * sizeof(char *));
+	if (!arg)
+		msh_exit(data);
 	arg[3] = NULL;
 	arg[0] = ft_strdup("export");
 	arg[1] = ft_strjoin("PWD=", data->relative_path);
 	arg[2] = ft_strjoin("OLDPWD=", data->old_path);
+	if (!arg[0] || !arg[1] || !arg[2])
+	{
+		free(arg[0]);
+		free(arg[1]);
+		free(arg[2]);
+		free(arg);
+	}
 	ft_export(data, 3, arg);
 	str_arr_free(arg);
 }
@@ -169,12 +203,12 @@ int	cd(t_data *data, int ac, char **str)
 
 	arg = NULL;
 	if (ac > 2)
-		return (ft_printf("minishell: cd: too many arguments\n"));
+		return (ft_printf("minishell: cd: too many arguments\n") > 0);
 	if (ac == 1)
 		return (cd_home(get_var("HOME", data), "HOME", data));
 	arg = ft_strdup(str[1]);
 	if (!arg)
-		return (-1);
+		msh_exit(data);
 	if (is_dash(arg) != 0)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')

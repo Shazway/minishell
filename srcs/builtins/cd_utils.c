@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 17:02:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 19:30:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	swap_paths(t_data *data)
 
 int	cd_home(char *path, char *name, t_data *data)
 {
+	if (!path)
+		msh_exit(data);
 	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
 	{
 		if (chdir(path) == -1)

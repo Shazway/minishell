@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 17:55:21 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 20:12:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	str_arr_free(char **str)
+char	**str_arr_free(char **str)
 {
 	int	i;
 
@@ -23,6 +23,7 @@ void	str_arr_free(char **str)
 		i++;
 	}
 	free(str);
+	return (NULL);
 }
 
 int	str_arr_size(char **args)
@@ -63,12 +64,16 @@ char	**str_arr_add(char **sarr, char **entry, int len_entry)
 	while (i < len_sarr)
 	{
 		new[i] = ft_strdup(sarr[i]);
+		if (!new[i])
+			return (str_arr_free(new));
 		i++;
 	}
 	j = 0;
 	while (entry && j < len_entry)
 	{
 		new[i] = ft_strdup(entry[j]);
+		if (!new[i])
+			return (str_arr_free(new));
 		j++;
 		i++;
 	}

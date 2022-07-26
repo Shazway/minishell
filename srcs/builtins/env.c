@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 16:14:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 20:18:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,19 @@ int	set_env(t_data *data)
 	size = str_arr_size(__environ);
 	data->env_str = malloc(sizeof(char *) * (size + 1));
 	if (!data->env_str)
-		return (1);
+		return (0);
 	data->env_str[size] = NULL;
 	while (__environ && __environ[i])
 	{
 		data->env_str[i] = ft_strdup(__environ[i]);
+		if (!data->env_str[i])
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
-int	update_env(t_data *data, char **entry, int len_entry)
+void	update_env(t_data *data, char **entry, int len_entry)
 {
 	char	**old_envr;
 
@@ -47,9 +49,10 @@ int	update_env(t_data *data, char **entry, int len_entry)
 	data->env_str = str_arr_add(data->env_str, entry, len_entry);
 	str_arr_free(old_envr);
 	if (!data->env_str)
-		return (1);
-	else
-		return (0);
+	{
+		str_arr_free(entry);
+		msh_exit(data);
+	}
 }
 
 char	*find_var(char **envr, char *entry)
