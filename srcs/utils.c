@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 15:37:12 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:38:07 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,7 @@ void	str_arr_display(char **str)
 	i = 0;
 	while (str && str[i])
 	{
-<<<<<<< HEAD
-		printf("%s\n", str[i]);
-=======
 		ft_printf("[%s]\n", str[i]);
->>>>>>> refs/remotes/origin/master
 		i++;
 	}
 }
