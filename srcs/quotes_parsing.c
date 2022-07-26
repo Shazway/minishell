@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:58:13 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 15:19:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/25 19:38:40 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,9 @@ char	*del_quote(char *str)
 void	delete_quotes(t_data *data)
 {
 	int		i;
-	int		j;
 	t_cmd	*cmd;
 	t_list	*cmd_idx;
 
-	j = 0;
 	cmd_idx = data->cmd;
 	while (cmd_idx)
 	{

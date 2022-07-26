@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/25 15:14:47 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:31:19 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	str_arr_display(char **str)
 	i = 0;
 	while (str && str[i])
 	{
-		printf("[%s]\n", str[i]);
+		printf("%s\n", str[i]);
 		i++;
 	}
 }
@@ -72,34 +72,62 @@ char	**str_arr_add(char **sarr, char **entry, int len_entry)
 		j++;
 		i++;
 	}
-	//str_arr_free(sarr);
 	return (new);
 }
 
 char	**str_arr_del(char **sarr, char **entry, int len_entry)
 {
-	int		len_sarr;
 	char	**new;
 	int		i;
 	int		j;
+	int		*to_del;
+	int		len_new;
 
-	len_sarr = str_arr_size(sarr);
-	new = malloc(sizeof(char *) * (len_sarr - len_entry + 1));
-	if (!new)
-		return (NULL);
-	new[len_sarr - len_entry] = NULL;
+	to_del = sarrdel_worker(sarr, entry, len_entry, &len_new);
+	new = malloc((len_new + 1) * sizeof(char *));
+	new[len_new] = NULL;
 	i = 0;
 	j = 0;
-	while (i < len_sarr)
+	while (i - j < len_new)
 	{
-		if (strncmp(sarr[i], entry[j], ft_strlen(entry[j])))
-			new[i - j] = ft_strdup(sarr[i]);
-		else if (j < len_entry)
+		if (i == to_del[j])
 			j++;
+		else
+			new[i - j] = ft_strdup(sarr[i]);
 		i++;
 	}
-	//free(sarr);
+	free(to_del);
 	return (new);
+}
+
+int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		len_sarr;
+	int		*to_del;
+
+	len_sarr = str_arr_size(sarr);
+	i = -1;
+	j = 0;
+	to_del = malloc((len_sarr + 1) * sizeof(int));
+	while (sarr[++i])
+	{
+		k = -1;
+		while (++k < len_entry)
+		{
+			if (ft_strnstr(sarr[i], entry[k], 0) == sarr[i])
+			{
+				to_del[j] = i;
+				j++;
+				break;
+			}
+		}
+	}
+	to_del[j] = -1;
+	*len_new = len_sarr - j;
+	return (to_del);
 }
 
 int	ft_malloc(void **p, int length)

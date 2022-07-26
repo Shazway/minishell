@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 15:12:56 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:05:23 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,6 @@ void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
 
 int		is_path(char *s);
 char	**str_arr_del(char **sarr, char **entry, int len_entry);
+int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
 
 #endif

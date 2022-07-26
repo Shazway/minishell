@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/24 14:26:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:32:41 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	search_cmds(t_data *data)
 		if (!current_cmd->builtin)
 		{
 			fullpath = get_path(current_cmd->name, data->env_str);
+			
 			if (fullpath)
 			{
 				free(current_cmd->fullpath);
@@ -77,12 +78,12 @@ char	*get_path(char *c_name, char **envr)
 		return (path_var);
 	}
 	i = 0;
-	if (envr[0])
+	if (envr)
 	{
 		while (envr[i] != NULL)
 		{
 			path_var = ft_strnstr(envr[i], "PATH=", 5);
-			if (path_var != NULL)
+			if (path_var)
 				break ;
 			i++;
 		}

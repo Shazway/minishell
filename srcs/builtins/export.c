@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/24 14:27:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:31:34 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	ft_export(t_data *data, int ac, char **av)
 		ft_env(data, ac, av);
 	else
 	{
-		entry = malloc((ac)* sizeof(char *));
-		entry[ac - 1] = NULL;
+		entry = malloc(ac * sizeof(char *));
 		i = 1;
 		j = 0;
 		while (i < ac)
@@ -45,6 +44,7 @@ int	ft_export(t_data *data, int ac, char **av)
 					av[i]);
 			i++;
 		}
+		entry[j] = NULL;
 		update_env(data, entry, j);
 		str_arr_free(entry);
 	}
