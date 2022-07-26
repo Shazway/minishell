@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 01:19:09 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:14:14 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ char	*get_name(char	*str)
 	start = 0;
 	while (str && str[start] && str[start] != '$')
 	{
-		check_quote(&type, str[start]);
 		start++;
 	}
 	if (str[start] == '$')
 		start++;
+	check_quote(&type, str[start]);
 	end = start;
 	while (str && ft_isalnum(str[end]))
 		end++;
@@ -146,6 +146,8 @@ char	*expand_variables(t_data *data, char *str)
 			free(start);
 			free(end);
 		}
+		if (!str[i])
+			return (str);
 		i++;
 	}
 	return (str);
