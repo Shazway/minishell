@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 20:46:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 21:46:55 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*next_dir(char *foldername)
 	while (foldername && foldername[i] &&foldername[i] != '/')
 		i++;
 	if (!foldername[i] || !foldername[i + 1])
-		return (NULL);
+		return (ft_strdup(""));
 	if (foldername[i] == '/')
 		i++;
 	foldername = ft_substr(foldername, i, ft_strlen(foldername));
@@ -130,7 +130,10 @@ int	new_pwd(char *foldername, char **new_path)
 		if (!foldername)
 			return (0);
 		if (!ft_strchr(foldername, '/'))
+		{
+			free(foldername);
 			return (1);
+		}
 	}
 	return (1);
 }

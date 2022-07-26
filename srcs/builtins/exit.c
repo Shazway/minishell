@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 21:04:02 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 21:33:38 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ int	shell_exit(t_data *data, int ac, char **av)
 	if (ac == 1)
 	{
 		write(1, "exit\n", 6);
-		exit(EXIT_SUCCESS);
+		return (0);
 	}
 	if (check_digits(av[1]))
 	{
 		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", av[0]);
-		exit(2);
+		return (2);
 	}
 	if (ac > 2)
 	{
@@ -109,6 +109,5 @@ int	shell_exit(t_data *data, int ac, char **av)
 	}
 	write(1, "exit\n", 6);
 	arg = ft_atol(av[1]);
-	exit(arg % 256);
-	return (1);
+	return (arg % 256);
 }

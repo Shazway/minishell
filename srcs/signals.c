@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 20:47:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 21:59:13 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ t_cmd	*init_cmd(int i)
 		return (NULL);
 	cmd->i = i;
 	cmd->ac = 0;
-	cmd->no_fork = 0;
+	cmd->to_fork = 1;
 	cmd->builtin = 0;
 	cmd->fin = -1;
 	cmd->fout = -1;

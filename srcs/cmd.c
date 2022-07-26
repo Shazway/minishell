@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 17:28:46 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 22:19:29 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 			cmd->builtin = 1;
 			cmd->func = farr[i];
 			if (ft_lstsize(data->cmd) == 1)
-				cmd->no_fork = 1;
+				cmd->to_fork = 0;
 			return (1);
 		}
 		i++;
