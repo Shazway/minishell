@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 23:28:49 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 01:12:15 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	*find_new_pwd(char *foldername, char **goal)
 		*goal = previous_dir(*goal);
 		foldername = next_dir(foldername);
 	}
+	else if (!ft_strncmp(to_go, ".", 2))
+		foldername = next_dir(foldername);
 	else
 	{
 		*goal = concat_path(*goal, to_go);
@@ -215,7 +217,7 @@ int	cd(t_data *data, int ac, char **str)
 	if (is_dash(arg) != 0)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')
-		return (change_path(arg, NULL, data));
+		return (change_path(arg, ft_strdup(arg), data));
 	path = ft_strdup(data->relative_path);
 	path = concat_path(path, arg);
 	if (!path)
