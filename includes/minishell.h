@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 23:30:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:25:18 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void	close_cmd_files(t_cmd *cmd);
 
 void	free_cmd(void *vcmd);
 void	search_cmds(t_data *data);
-int		is_builtin(t_cmd *cmd);
+int		is_builtin(t_data *data, t_cmd *cmd);
 void	execute(t_data *data);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 char	*get_path(char *c_name, char **envr);
