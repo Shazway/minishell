@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 19:27:38 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/26 23:26:47 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	ft_export(t_data *data, int ac, char **av)
 		entry[j] = NULL;
 		update_env(data, entry, j);
 		str_arr_free(entry);
-		update_pwd(data);
 	}
 	return (0);
 }

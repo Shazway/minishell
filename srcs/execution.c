@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 22:15:40 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/26 23:23:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	execute(t_data *data)
 		cmd = c_idx->content;
 		if (c_idx->next != NULL)
 			init_pipe(data, cmd->i);
-		if (cmd->to_fork && cmd->builtin == 1)
+		if (!cmd->to_fork)
 			run_cmd(data, cmd, cmd->i, data->n_cmd);
 		else
 		{
@@ -125,7 +125,7 @@ void	exec_builtin(t_data *data, t_cmd *cmd)
 	int	ret;
 
 	ret = cmd->func(data, cmd->ac, cmd->args);
-	if (cmd->to_fork || cmd->fout != -1 || !ft_strncmp(cmd->name, "exit", 4))
+	if (cmd->to_fork || !ft_strncmp(cmd->name, "exit", 4))
 	{
 		msh_free(data);
 		exit(ret);
