@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 20:18:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:39:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ char	*find_var(char **envr, char *entry)
 
 	i = -1;
 	len = ft_strlen(entry);
+	if (!entry)
+		return (NULL);
 	while (envr[++i])
 		if (!strncmp(envr[i], entry, len))
 			return (ft_strdup(envr[i] + len + 1));

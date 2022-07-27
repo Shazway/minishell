@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 15:37:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:42:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 	type = is_redirection(arg->args[i], 0);
 	work_path = ft_strdup(data->relative_path);
 	final_path = concat_path(work_path, arg->args[i + 1]);
+	if (!final_path)
+	{
+		free(work_path);
+		return (0);
+	}
 	if (arg->fout != -1)
 		close(arg->fout);
 	if (arg->fin != -1)
@@ -31,6 +36,7 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (type == L_DIR)
 		arg->fin = open(final_path, O_RDONLY);
+	free(final_path);
 	if (type == L_DDIR)
 	{
 		if (arg->args[i + 1])
@@ -38,13 +44,12 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 			memset(&g_signals, 0, sizeof(struct sigaction));
 			g_signals.sa_sigaction = heredoc_handler;
 			signal_intercept();
-			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr);
+			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr, data);
 			memset(&g_signals, 0, sizeof(struct sigaction));
 			g_signals.sa_sigaction = sig_info_main;
 			signal_intercept();
 		}
 	}
-	free(final_path);
 	return (1);
 }
 
@@ -137,7 +142,8 @@ int	open_redirections(t_data *data)
 		{
 			if (is_redirection(arg->args[i], 0))
 			{
-				setup_rfiles(arg, i, data->env_str, data);
+				if (!setup_rfiles(arg, i, data->env_str, data))
+					msh_exit(data);
 				i++;
 			}
 			if (arg->args[i])

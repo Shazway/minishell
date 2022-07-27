@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:58:13 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 15:37:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:18:53 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*del_quote(char *str)
 
 	size = 0;
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str && str[i])
 	{
 		if (str[i] != '\'' && str[i] != '"')
@@ -28,6 +30,8 @@ char	*del_quote(char *str)
 		i++;
 	}
 	new = malloc(sizeof(char) * (size + 1));
+	if (!new)
+		return (NULL);
 	new[size] = '\0';
 	i = 0;
 	j = 0;

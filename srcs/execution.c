@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 23:23:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:44:05 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,19 +139,22 @@ void	cmd_notfound(char *cmd_name)
 	ft_printf("%s: command not found\n", cmd_name);
 }
 
- int	here_doc(char *lim, int expand, char **envr)
+ int	here_doc(char *lim, int expand, char **envr, t_data *data)
 {
 	int		fd;
 	char	*buf;
 	char	*p;
 	int		len_lim;
-	int		stdin_copy = dup(0);
+	int		stdin_copy;
 
+	stdin_copy = dup(0);
 	expand = 1;
 	if (ft_strchr(lim, '"') || ft_strchr(lim, '\''))
 		expand = 0;
 	if (!expand)
 		lim = del_quote(lim);
+	if (!lim)
+		msh_exit(data);
 	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
 		perror("open");
@@ -159,6 +162,11 @@ void	cmd_notfound(char *cmd_name)
 	while (fd)
 	{
 		buf = readline("> ");
+		/*if ( == ENOMEM)
+		{
+			free(lim);
+			msh_exit(data);
+		}*/
 		if (!buf)
 			break ;
 		p = ft_strnstr(buf, lim, len_lim);
@@ -167,7 +175,12 @@ void	cmd_notfound(char *cmd_name)
 			free(buf);
 			break ;
 		}
-		heredoc_writer(fd, buf, expand, envr);
+		if (!heredoc_writer(fd, buf, expand, envr))
+		{
+			free(buf);
+			free(lim);
+			msh_exit(data);
+		}
 		free(buf);
 	}
 	free(lim);
@@ -178,7 +191,7 @@ void	cmd_notfound(char *cmd_name)
 	return (fd);
 }
 
-void	heredoc_writer(int fd, char *buf, int expand, char **envr)
+int		heredoc_writer(int fd, char *buf, int expand, char **envr)
 {
 	char	*p;
 	char	*var;
@@ -196,6 +209,8 @@ void	heredoc_writer(int fd, char *buf, int expand, char **envr)
 			var = extract_var(p + 1);
 			from += 1 + ft_strlen(var);
 			value = find_var(envr, var);
+			if (!value)
+				return (0);
 			ft_printf("%s\n", value);
 			free(value);
 			free(var);
@@ -204,6 +219,7 @@ void	heredoc_writer(int fd, char *buf, int expand, char **envr)
 	}
 	if (!expand || !p)
 		ft_putendl_fd(buf + from, fd);
+	return (1);
 }
 
 char	*extract_var(char *pvar)

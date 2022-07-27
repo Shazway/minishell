@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 21:58:46 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:43:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <term.h>
 # include <signal.h>
 # include <curses.h>
+# include <error.h>
 # include <sys/ioctl.h>
 # include <dirent.h>
 # include <sys/types.h>
@@ -99,6 +100,7 @@ char	*get_name(char	*str);
 int		ft_export(t_data *data, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 
+int		heredoc_writer(int fd, char *buf, int expand, char **envr);
 int		pwd(t_data *data, int ac, char **av);
 
 void	heredoc_handler(int signal, siginfo_t *s, void *trash);
@@ -119,7 +121,6 @@ int		parsing(t_data *data);
 int		is_opened_quotes(char	*str);
 void	print_result(t_cmd *token);
 void	split_spaces(t_cmd *token, char *content);
-void	del_token(void *content);
 t_cmd	*init_cmd(int i);
 
 char	*concat_redir(char *str, char *redir, int *i, int is_double);
@@ -166,8 +167,7 @@ char	*ft_strsetchr(const char *s, char *set);
 char	*find_var(char **envr, char *entry);
 char	*replace_variables(char	*str, t_data *data);
 char	*extract_var(char *pvar);
-void	heredoc_writer(int fd, char *buf, int expand, char **envr);
-int		here_doc(char *lim, int expand, char **envr);
+ int	here_doc(char *lim, int expand, char **envr, t_data *data);
 char	*get_var(char *str, t_data *data);
 void	exec_builtin(t_data *data, t_cmd *cmd);
 int		nofork_builtin(char *fullpath);

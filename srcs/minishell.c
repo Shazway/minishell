@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 18:44:37 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 16:32:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	msh_free(t_data *data)
 
 void	msh_exit(t_data *data)
 {
-	//perror("minishell: ");
 	msh_free(data);
 	exit(EXIT_FAILURE);
 }
@@ -123,13 +122,13 @@ void	prompt_loop(t_data *data)
 			break ;
 		else
 		{
-			add_history(data->input);
 			if (!is_opened_quotes(data->input))
 			{
 				ft_printf("Unclosed quote, try closing the \" or \'\n");
 				free(data->input);
 				continue ;
 			}
+			add_history(data->input);
 			if (ft_strchr(data->input, '$'))
 				data->input = expand_variables(data, data->input);
 			if (parsing(data))
