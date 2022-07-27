@@ -6,36 +6,12 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 01:44:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 22:25:32 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	search_cmds(t_data *data)
-{
-	t_list	*cmd_idx;
-	t_cmd	*current_cmd;
-	char	*fullpath;
-
-	cmd_idx = data->cmd;
-	while (cmd_idx != NULL)
-	{
-		current_cmd = cmd_idx->content;
-		current_cmd->builtin = is_builtin(data, current_cmd);
-		if (!current_cmd->builtin)
-		{
-			fullpath = get_path(current_cmd->name, data->env_str);
-			
-			if (fullpath)
-			{
-				free(current_cmd->fullpath);
-				current_cmd->fullpath = fullpath;
-			}
-		}
-		cmd_idx = cmd_idx->next;
-	}
-}
 
 int	is_builtin(t_data *data, t_cmd *cmd)
 {

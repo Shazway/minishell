@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/25 14:55:23 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/27 23:13:35 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,12 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/expand_variables.c	\
 				$(SRC)/utils.c				\
 				$(SRC)/quotes_parsing.c		\
-				
+				$(SRC)/pipe_utils.c			\
+				$(SRC)/msh_utils.c			\
+				$(SRC)/cmd_utils.c			\
+				$(SRC)/find_path.c			\
+				$(SRC)/find_path_utils.c
+
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
 # ----------- COLORS ---------------

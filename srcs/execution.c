@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 17:44:05 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 22:25:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,7 @@ void	exec_builtin(t_data *data, t_cmd *cmd)
 		data->ret = ret;
 }
 
-void	cmd_notfound(char *cmd_name)
-{
-	ft_printf("%s: command not found\n", cmd_name);
-}
-
- int	here_doc(char *lim, int expand, char **envr, t_data *data)
+int	here_doc(char *lim, int expand, char **envr, t_data *data)
 {
 	int		fd;
 	char	*buf;

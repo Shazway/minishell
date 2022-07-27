@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 20:23:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 22:27:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(void)
 		msh_free(data);
 		return (1);
 	}
-	prompt_loop(data);
+	minishell_sh(data);
 	if (!data->input)
 		ft_printf("exit\n");
 	msh_free(data);

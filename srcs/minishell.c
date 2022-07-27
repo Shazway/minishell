@@ -6,90 +6,11 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 16:32:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 22:35:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	msh_free(t_data *data)
-{
-	rl_clear_history();
-	free(data->input);
-	free(data->prompt);
-	free(data->relative_path);
-	free(data->old_path);
-	ft_lstclear	(&data->cmd, &free_cmd);
-	free_pipes(data);
-	str_arr_free(data->env_str);
-	free(data);
-	return (1);
-}
-
-void	msh_exit(t_data *data)
-{
-	msh_free(data);
-	exit(EXIT_FAILURE);
-}
-
-void	alloc_pipes(t_data *data)
-{
-	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
-	if (!data->pips)
-		msh_exit(data);
-}
-
-void	init_pipe(t_data *data, int i)
-{
-	if (pipe(data->pips[i].fd) == (-1))
-		msh_exit(data);
-}
-
-void	free_pipes(t_data *data)
-{
-	close_pipes(data->pips, data->n_cmd - 1);
-	free(data->pips);
-	data->pips = NULL;
-}
-
-void	close_pipes(t_pipex *pips, int n)
-{
-	int	i;
-
-	if (!pips)
-		return ;
-	i = 0;
-	while (i < n)
-	{
-		if (pips[i].fd[0] != -1)
-			close(pips[i].fd[0]);
-		if (pips[i].fd[1] != -1)
-			close(pips[i].fd[1]);
-		i++;
-	}
-}
-
-void	close_cmd_files(t_cmd *cmd)
-{
-	if (!cmd)
-		return ;
-	if (cmd->fin != -1)
-		close(cmd->fin);
-	if (cmd->fout != -1)
-		close(cmd->fout);
-}
-
-void	free_cmd(void *vcmd)
-{
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *)vcmd;
-	free(cmd->name);
-	str_arr_free(cmd->args);
-	free(cmd->fullpath);
-	close_cmd_files(cmd);
-	free(cmd);
-}
 
 void	set_prompt_string(t_data *data)
 {
@@ -101,16 +22,46 @@ void	set_prompt_string(t_data *data)
 	crf_dolar = NULL;
 	tmp = NULL;
 	current_folder = ft_strrchr(data->relative_path, '/');
-	crf_dolar = ft_strjoin(current_folder + 1, "\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
+	if (ft_strlen(current_folder) == 1)
+		crf_dolar = ft_strjoin(current_folder,
+				"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
+	else
+		crf_dolar = ft_strjoin(current_folder + 1,
+				"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
+	if (!crf_dolar)
+		msh_exit(data);
 	tmp = data->prompt;
 	data->prompt = ft_strjoin("\001\033[1;32m\002""╔\002"
-				"\001\033[1;32m\002"" minishell" " " "\001╝\002" " " "\001\033[1;31m\002"""
-				, crf_dolar);
+			"\001\033[1;32m\002"" minishell" " " "\001╝\002" " " "\001\033[1;31m\002""",
+			crf_dolar);
+	if (!data->prompt)
+		msh_exit(data);
 	free(crf_dolar);
 	free(tmp);
 }
 
-void	prompt_loop(t_data *data)
+void	ministart(t_data *data)
+{
+	if (!is_opened_quotes(data->input))
+	{
+		ft_printf("Unclosed quote, try closing the \" or \'\n");
+		return ;
+	}
+	add_history(data->input);
+	if (ft_strchr(data->input, '$'))
+		data->input = expand_variables(data, data->input);
+	if (parsing(data))
+	{
+		delete_quotes(data);
+		open_redirections(data);
+		search_cmds(data);
+		execute(data);
+		free_pipes(data);
+		ft_lstclear(&data->cmd, &free_cmd);
+	}
+}
+
+void	minishell_sh(t_data *data)
 {
 	while (1)
 	{
@@ -121,26 +72,7 @@ void	prompt_loop(t_data *data)
 		if (!data->input)
 			break ;
 		else
-		{
-			if (!is_opened_quotes(data->input))
-			{
-				ft_printf("Unclosed quote, try closing the \" or \'\n");
-				free(data->input);
-				continue ;
-			}
-			add_history(data->input);
-			if (ft_strchr(data->input, '$'))
-				data->input = expand_variables(data, data->input);
-			if (parsing(data))
-			{
-				delete_quotes(data);
-				open_redirections(data);
-				search_cmds(data);
-				execute(data);
-				free_pipes(data);
-				ft_lstclear(&data->cmd, &free_cmd);
-			}
-		}
+			ministart(data);
 		free(data->input);
 	}
 }
