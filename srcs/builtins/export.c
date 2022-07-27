@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 23:31:22 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:41:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*---------------------OLD EXPORT--------------*/
 
 int	ft_export(t_data *data, int ac, char **av)
 {
@@ -40,6 +39,7 @@ int	ft_export(t_data *data, int ac, char **av)
 	ids[len_entry] = NULL;
 	entry[len_entry] = NULL;
 	update_env(data, ids, entry, len_entry);
+	update_pwd(data);
 	return (0);
 }
 

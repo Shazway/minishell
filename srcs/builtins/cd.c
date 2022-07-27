@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 23:09:39 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:36:06 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*concat_path(char *goal, char *folder_name)
 
 int	change_path_worker(char *goal, char *foldername, t_data *data)
 {
-	int ret;
+	int	ret;
 
 	free(data->old_path);
 	data->old_path = ft_strdup(data->relative_path);
