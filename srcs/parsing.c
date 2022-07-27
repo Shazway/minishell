@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 00:21:42 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 01:26:25 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,20 @@ void	split_spaces(t_cmd *token, char *content)
 	print_result(token);
 }
 
-int	is_opened_quotes(char	*str)
+int	is_opened_quotes(t_data *data)
 {
 	char	type;
 	int		i;
 
 	i = 0;
 	type = -1;
-	while (str && str[i])
+	while (data->input && data->input[i])
 	{
-		check_quote(&type, str[i]);
+		check_quote(&type, data->input[i]);
 		i++;
 	}
 	if (type == -1)
 		return (1);
+	data->error_msh = "Unclosed quote, try closing the \" or \' quote\n";
 	return (0);
 }

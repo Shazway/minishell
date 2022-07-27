@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 00:40:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 01:25:39 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 	char				*relative_path;
 	struct termios		termios;
 	char				*prompt;
+	char				*error_msh;
 	t_pipex				*pips;
 }	t_data;
 
@@ -170,7 +171,7 @@ int		parsing(t_data *data);
 void	print_result(t_cmd *token);
 void	delete_quotes(t_data *data);
 void	split_spaces(t_cmd *token, char *content);
-int		is_opened_quotes(char	*str);
+int		is_opened_quotes(t_data *data);
 void	check_quote(char *type, char c);
 char	*del_quote(char *str);
 int		trim_quote_size(char *str);
