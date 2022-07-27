@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 19:30:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 01:54:58 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	cd_home(char *path, char *name, t_data *data)
 	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
 	{
 		if (chdir(path) == -1)
-			ft_printf("minishell: cd: HOME not set\n");
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		else
 			swap_paths(data);
 		free(path);
@@ -65,7 +65,7 @@ int	cd_home(char *path, char *name, t_data *data)
 	if (!ft_strncmp(name, "OLDPWD", ft_strlen("OLDPWD")))
 	{
 		if (chdir(path) == -1)
-			ft_printf("minishell: cd: OLDPWD not set\n");
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 		else
 			swap_paths(data);
 		free(path);
@@ -81,7 +81,7 @@ int	cd_dash(char *arg, t_data *data)
 	ret = is_dash(arg);
 	free(arg);
 	if (ret == -1)
-		ft_printf("minishell: --: invalid option\n");
+		ft_putstr_fd("minishell: --: invalid option\n", 2);
 	if (ret == 1)
 	{
 		ft_printf("%s\n", data->old_path);
