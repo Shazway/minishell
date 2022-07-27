@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 17:56:23 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 00:14:47 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,6 @@ char	*get_end(char *str, int index)
 		return (NULL);
 	i++;
 	return (ft_substr(str, i, ft_strlen(str)));
-}
-
-void	check_quote_2(char *type, char c)
-{
-	if (*type == -1 && c == 39)
-		*type = c;
-	else if (c == *type)
-		*type = -1;
-}
-
-void	check_quote_double(char	*type, char c)
-{
-	if (*type == -1 && c == '"')
-		*type = c;
-	else if (c == *type)
-		*type = -1;
 }
 
 int	get_start_unquote(char *str, char **start)
