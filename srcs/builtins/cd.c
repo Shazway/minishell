@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 03:13:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 16:19:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,12 @@ int	new_pwd(char *foldername, char **new_path)
 	{
 		free(*new_path);
 		*new_path = ft_strdup("/");
+		if (!new_path)
+			return (0);
 		tmp = foldername;
 		foldername = ft_strtrim(foldername, "/");
+		if (!foldername)
+			return (0);
 		free(tmp);
 	}
 	if (ft_strlen(foldername) > 0
@@ -160,7 +164,8 @@ int	new_pwd(char *foldername, char **new_path)
 		if (!foldername)
 			return (0);
 	}
-	foldername_loop(&foldername, new_path);
+	if (!foldername_loop(&foldername, new_path))
+		return (0);
 	return (1);
 }
 
@@ -168,8 +173,16 @@ int	change_path(char *goal, char *foldername, t_data *data)
 {
 	int	ret;
 
-	if (!goal)
+	if (!foldername)
+	{
+		free(goal);
 		msh_exit(data);
+	}
+	if (!goal)
+	{
+		free(foldername);
+		msh_exit(data);
+	}
 	if (chdir(goal) == -1)
 	{
 		perror("cd");
