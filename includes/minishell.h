@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 17:43:28 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:25:38 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		check_echo_n(char *str);
 
 int		ft_env(t_data *data, int ac, char **av);
 int		set_env(t_data *data);
-void	update_env(t_data *data, char **entry, int len_entry);
+void	update_env(t_data *data, char **ids, char **entry, int len_entry);
 
 int		shell_exit(t_data *data, int ac, char **av);
 
@@ -186,5 +186,11 @@ char	**str_arr_del(char **sarr, char **entry, int len_entry);
 int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
 
 void	update_pwd(t_data *data);
+
+void	*ft_free(void	*ptr);
+char	*ft_str_zero(char	*str);
+
+int	export_worker(char **ids, char **entry, int ac, char **av);
+char	*ft_replace(char *dest, char *src);
 
 #endif

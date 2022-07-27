@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:56 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/26 17:48:56 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 19:14:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int ft_unset(t_data *data, int ac, char **av)
 	int		i;
 	char	**to_del;
 	int		j;
-	char	**old_envr;
 
 	j = 0;
 	to_del = malloc(ac * sizeof(char *));
@@ -39,9 +38,6 @@ int ft_unset(t_data *data, int ac, char **av)
 		i++;
 	}
 	to_del[j] = NULL;
-	old_envr = data->env_str;
 	data->env_str = str_arr_del(data->env_str, to_del, j);
-	str_arr_free(to_del);
-	str_arr_free(old_envr);
 	return (1);
 }

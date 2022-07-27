@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 23:59:42 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:09:28 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,34 @@ char	**str_arr_add(char **sarr, char **entry, int len_entry)
 		i++;
 	}
 	j = 0;
-	while (entry && j < len_entry)
+	while (entry && entry[j])
 	{
-		new[i] = ft_strdup(entry[j]);
-		if (!new[i])
-			return (str_arr_free(new));
+		if (entry[j][0])
+		{
+			new[i] = ft_strdup(entry[j]);
+			if (!new[i])
+				return (str_arr_free(new));
+			i++;
+		}
 		j++;
-		i++;
 	}
+	str_arr_free(entry);
+	str_arr_free(sarr);
 	return (new);
 }
+
+void	*ft_free(void	*ptr)
+{
+	free(ptr);
+	return (NULL);
+}
+
+char	*ft_str_zero(char	*str)
+{
+	free(str);
+	return (ft_strdup(""));
+}
+
 
 char	**str_arr_del(char **sarr, char **entry, int len_entry)
 {
@@ -104,6 +122,8 @@ char	**str_arr_del(char **sarr, char **entry, int len_entry)
 		i++;
 	}
 	free(to_del);
+	str_arr_free(sarr);
+	str_arr_free(entry);
 	return (new);
 }
 
