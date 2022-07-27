@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 01:55:49 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 02:59:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ char	*concat_path(char *goal, char *folder_name)
 
 	if (!goal)
 		return(NULL);
-	temp = goal;
-	goal = ft_strjoin(goal, "/");
-	free(temp);
+	if (ft_strncmp(goal, "/", ft_strlen(goal)))
+	{
+		temp = goal;
+		goal = ft_strjoin(goal, "/");
+		free(temp);
+	}
 	if (!goal)
 		return (NULL);
 	temp = goal;
@@ -109,12 +112,45 @@ char	*find_new_pwd(char *foldername, char **goal)
 	return (foldername);
 }
 
+int	foldername_loop(char **foldername, char **new_path)
+{
+	char	*tmp;
+
+	if (*foldername && ft_strchr(*foldername, '/'))
+	{
+		while (*foldername && ft_strchr(*foldername, '/'))
+		{
+			tmp = *foldername;
+			*foldername = find_new_pwd(*foldername, new_path);
+			free(tmp);
+			if (!*foldername)
+				return (0);
+			if (!ft_strchr(*foldername, '/'))
+			{
+				free(*foldername);
+				return (1);
+			}
+		}
+	}
+	else
+		free(*foldername);
+	return (1);
+}
+
 int	new_pwd(char *foldername, char **new_path)
 {
 	char	*tmp;
 
 	if (!foldername)
 		return (0);
+	if (foldername[0] == '/')
+	{
+		free(*new_path);
+		*new_path = ft_strdup("/");
+		tmp = foldername;
+		foldername = ft_strtrim(foldername, "/");
+		free(tmp);
+	}
 	if (ft_strlen(foldername) > 0
 		&& foldername[ft_strlen(foldername) - 1] != '/')
 	{
@@ -124,19 +160,7 @@ int	new_pwd(char *foldername, char **new_path)
 		if (!foldername)
 			return (0);
 	}
-	while (foldername && ft_strchr(foldername, '/'))
-	{
-		tmp = foldername;
-		foldername = find_new_pwd(foldername, new_path);
-		free(tmp);
-		if (!foldername)
-			return (0);
-		if (!ft_strchr(foldername, '/'))
-		{
-			free(foldername);
-			return (1);
-		}
-	}
+	foldername_loop(&foldername, new_path);
 	return (1);
 }
 
