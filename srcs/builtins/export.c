@@ -6,11 +6,13 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 23:27:56 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:31:22 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*---------------------OLD EXPORT--------------*/
 
 int	ft_export(t_data *data, int ac, char **av)
 {
@@ -81,7 +83,6 @@ void	update_pwd(t_data *data)
 	if (!data->old_path)
 		msh_exit(data);
 }
- 
 
 int	is_validid(char	*identifier, int len)
 {

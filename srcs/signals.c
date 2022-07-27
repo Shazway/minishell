@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/26 21:59:13 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 22:23:08 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,44 +88,3 @@ int	termios_setup(t_data *data)
 	return (0);
 }
 
-int	msh_init(t_data *data)
-{
-	g_signals.sa_sigaction = sig_info_main;
-	data->input = NULL;
-	data->env_str = NULL;
-	data->cmd = NULL;
-	data->n_cmd = 0;
-	data->pips = NULL;
-	data->ret = 0;
-	data->prompt = NULL;
-	data->relative_path = NULL;
-	data->old_path = NULL;
-	if (!set_env(data))
-		return (1);
-	data->relative_path = get_var("PWD", data);
-	if (!data->relative_path)
-		return (1);
-	data->old_path = ft_strdup(data->relative_path);
-	if (!data->old_path)
-		return (1);
-	return (0);
-}
-
-t_cmd	*init_cmd(int i)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->i = i;
-	cmd->ac = 0;
-	cmd->to_fork = 1;
-	cmd->builtin = 0;
-	cmd->fin = -1;
-	cmd->fout = -1;
-	cmd->name = NULL;
-	cmd->args = NULL;
-	cmd->fullpath = NULL;
-	return (cmd);
-}

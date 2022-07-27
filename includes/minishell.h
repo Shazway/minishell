@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 23:25:38 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:31:32 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_data
 	t_pipex				*pips;
 }	t_data;
 
-typedef int (*FP)(t_data *, int, char **);
+typedef int				(*FP)(t_data *, int, char **);
 
 typedef struct s_cmd
 {
@@ -114,7 +114,7 @@ int		is_redirection(char	*str, int type);
 
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
-void	prompt_loop(t_data *data);
+void	minishell_sh(t_data *data);
 
 void	delete_quotes(t_data *data);
 int		parsing(t_data *data);
@@ -141,10 +141,14 @@ int		trim_quote_size(char *str);
 char	**fill(char *s, char c, char **str);
 char	*trim_quotes_fill(char *dest, char *str, int size);
 char	*trim_quotes(t_data *data, char *str);
+char	*find_new_pwd(char *foldername, char **goal);
 char	**unquote_split(char *s, char c);
+int		foldername_loop(char **foldername, char **new_path);
 
+int		new_pwd(char *foldername, char **new_path);
 char	**str_arr_free(char **str);
 void	str_arr_display(char **str);
+char	*next_dir(char *foldername);
 int		str_arr_size(char **args);
 char	**str_arr_add(char **sarr, char **entry, int len_entry);
 int		ft_malloc(void **p, int length);
@@ -162,12 +166,14 @@ char	*get_path(char *c_name, char **envr);
 char	*parse_path(char **path_array, char *c_name);
 void	print_fullpath(t_data *data);
 void	cmd_notfound(char *cmd_name);
+char	*previous_dir(char *path);
+char	*next_dir(char *foldername);
 
 char	*ft_strsetchr(const char *s, char *set);
 char	*find_var(char **envr, char *entry);
 char	*replace_variables(char	*str, t_data *data);
 char	*extract_var(char *pvar);
- int	here_doc(char *lim, int expand, char **envr, t_data *data);
+int		here_doc(char *lim, int expand, char **envr, t_data *data);
 char	*get_var(char *str, t_data *data);
 void	exec_builtin(t_data *data, t_cmd *cmd);
 int		nofork_builtin(char *fullpath);
@@ -183,14 +189,14 @@ void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
 
 int		is_path(char *s);
 char	**str_arr_del(char **sarr, char **entry, int len_entry);
-int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
+int		*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
 
 void	update_pwd(t_data *data);
 
 void	*ft_free(void	*ptr);
 char	*ft_str_zero(char	*str);
 
-int	export_worker(char **ids, char **entry, int ac, char **av);
+int		export_worker(char **ids, char **entry, int ac, char **av);
 char	*ft_replace(char *dest, char *src);
 
 #endif
