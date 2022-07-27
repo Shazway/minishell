@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 02:59:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 03:13:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ int	cd(t_data *data, int ac, char **str)
 	arg = NULL;
 	if (ac > 2)
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2) > 0);
-	if (ac == 1)
+	if (ac == 1 || (ac == 2 && !ft_strncmp(str[1], "~", ft_strlen(str[1]))))
 		return (cd_home(get_var("HOME", data), "HOME", data));
 	arg = ft_strdup(str[1]);
 	if (!arg)

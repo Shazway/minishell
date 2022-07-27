@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 01:54:58 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/27 03:17:59 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,13 @@ int	cd_home(char *path, char *name, t_data *data)
 	{
 		if (chdir(path) == -1)
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-		else
-			swap_paths(data);
+		free(data->old_path);
+		data->old_path = ft_strdup(data->relative_path);
+		free(data->relative_path);
+		data->relative_path = ft_strdup(path);
 		free(path);
+		if (!data->relative_path || !data->old_path)
+			msh_exit(data);
 		return (1);
 	}
 	if (!ft_strncmp(name, "OLDPWD", ft_strlen("OLDPWD")))
