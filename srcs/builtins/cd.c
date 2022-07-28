@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 23:36:06 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:18:25 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,5 @@ int	cd(t_data *data, int ac, char **str)
 	if (change_path(path, arg, data) == -1)
 		return (-1);
 	export_paths(data);
-	return (1);
+	return (0);
 }

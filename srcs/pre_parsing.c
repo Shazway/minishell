@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 14:12:32 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:18:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	check_input(t_data *data)
 {
 	int		i;
 	char	*tmp;
-	i = 0;
 
+	i = 0;
 	tmp = data->input;
 	data->input = ft_strtrim(data->input, " ");
-	free(tmp;)
+	free(tmp);
 	if (!data->input)
 		msh_exit(data);
 	while (data->input && data->input[i])
