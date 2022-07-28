@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 14:28:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:36:32 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_prompt_string(t_data *data)
 	crf_dolar = NULL;
 	tmp = NULL;
 	current_folder = ft_strrchr(data->relative_path, '/');
-	if (ft_strlen(current_folder) == 1)
+	if (ft_strlen(current_folder) <= 1)
 		crf_dolar = ft_strjoin(current_folder,
 				"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
 	else

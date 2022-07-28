@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:21 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 14:46:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:27:54 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 int	check_args_pwd(char **str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (str && str[i])
 	{
-		j = 0;
 		if (str[i][0] == '-')
 			return (0);
 		i++;
