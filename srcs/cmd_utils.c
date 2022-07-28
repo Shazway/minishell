@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 19:11:51 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:59:04 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,7 @@ void	close_cmd_files(t_cmd *cmd)
 
 void	cmd_notfound(char *cmd_name)
 {
-	ft_printf("%s: command not found\n", cmd_name);
+	ft_putstr_fd(cmd_name, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	g_cmd_status = 127;
 }

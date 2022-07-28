@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 00:03:16 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 01:02:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,14 @@ int	here_doc(char *lim, int expand, char **envr, t_data *data)
 		msh_exit(data);
 	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
+	{
 		perror("open");
+		g_cmd_status = 126;
+	}
 	len_lim = ft_strlen(lim);
 	while (fd)
 	{
 		buf = readline("> ");
-		/*if ( == ENOMEM)
-		{
-			free(lim);
-			msh_exit(data);
-		}*/
 		if (!buf)
 			break ;
 		p = ft_strnstr(buf, lim, len_lim);

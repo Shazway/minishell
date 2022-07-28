@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 20:39:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 01:05:49 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 		perror("cd");
 		free(goal);
 		free(foldername);
-		return (1);
+		return (127);
 	}
 	if (!change_path_worker(goal, foldername, data))
 		msh_exit(data);

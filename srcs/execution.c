@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 00:54:43 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 01:01:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,12 @@ void	exec_error(t_cmd *cmd)
 	fdtest = -1;
 	if (!cmd->fullpath)
 		cmd_notfound(cmd->name);
-	else if (open(cmd->fullpath, O_WRONLY | O_APPEND) == -1)
+	else if (open(cmd->fullpath, O_WRONLY | O_APPEND) == -1
+		|| access(cmd->fullpath, X_OK) == -1)
+	{
 		perror("minishell: ");
-	else if (access(cmd->fullpath, X_OK) == -1)
-		perror("minishell: ");
+		g_cmd_status = 126;
+	}
 	if (fdtest != -1)
 		close(fdtest);
 }

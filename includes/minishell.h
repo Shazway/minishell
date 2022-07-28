@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 00:47:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 01:05:59 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_data
 	t_pipex				*pips;
 	pid_t				child;
 	struct sigaction	*signals_test;
-	int			ret;
 }	t_data;
 
 typedef int				(*t_fp)(t_data *, int, char **);
