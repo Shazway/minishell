@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 23:17:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:01:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ char	*get_end(char *str, int index)
 	i = index;
 	if (!str[i])
 		return (NULL);
-	i++;
-	return (ft_substr(str, i, ft_strlen(str)));
+	return (ft_substr(str, i, ft_strlen(str) - i));
 }
 
 int	get_start_unquote(char *str, char **start)

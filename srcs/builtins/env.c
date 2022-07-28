@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 23:26:23 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:59:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,22 @@ char	*replace_variables(char	*str, t_data *data)
 
 	if (!str)
 		return (str);
+	end = NULL;
 	start = get_start(str);
 	name = get_name(str);
 	if (!name)
 		true_var = get_var(NULL, data);
 	else if (!ft_strncmp(name, "$", ft_strlen(name)))
+	{
 		true_var = ft_strdup("$");
+		end = get_end(str, ft_strlen(name));
+	}
 	else
+	{
 		true_var = get_var(name, data);
-	end = get_end(str, ft_strlen(start) + ft_strlen(name));
+		end = get_end(str, ft_strlen(name) + 1);
+	}
+	printf("start[%s]value[%s]end[%s]\n", name, true_var, end);
 	tmp = str;
 	str = ft_strjoin(start, true_var);
 	free(tmp);
