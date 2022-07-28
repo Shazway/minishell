@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 00:14:47 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:17:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*get_var(char *str, t_data *data)
 	if (!str)
 		return (NULL);
 	if (!ft_strncmp(str, "$?", ft_strlen(str)))
-		return (ft_itoa(data->ret));
+		return (ft_itoa(g_cmd_status));
 	len = ft_strlen(str);
 	while (data->env_str && data->env_str[i])
 	{

@@ -6,11 +6,13 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 22:58:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:17:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_cmd_status;
 
 void	execute(t_data *data)
 {
@@ -55,7 +57,7 @@ void	wait_cmds(t_data *data)
 	pid_t	wpid;
 
 	wpid = 1;
-	while ((wpid = wait(&data->ret)) > 0);
+	while ((wpid = wait(&g_cmd_status)) > 0);
 }
 
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
@@ -130,7 +132,7 @@ void	exec_builtin(t_data *data, t_cmd *cmd)
 		exit(ret);
 	}
 	else
-		data->ret = ret;
+		g_cmd_status = ret;
 }
 
 int	here_doc(char *lim, int expand, char **envr, t_data *data)

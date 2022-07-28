@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 22:58:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:16:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define L_DIR 3
 # define L_DDIR 4
 
-
+extern int g_cmd_status;
 
 typedef struct s_pipex
 {
@@ -47,7 +47,6 @@ typedef struct s_data
 	char				*input;
 	t_list				*cmd;
 	int					n_cmd;
-	int					ret;
 	char				**env_str;
 	char				*old_path;
 	char				*relative_path;

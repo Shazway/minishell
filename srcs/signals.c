@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 22:57:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:21:03 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,15 @@ void	heredoc_handler(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGINT)
 	{
 		write(1, "^C\n", 4);
+		g_cmd_status = 130;
 		close(0);
 		
 	}
 	if (signal == SIGQUIT)
+	{
+		g_cmd_status = 0;
 		return ;
+	}
 	if (signal == SIGCHLD)
 		return ;
 }
@@ -47,11 +51,15 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 	(void)trash;
 	if (signal == SIGINT)
 	{
+		g_cmd_status = 130;
 		wait(NULL);
 		return ;
 	}
 	if (signal == SIGQUIT)
+	{
+		g_cmd_status = 0;
 		return ;
+	}
 	if (signal == SIGCHLD)
 		return ;
 }
@@ -62,13 +70,17 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 	(void)trash;
 	if (signal == SIGINT)
 	{
+		g_cmd_status = 130;
 		write(1, "^C\n", 4);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	if (signal == SIGQUIT)
+	{
+		g_cmd_status = 0;
 		return ;
+	}
 	if (signal == SIGCHLD)
 		return ;
 }
