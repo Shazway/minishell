@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 02:01:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:09:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,15 @@ int	check_input_redirect(t_data *data, int *i, int count)
 
 int	check_input_pipe(t_data *data, int *i, int count)
 {
-	if (!data->input[*i + 1])
+	if (!data->input[*i + 1] || (*i == 0)
+		|| (*i > 0 && (data->input[*i - 1] == '>'
+				|| data->input[*i - 1] == '<'))
+		|| (data->input[*i] && (data->input[*i + 1] == '>'
+				|| data->input[*i + 1] == '<')))
+	{
+		data->error_msh = "minishell: syntax error for \'|\'\n";
 		return (0);
+	}
 	while (data->input[*i] && data->input[*i] == '|')
 	{
 		count++;
@@ -46,7 +53,7 @@ int	check_input_pipe(t_data *data, int *i, int count)
 	}
 	if (count > 1)
 	{
-		data->error_msh = "minishell: syntax error for \'|\'";
+		data->error_msh = "minishell: syntax error for \'|\'\n";
 		return (0);
 	}
 	return (1);
