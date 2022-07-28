@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 20:05:25 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 22:58:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ void	execute(t_data *data)
 				run_cmd(data, cmd, cmd->i, data->n_cmd);
 			else
 			{
-				memset(&g_signals, 0, sizeof(struct sigaction));
-				g_signals.sa_sigaction = secondary_handler;
-				signal_intercept();
+				memset(data->signals_test, 0, sizeof(struct sigaction));
+				data->signals_test->sa_sigaction = secondary_handler;
+				signal_intercept(data);
 			}
 		}
 		c_idx = c_idx->next;
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
 	wait_cmds(data);
-	memset(&g_signals, 0, sizeof(struct sigaction));
-	g_signals.sa_sigaction = sig_info_main;
-	signal_intercept();
+	memset(data->signals_test, 0, sizeof(struct sigaction));
+	data->signals_test->sa_sigaction = sig_info_main;
+	signal_intercept(data);
 }
 
 void	wait_cmds(t_data *data)
@@ -155,12 +155,7 @@ int	here_doc(char *lim, int expand, char **envr, t_data *data)
 	len_lim = ft_strlen(lim);
 	while (fd)
 	{
-		buf = readline("> ");
-		/*if ( == ENOMEM)
-		{
-			free(lim);
-			msh_exit(data);
-		}*/
+		buf = readline("> ");	
 		if (!buf)
 			break ;
 		p = ft_strnstr(buf, lim, len_lim);

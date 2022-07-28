@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 20:40:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 22:58:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define L_DIR 3
 # define L_DDIR 4
 
-extern struct sigaction	g_signals;
+
 
 typedef struct s_pipex
 {
@@ -56,6 +56,7 @@ typedef struct s_data
 	char				*prompt;
 	char				*error_msh;
 	t_pipex				*pips;
+	struct sigaction	*signals_test;
 }	t_data;
 
 typedef int				(*FP)(t_data *, int, char **);
@@ -200,10 +201,10 @@ char	*separate_redir(char *str);
 
 //-----------SIGNAL-------------//
 void	secondary_handler(int signal, siginfo_t *s, void *trash);
-int		signal_intercept(void);
 void	sig_info_main(int signal, siginfo_t *s, void *trash);
 int		termios_setup(t_data *data);
 void	heredoc_handler(int signal, siginfo_t *s, void *trash);
+int		signal_intercept(t_data *data);
 //------------------------------//
 
 //-----------UTILS---------------//

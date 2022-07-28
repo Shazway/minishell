@@ -6,21 +6,20 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 22:23:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 22:57:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-struct sigaction	g_signals;
 
-int	signal_intercept(void)
+int	signal_intercept(t_data *data)
 {
-	if (sigaction(SIGCHLD, &(g_signals), NULL) == -1)
+	if (sigaction(SIGCHLD, data->signals_test, NULL) == -1)
 		return (1);
-	if (sigaction(SIGINT, &(g_signals), NULL) == -1)
+	if (sigaction(SIGINT, data->signals_test, NULL) == -1)
 		return (1);
-	if (sigaction(SIGQUIT, &(g_signals), NULL) == -1)
+	if (sigaction(SIGQUIT, data->signals_test, NULL) == -1)
 		return (1);
 	return (0);
 }

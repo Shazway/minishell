@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 19:47:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 22:58:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	msh_free(t_data *data)
 {
 	rl_clear_history();
+	free(data->signals_test);
 	free(data->input);
 	free(data->prompt);
 	free(data->relative_path);
@@ -35,7 +36,9 @@ void	msh_exit(t_data *data)
 
 int	msh_init(t_data *data)
 {
-	g_signals.sa_sigaction = sig_info_main;
+	data->signals_test = malloc(sizeof(struct sigaction));
+	memset(data->signals_test, 0, sizeof(struct sigaction));
+	data->signals_test->sa_sigaction = sig_info_main;
 	data->input = NULL;
 	data->env_str = NULL;
 	data->cmd = NULL;
