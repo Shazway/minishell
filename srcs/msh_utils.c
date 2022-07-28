@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 23:17:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:03:48 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	msh_free(t_data *data)
 	free(data->relative_path);
 	free(data->old_path);
 	free(data->prompt_path);
-	ft_lstclear	(&data->cmd, &free_cmd);
+	ft_lstclear(&data->cmd, &free_cmd);
 	free_pipes(data);
 	str_arr_free(data->env_str);
 	free(data);

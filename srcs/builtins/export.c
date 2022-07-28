@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 20:44:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:04:42 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_export(t_data *data, int ac, char **av)
 {
@@ -134,4 +133,38 @@ int	is_validid(char	*identifier, int len)
 		i++;
 	}
 	return (i);
+}
+
+void	update_env(t_data *data, char **ids, char **entry, int len_entry)
+{
+	int		i;
+	int		k;
+
+	i = -1;
+	while (data->env_str[++i])
+	{
+		k = -1;
+		while (entry[++k])
+		{
+			if (entry[k][0] &&
+				ft_strnstr(data->env_str[i], ids[k], 0) == data->env_str[i])
+			{
+				data->env_str[i] = ft_s_replace(data->env_str[i], ft_strdup(entry[k]));
+				entry[k] = ft_str_zero(entry[k]);
+				len_entry--;
+				break ;
+			}
+		}
+	}
+	str_arr_free(ids);
+	if (len_entry > 0)
+		data->env_str = str_arr_add(data->env_str, i, entry, len_entry);
+	else
+		str_arr_free(entry);
+}
+
+char	*ft_str_zero(char	*str)
+{
+	free(str);
+	return (ft_strdup(""));
 }

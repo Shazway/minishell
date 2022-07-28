@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 23:59:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:25:32 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_env(t_data *data, int ac, char **av)
 {
 	(void)ac;
 	(void)av;
+	if (ac > 1)
+		return (0);
 	str_arr_display(data->env_str);
 	return (0);
 }
@@ -41,35 +43,7 @@ int	set_env(t_data *data)
 	return (1);
 }
 
-void	update_env(t_data *data, char **ids, char **entry, int len_entry)
-{
-	int		i;
-	int		k;
-
-	i = -1;
-	while (data->env_str[++i])
-	{
-		k = -1;
-		while (entry[++k])
-		{
-			if (entry[k][0] &&
-				ft_strnstr(data->env_str[i], ids[k], 0) == data->env_str[i])
-			{
-				data->env_str[i] = ft_replace(data->env_str[i], ft_strdup(entry[k]));
-				entry[k] = ft_str_zero(entry[k]);
-				len_entry--;
-				break ;
-			}
-		}
-	}
-	str_arr_free(ids);
-	if (len_entry > 0)
-		data->env_str = str_arr_add(data->env_str, entry, len_entry);
-	else
-		str_arr_free(entry);
-}
-
-char	*ft_replace(char *dest, char *src)
+char	*ft_s_replace(char *dest, char *src)
 {
 	char	*tmp;
 
