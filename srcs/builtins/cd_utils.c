@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 03:17:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:31:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	cd_dash(char *arg, t_data *data)
 	ret = is_dash(arg);
 	free(arg);
 	if (ret == -1)
+	{
 		ft_putstr_fd("minishell: --: invalid option\n", 2);
+		return (2);
+	}
 	if (ret == 1)
 	{
 		ft_printf("%s\n", data->old_path);

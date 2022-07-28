@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 14:07:49 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:28:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ministart(t_data *data)
 	add_history(data->input);
 	if (!is_opened_quotes(data) || !check_input(data))
 	{
+		data->ret = 2;
 		ft_printf("%s", data->error_msh);
 		return ;
 	}
