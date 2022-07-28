@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 15:36:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 16:00:09 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,16 @@
 void	set_prompt_string(t_data *data)
 {
 	char	*tmp;
-	char	*current_folder;
+	char	*cr_dir;
 	char	*crf_dolar;
 
-	current_folder = NULL;
-	crf_dolar = NULL;
-	tmp = NULL;
-	current_folder = ft_strrchr(data->relative_path, '/');
-	if (ft_strlen(current_folder) <= 1)
-		crf_dolar = ft_strjoin(current_folder,
-				"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
+	cr_dir = ft_strrchr(data->prompt_path, '/');
+	if ((cr_dir && !cr_dir[1]) || !cr_dir)
+		cr_dir = data->prompt_path;
 	else
-		crf_dolar = ft_strjoin(current_folder + 1,
-				"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
+		cr_dir = cr_dir + 1;
+	crf_dolar = ft_strjoin(cr_dir,
+			"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
 	if (!crf_dolar)
 		msh_exit(data);
 	tmp = data->prompt;
@@ -68,6 +65,7 @@ void	minishell_sh(t_data *data)
 	{
 		if (signal_intercept())
 			exit(1);
+		update_pwd(data);
 		set_prompt_string(data);
 		data->input = readline(data->prompt);
 		if (!data->input)

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 15:35:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:44:12 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	ft_export(t_data *data, int ac, char **av)
 	ids[len_entry] = NULL;
 	entry[len_entry] = NULL;
 	update_env(data, ids, entry, len_entry);
-	//update_pwd(data);
 	return (0);
 }
 
@@ -74,13 +73,9 @@ int	export_worker(char **ids, char **entry, int ac, char **av)
 
 void	update_pwd(t_data *data)
 {
-	free(data->relative_path);
-	free(data->old_path);
-	data->relative_path = get_var("PWD", data);
-	if (!data->relative_path)
-		msh_exit(data);
-	data->old_path = get_var("OLDPWD", data);
-	if (!data->old_path)
+	free(data->prompt_path);
+	data->prompt_path = get_var("PWD", data);
+	if (!data->prompt_path)
 		msh_exit(data);
 }
 

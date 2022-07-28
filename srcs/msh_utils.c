@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 02:03:43 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:45:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	msh_free(t_data *data)
 	free(data->prompt);
 	free(data->relative_path);
 	free(data->old_path);
+	free(data->prompt_path);
 	ft_lstclear	(&data->cmd, &free_cmd);
 	free_pipes(data);
 	str_arr_free(data->env_str);
@@ -45,13 +46,12 @@ int	msh_init(t_data *data)
 	data->error_msh = "";
 	data->relative_path = NULL;
 	data->old_path = NULL;
+	data->prompt_path = NULL;
 	if (!set_env(data))
 		return (1);
 	data->relative_path = get_var("PWD", data);
-	if (!data->relative_path)
-		return (1);
 	data->old_path = ft_strdup(data->relative_path);
-	if (!data->old_path)
+	if (!data->relative_path || !data->old_path)
 		return (1);
 	return (0);
 }
