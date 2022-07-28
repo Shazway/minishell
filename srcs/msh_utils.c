@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 15:45:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:47:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	msh_init(t_data *data)
 	data->pips = NULL;
 	data->ret = 0;
 	data->prompt = NULL;
-	data->error_msh = "";
+	data->error_msh = NULL;
 	data->relative_path = NULL;
 	data->old_path = NULL;
 	data->prompt_path = NULL;

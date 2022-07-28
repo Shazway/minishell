@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 15:39:48 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 20:40:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*next_dir(char *foldername);
 char	*previous_dir(char *path);
 char	*next_dir(char *foldername);
 void	update_pwd(t_data *data);
+void	export_paths(t_data *data);
 //------------------------------//
 
 //-----------ECHO--------------//
