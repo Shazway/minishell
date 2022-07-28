@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 01:45:48 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 01:51:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,45 +40,7 @@ void	set_prompt_string(t_data *data)
 	free(tmp);
 }
 
-int	check_input_worker(t_data *data, int *i, int count)
-{
-	if (!data->input[*i + 1]
-		|| (data->input[*i] == '>' && data->input[*i + 1] == '<')
-		|| (data->input[*i] == '<' && data->input[*i + 1] == '>'))
-	{
-		data->error_msh = "minishell: syntax error: > or < close to newline\n";
-		return (0);
-	}
-	while (data->input[*i]
-		&& (data->input[*i] == '>' || data->input[*i] == '<'))
-	{
-		count++;
-		*i = *i + 1;
-	}
-	if (count > 2)
-	{
-		data->error_msh = "minishell: syntax error for either > or <\n";
-		return (0);
-	}
-	return (1);
-}
 
-int	check_input(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->input && data->input[i])
-	{
-		if (data->input[i] == '>' || data->input[i] == '<')
-			if (!check_input_worker(data, &i, 0))
-				return (0);
-		if (!data->input[i])
-			break ;
-		i++;
-	}
-	return (1);
-}
 
 void	ministart(t_data *data)
 {

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 01:25:39 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 02:00:56 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,9 @@ int		trim_quote_size(char *str);
 char	*trim_quotes_fill(char *dest, char *str, int size);
 char	*trim_quotes(t_data *data, char *str);
 char	**unquote_split(char *s, char c);
+int		check_input_redirect(t_data *data, int *i, int count);
+int		check_input_pipe(t_data *data, int *i, int count);
+int		check_input(t_data *data);
 //------------------------------//
 
 //-----------REDIRECTIONS-------//
