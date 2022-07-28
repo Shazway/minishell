@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 01:05:43 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:42:47 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 int	is_builtin(t_data *data, t_cmd *cmd)
 {
-	char		*builtins[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
-	const FP	farr[7]= {&ft_echo, &cd, &pwd, &ft_export, &ft_unset, &ft_env, &shell_exit};
-	int		i;
+	const char	*b[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
+	const t_fp	f[7] = {&ft_echo, &cd, &pwd, &ft_export,
+		&ft_unset, &ft_env, &shell_exit};
+	int			i;
 
 	i = 0;
 	while (i < 7)
 	{
-		if (cmd->name && !ft_strncmp(builtins[i], cmd->name, ft_strlen(cmd->name)))
+		if (cmd->name && !ft_strncmp(b[i], cmd->name, ft_strlen(cmd->name)))
 		{
 			cmd->builtin = 1;
-			cmd->func = farr[i];
-			if ((i == 1 || i == 3 || i == 4 || i == 6) && ft_lstsize(data->cmd) == 1)
+			cmd->func = f[i];
+			if ((i == 1 || i == 3 || i == 4 || i == 6)
+				&& ft_lstsize(data->cmd) == 1)
 				cmd->to_fork = 0;
 			return (1);
 		}
@@ -43,29 +44,24 @@ char	*get_path(char *c_name, char **envr)
 	char	*working_cmd;
 
 	if (ft_strchr(c_name, '/'))
+		return (ft_strdup(c_name));
+	if (!envr)
+		return (NULL);
+	i = -1;
+	while (envr[++i] != NULL)
 	{
-		path_var = ft_strdup(c_name);
-		return (path_var);
+		path_var = ft_strnstr(envr[i], "PATH=", 5);
+		if (path_var)
+			break ;
 	}
-	i = 0;
-	if (envr)
-	{
-		while (envr[i] != NULL)
-		{
-			path_var = ft_strnstr(envr[i], "PATH=", 5);
-			if (path_var)
-				break ;
-			i++;
-		}
-		if (!path_var)
-			return (NULL);
-		path_var += 5;
-		path_array = ft_split(path_var, ':');
-		working_cmd = parse_path(path_array, c_name);
-		str_arr_free(path_array);
-		if (working_cmd)
-			return (working_cmd);
-	}
+	if (!path_var)
+		return (NULL);
+	path_var += 5;
+	path_array = ft_split(path_var, ':');
+	working_cmd = parse_path(path_array, c_name);
+	str_arr_free(path_array);
+	if (working_cmd)
+		return (working_cmd);
 	return (NULL);
 }
 
@@ -92,4 +88,18 @@ char	*parse_path(char **path_array, char *c_name)
 		return (working_cmd);
 	else
 		return (NULL);
+}
+
+void	exec_builtin(t_data *data, t_cmd *cmd)
+{
+	int	ret;
+
+	ret = cmd->func(data, cmd->ac, cmd->args);
+	if (cmd->to_fork || !ft_strncmp(cmd->name, "exit", 4))
+	{
+		msh_free(data);
+		exit(ret);
+	}
+	else
+		data->ret = ret;
 }

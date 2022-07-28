@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 22:23:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:12:00 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,14 @@ int	signal_intercept(void)
 	return (0);
 }
 
-void	heredoc_handler(int signal, siginfo_t *s, void *trash)
+void	reset_signal_handler(int i)
 {
-	(void)trash;
-	(void)s;
-
-	if (signal == SIGINT)
-	{
-		write(1, "^C\n", 4);
-		close(0);
-		
-	}
-	if (signal == SIGQUIT)
-		return ;
-	if (signal == SIGCHLD)
-		return ;
+	memset(&g_signals, 0, sizeof(struct sigaction));
+	if (i == 0)
+		g_signals.sa_sigaction = sig_info_main;
+	else if (i == 1)
+		g_signals.sa_sigaction = secondary_handler;
+	signal_intercept();
 }
 
 void	secondary_handler(int signal, siginfo_t *s, void *trash)
@@ -87,4 +80,3 @@ int	termios_setup(t_data *data)
 		return (1);
 	return (0);
 }
-

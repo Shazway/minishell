@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:16:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 22:23:52 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 18:41:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,18 @@ void	close_pipes(t_pipex *pips, int n)
 			close(pips[i].fd[1]);
 		i++;
 	}
+}
+
+int	dup_close(int oldfd, int newfd)
+{
+	if (oldfd != newfd)
+	{
+		if (dup2(oldfd, newfd) == -1)
+		{
+			perror("minishell: ");
+			return (0);
+		}
+		close(oldfd);
+	}
+	return (1);
 }

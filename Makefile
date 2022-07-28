@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/28 02:00:32 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/28 19:27:57 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,9 @@ SRCS		=	$(SRC)/builtins/cd.c		\
 				$(SRC)/msh_utils.c			\
 				$(SRC)/cmd_utils.c			\
 				$(SRC)/find_path.c			\
+				$(SRC)/heredoc.c			\
 				$(SRC)/find_path_utils.c	\
+				$(SRC)/str_arr_utils.c		\
 				$(SRC)/pre_parsing.c
 
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 15:39:48 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:52:58 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_data
 	t_pipex				*pips;
 }	t_data;
 
-typedef int				(*FP)(t_data *, int, char **);
+typedef int				(*t_fp)(t_data *, int, char **);
 
 typedef struct s_cmd
 {
@@ -73,7 +73,7 @@ typedef struct s_cmd
 	int		fout;
 	int		to_fork;
 	int		builtin;
-	FP		func;
+	t_fp	func;
 }	t_cmd;
 
 //-----------CD--------------//
@@ -102,7 +102,7 @@ int		check_echo_n(char *str);
 int		ft_env(t_data *data, int ac, char **av);
 void	update_env(t_data *data, char **ids, char **entry, int len_entry);
 char	*find_var(char **envr, char *entry);
-char	*ft_replace(char *dest, char *src);
+char	*ft_s_replace(char *dest, char *src);
 //------------------------------//
 
 //-----------EXIT--------------//
@@ -128,6 +128,7 @@ int		ft_unset(t_data *data, int ac, char **av);
 //-----------CMD---------------//
 t_cmd	*init_cmd(int i);
 void	search_cmds(t_data *data);
+void	exec_builtin(t_data *data, t_cmd *cmd);
 void	free_cmd(void *vcmd);
 void	close_cmd_files(t_cmd *cmd);
 void	cmd_notfound(char *cmd_name);
@@ -139,15 +140,16 @@ void	print_fullpath(t_data *data);
 
 //-----------EXECUTE-----------//
 void	execute(t_data *data);
-void	wait_cmds(t_data *data);
+void	run_forked_cmd(t_data *data, t_cmd *cmd);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
+void	exec_error(t_cmd *cmd);
 void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
-void	exec_builtin(t_data *data, t_cmd *cmd);
 int		here_doc(char *lim, int expand, char **envr, t_data *data);
 int		heredoc_writer(int fd, char *buf, int expand, char **envr);
 char	*extract_var(char *pvar);
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);
+int		dup_close(int oldfd, int newfd);
 //------------------------------//
 
 //-----------EXPAND-------------//
@@ -203,6 +205,7 @@ int		signal_intercept(void);
 void	sig_info_main(int signal, siginfo_t *s, void *trash);
 int		termios_setup(t_data *data);
 void	heredoc_handler(int signal, siginfo_t *s, void *trash);
+void	reset_signal_handler(int i);
 //------------------------------//
 
 //-----------UTILS---------------//
@@ -210,11 +213,14 @@ char	**str_arr_free(char **str);
 void	str_arr_display(char **str);
 int		str_arr_size(char **args);
 char	**str_arr_del(char **sarr, char **entry, int len_entry);
-char	**str_arr_add(char **sarr, char **entry, int len_entry);
+char	**str_arr_add(char **sarr, int len_sarr, char **entry, int len_entry);
 char	*ft_str_zero(char	*str);
-int		ft_malloc(void **p, int length);
+int		ft_malloc(void **p, size_t length);
 int		*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
-void	*ft_free(void	*ptr);
+void	*ft_free(void *ptr);
+void	*ft_free_ptrs(void **p1, void **p2, void **p3, void **p4);
+void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
+int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
 
 #endif

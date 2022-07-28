@@ -6,11 +6,19 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 16:00:09 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:58:28 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	update_pwd(t_data *data)
+{
+	free(data->prompt_path);
+	data->prompt_path = get_var("PWD", data);
+	//if (!data->prompt_path)
+		//msh_exit(data);
+}
 
 void	set_prompt_string(t_data *data)
 {
@@ -72,6 +80,6 @@ void	minishell_sh(t_data *data)
 			break ;
 		else
 			ministart(data);
-		free(data->input);
+		data->input = ft_free(data->input);
 	}
 }

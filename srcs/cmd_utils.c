@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 22:26:09 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:11:51 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	search_cmds(t_data *data)
 		if (!current_cmd->builtin)
 		{
 			fullpath = get_path(current_cmd->name, data->env_str);
-			
 			if (fullpath)
 			{
 				free(current_cmd->fullpath);
