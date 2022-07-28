@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 14:29:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:08:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ int	check_input(t_data *data)
 {
 	int		i;
 	char	*tmp;
+	char	type;
 
 	i = 0;
+	type = -1;
 	tmp = data->input;
 	data->input = ft_strtrim(data->input, " ");
 	free(tmp);
@@ -72,10 +74,11 @@ int	check_input(t_data *data)
 		msh_exit(data);
 	while (data->input && data->input[i])
 	{
-		if (data->input[i] == '>' || data->input[i] == '<')
+		check_quote(&type, data->input[i]);
+		if (type == -1 && (data->input[i] == '>' || data->input[i] == '<'))
 			if (!check_input_redirect(data, &i, 0))
 				return (0);
-		if (data->input[i] == '|')
+		if (type == -1 && (data->input[i] == '|'))
 			if (!check_input_pipe(data, &i, 0))
 				return (0);
 		if (!data->input[i])
