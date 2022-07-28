@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 16:00:09 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:43:25 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	set_prompt_string(t_data *data)
 	char	*cr_dir;
 	char	*crf_dolar;
 
-	cr_dir = ft_strrchr(data->prompt_path, '/');
+	cr_dir = ft_strrchr(data->relative_path, '/');
 	if ((cr_dir && !cr_dir[1]) || !cr_dir)
-		cr_dir = data->prompt_path;
+		cr_dir = data->relative_path;
 	else
 		cr_dir = cr_dir + 1;
 	crf_dolar = ft_strjoin(cr_dir,
