@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 00:03:48 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:55:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,15 @@ int	msh_init(t_data *data)
 	data->input = NULL;
 	data->env_str = NULL;
 	data->cmd = NULL;
-	data->n_cmd = 0;
 	data->pips = NULL;
-	g_cmd_status = 0;
 	data->prompt = NULL;
 	data->error_msh = NULL;
 	data->relative_path = NULL;
 	data->old_path = NULL;
 	data->prompt_path = NULL;
+	data->child = -1;
+	g_cmd_status = 0;
+	data->n_cmd = 0;
 	if (!set_env(data))
 		return (1);
 	data->relative_path = get_var("PWD", data);

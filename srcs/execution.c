@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 00:39:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:54:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,18 @@ void	execute(t_data *data)
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
 	wpid = 1;
-	while (wpid > 0)
-		wpid = wait(&g_cmd_status);
+	while (data->child > 0)
+		data->child = waitpid(data->child, &g_cmd_status, 0);
+	g_cmd_status = WEXITSTATUS(g_cmd_status);
 	reset_signal_handler(data, 0);
 }
 
 void	run_forked_cmd(t_data *data, t_cmd *cmd)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
+	data->child = fork();
+	if (data->child == -1)
 		return ;
-	else if (pid == 0)
+	else if (data->child == 0)
 		run_cmd(data, cmd, cmd->i, data->n_cmd);
 	else
 		reset_signal_handler(data, 1);
