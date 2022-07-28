@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 00:25:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:39:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	execute(t_data *data)
 	close_pipes(data->pips, data->n_cmd - 1);
 	wpid = 1;
 	while (wpid > 0)
-		wpid = wait(&data->ret);
+		wpid = wait(&g_cmd_status);
 	reset_signal_handler(data, 0);
 }
 
