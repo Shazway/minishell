@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 23:17:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:22:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	wait_cmds(t_data *data)
 {
 	pid_t	wpid;
 
+	(void)data;
 	wpid = 1;
 	while ((wpid = wait(&g_cmd_status)) > 0);
 }
