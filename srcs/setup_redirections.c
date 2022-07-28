@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 01:05:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 22:58:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 	{
 		if (arg->args[i + 1])
 		{
-			memset(&g_signals, 0, sizeof(struct sigaction));
-			g_signals.sa_sigaction = heredoc_handler;
-			signal_intercept();
+			memset(data->signals_test, 0, sizeof(struct sigaction));
+			data->signals_test->sa_sigaction = heredoc_handler;
+			signal_intercept(data);
 			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr, data);
-			memset(&g_signals, 0, sizeof(struct sigaction));
-			g_signals.sa_sigaction = sig_info_main;
-			signal_intercept();
+			memset(data->signals_test, 0, sizeof(struct sigaction));
+			data->signals_test->sa_sigaction = sig_info_main;
+			signal_intercept(data);
 		}
 	}
 	return (1);

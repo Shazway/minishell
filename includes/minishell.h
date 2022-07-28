@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 23:52:58 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:12:34 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define L_DIR 3
 # define L_DDIR 4
 
-extern struct sigaction	g_signals;
+extern int g_cmd_status;
 
 typedef struct s_pipex
 {
@@ -47,7 +47,6 @@ typedef struct s_data
 	char				*input;
 	t_list				*cmd;
 	int					n_cmd;
-	int					ret;
 	char				**env_str;
 	char				*old_path;
 	char				*relative_path;
@@ -56,6 +55,8 @@ typedef struct s_data
 	char				*prompt;
 	char				*error_msh;
 	t_pipex				*pips;
+	struct sigaction	*signals_test;
+	int			ret;
 }	t_data;
 
 typedef int				(*t_fp)(t_data *, int, char **);
@@ -91,6 +92,7 @@ char	*next_dir(char *foldername);
 char	*previous_dir(char *path);
 char	*next_dir(char *foldername);
 void	update_pwd(t_data *data);
+void	export_paths(t_data *data);
 //------------------------------//
 
 //-----------ECHO--------------//
@@ -201,11 +203,11 @@ char	*separate_redir(char *str);
 
 //-----------SIGNAL-------------//
 void	secondary_handler(int signal, siginfo_t *s, void *trash);
-int		signal_intercept(void);
 void	sig_info_main(int signal, siginfo_t *s, void *trash);
 int		termios_setup(t_data *data);
 void	heredoc_handler(int signal, siginfo_t *s, void *trash);
-void	reset_signal_handler(int i);
+void	reset_signal_handler(t_data *data, int i);
+int		signal_intercept(t_data *data);
 //------------------------------//
 
 //-----------UTILS---------------//

@@ -6,19 +6,11 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 19:58:28 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:14:39 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	update_pwd(t_data *data)
-{
-	free(data->prompt_path);
-	data->prompt_path = get_var("PWD", data);
-	//if (!data->prompt_path)
-		//msh_exit(data);
-}
 
 void	set_prompt_string(t_data *data)
 {
@@ -26,9 +18,9 @@ void	set_prompt_string(t_data *data)
 	char	*cr_dir;
 	char	*crf_dolar;
 
-	cr_dir = ft_strrchr(data->prompt_path, '/');
+	cr_dir = ft_strrchr(data->relative_path, '/');
 	if ((cr_dir && !cr_dir[1]) || !cr_dir)
-		cr_dir = data->prompt_path;
+		cr_dir = data->relative_path;
 	else
 		cr_dir = cr_dir + 1;
 	crf_dolar = ft_strjoin(cr_dir,
@@ -50,8 +42,8 @@ void	ministart(t_data *data)
 	add_history(data->input);
 	if (!is_opened_quotes(data) || !check_input(data))
 	{
-		data->ret = 2;
-		ft_printf("%s", data->error_msh);
+		g_cmd_status = 2;
+		ft_putstr_fd(data->error_msh, 2);
 		return ;
 	}
 	if (ft_strchr(data->input, '$'))
@@ -71,9 +63,8 @@ void	minishell_sh(t_data *data)
 {
 	while (1)
 	{
-		if (signal_intercept())
+		if (signal_intercept(data))
 			exit(1);
-		update_pwd(data);
 		set_prompt_string(data);
 		data->input = readline(data->prompt);
 		if (!data->input)

@@ -6,11 +6,13 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 19:53:45 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:19:25 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_cmd_status;
 
 void	execute(t_data *data)
 {
@@ -35,7 +37,7 @@ void	execute(t_data *data)
 	wpid = 1;
 	while (wpid > 0)
 		wpid = wait(&data->ret);
-	reset_signal_handler(0);
+	reset_signal_handler(data, 0);
 }
 
 void	run_forked_cmd(t_data *data, t_cmd *cmd)
@@ -48,7 +50,7 @@ void	run_forked_cmd(t_data *data, t_cmd *cmd)
 	else if (pid == 0)
 		run_cmd(data, cmd, cmd->i, data->n_cmd);
 	else
-		reset_signal_handler(1);
+		reset_signal_handler(data, 1);
 }
 
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
@@ -58,25 +60,14 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 
 	r = i - 1 + 1 * ((n - i) / n);
 	w = i - 1 * (i == n - 1);
-	if (cmd->fin == -1)
-	{
-		if (i != 0 && n > 1)
-			dup2(data->pips[r].fd[0], STDIN_FILENO);
-	}
-	else
-	{
-		if (!dup_close(cmd->fin, STDIN_FILENO))
-			msh_exit(data);
-	}
-	if (cmd->fout == -1)
-	{
-		if (i != n - 1 && n > 1)
-			dup2(data->pips[w].fd[1], STDOUT_FILENO);
-	}
-	else
-	{
-		dup_close(cmd->fout, STDOUT_FILENO);
-	}
+	if (cmd->fin == -1 && i != 0 && n > 1)
+		dup2(data->pips[r].fd[0], STDIN_FILENO);
+	else if (cmd->fin != -1 && !dup_close(cmd->fin, STDIN_FILENO))
+		msh_exit(data);
+	if (cmd->fout == -1 && i != n - 1 && n > 1)
+		dup2(data->pips[w].fd[1], STDOUT_FILENO);
+	else if (cmd->fout != -1 && !dup_close(cmd->fout, STDOUT_FILENO))
+		msh_exit(data);
 	close_unused_pipes(data->pips, r, w, n);
 	if (cmd->builtin)
 		exec_builtin(data, cmd);

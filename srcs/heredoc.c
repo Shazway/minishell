@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/28 18:42:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:03:16 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,15 @@ void	heredoc_handler(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGINT)
 	{
 		write(1, "^C\n", 4);
+		g_cmd_status = 130;
 		close(0);
 		
 	}
 	if (signal == SIGQUIT)
+	{
+		g_cmd_status = 0;
 		return ;
+	}
 	if (signal == SIGCHLD)
 		return ;
 }

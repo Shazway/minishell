@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 16:41:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:38:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ char	*separate_redir(char *str)
 {
 	int		i;
 	char	*temp;
+	char	type;
 
+	type = -1;
 	i = 0;
 	temp = str;
 	str = ft_strtrim(str, " ");
@@ -94,7 +96,8 @@ char	*separate_redir(char *str)
 	free(temp);
 	while (str && str[i])
 	{
-		if ((str[i] == '>' || str[i] == '<'))
+		check_quote(&type, str[i]);
+		if (type == -1 && (str[i] == '>' || str[i] == '<'))
 		{
 			str = check_redir(str, &i);
 			if (!str)
