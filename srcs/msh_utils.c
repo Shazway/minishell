@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 01:26:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/28 02:03:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	msh_init(t_data *data)
 	data->pips = NULL;
 	data->ret = 0;
 	data->prompt = NULL;
-	data->error_msh = NULL;
+	data->error_msh = "";
 	data->relative_path = NULL;
 	data->old_path = NULL;
 	if (!set_env(data))
