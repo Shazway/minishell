@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 11:55:55 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:44:59 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ void	execute(t_data *data)
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
 	while (data->child > 0)
+	{
 		data->child = waitpid(data->child, &g_cmd_status, 0);
-	g_cmd_status = WEXITSTATUS(g_cmd_status);
+		g_cmd_status = WEXITSTATUS(g_cmd_status);
+	}
 	reset_signal_handler(data, 0);
 }
 

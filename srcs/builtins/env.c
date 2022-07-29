@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 20:42:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:47:56 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,6 @@ char	*ft_s_replace(char *dest, char *src)
 	dest = src;
 	free(tmp);
 	return (dest);
-}
-
-char	*find_var(char **envr, char *entry)
-{
-	int	i;
-	int	len;
-
-	i = -1;
-	len = ft_strlen(entry);
-	if (!entry)
-		return (NULL);
-	while (envr[++i])
-		if (!strncmp(envr[i], entry, len))
-			return (ft_strdup(envr[i] + len + 1));
-	return (NULL);
 }
 
 char	*replace_variables(char	*str, t_data *data, char type)

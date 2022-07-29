@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 19:06:34 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:47:52 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,42 +54,12 @@ int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
 		p = ft_strnstr(buf, lim, len_lim);
 		if (p && p == buf && p[len_lim] == '\0')
 			return (ft_free(buf) == NULL);
-		if (!heredoc_writer(fd, buf, expand, data))
-		{
-			ft_free_strs(&buf, &lim, NULL, NULL);
-			msh_exit(data);
-		}
+		if (expand)
+			buf = expand_variables(data, buf, -1);
+		ft_putendl_fd(buf, fd);
 		free(buf);
 	}
 	return (0);
-}
-
-int	heredoc_writer(int fd, char *buf, int expand, t_data *data)
-{
-	char	*p;
-	char	*var;
-	int		from;
-	char	*value;
-
-	p = NULL;
-	from = 0;
-	if (expand)
-	{
-		p = ft_strchr(buf, '$');
-		while (p)
-		{
-			write(fd, buf + from, p - (buf + from));
-			var = extract_var(p + 1);
-			from += 1 + ft_strlen(var);
-			value = find_var(data->env_str, var);
-			ft_putstr_fd(value, fd);
-			ft_free_strs(&value, &var, NULL, NULL);
-			p = ft_strchr(buf + from, '$');
-		}
-	}
-	if (!expand || !p)
-		ft_putendl_fd(buf + from, fd);
-	return (1);
 }
 
 char	*extract_var(char *pvar)

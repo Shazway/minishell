@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 01:03:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:46:45 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,10 @@ char	*parse_path(char **path_array, char *c_name)
 
 void	exec_builtin(t_data *data, t_cmd *cmd)
 {
-	int	ret;
-
-	ret = cmd->func(data, cmd->ac, cmd->args);
+	g_cmd_status = cmd->func(data, cmd->ac, cmd->args);
 	if (cmd->to_fork || !ft_strncmp(cmd->name, "exit", 4))
 	{
 		msh_free(data);
-		exit(ret);
+		exit(g_cmd_status);
 	}
-	else
-		g_cmd_status = ret;
 }

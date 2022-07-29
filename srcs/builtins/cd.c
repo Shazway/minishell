@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 11:35:07 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:05:55 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	}
 	if (chdir(goal) == -1)
 	{
-		perror("cd");
+		perror("minishell: cd");
 		ft_free_strs(&goal, &foldername, NULL, NULL);
-		return (127);
+		return (1);
 	}
 	if (!change_path_worker(goal, foldername, data))
 		msh_exit(data);
