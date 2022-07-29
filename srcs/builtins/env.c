@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 22:56:33 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 23:39:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,15 @@ char	*join_variable(char *str, char *true_var, char *end, char *start)
 	return (str);
 }
 
-char	*replace_variables(char	*str, t_data *data, char type)
+char	*replace_variables(char *str, t_data *data, char type, char *start)
 {
 	char	*true_var;
-	char	*start;
 	char	*end;
 	char	*name;
 
 	if (!str)
 		return (str);
 	end = NULL;
-	start = get_start(str);
 	name = get_name(str, type);
 	if (name)
 	{
@@ -91,7 +89,7 @@ char	*replace_variables(char	*str, t_data *data, char type)
 		true_var = get_var(name, data);
 		end = get_end(str, ft_strlen(name) + 1);
 	}
-	str = join_variable(str, true_var, end, NULL);
+	str = join_variable(str, true_var, end, start);
 	ft_free_strs(&end, NULL, &name, NULL);
 	return (str);
 }

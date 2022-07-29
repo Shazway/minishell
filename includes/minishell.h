@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 22:58:15 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 23:37:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int		export_worker(char **ids, char **entry, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 void	free_pipes(t_data *data);
 void	close_pipes(t_pipex *pips, int n);
+void	update_pwd(t_data *data);
 //------------------------------//
 
 //-----------PWD---------------//
@@ -159,7 +160,7 @@ char	*get_end(char *str, int index);
 char	*get_start(char *str);
 char	*get_var(char *str, t_data *data);
 char	*get_name(char	*str, char type);
-char	*replace_variables(char	*str, t_data *data, char type);
+char	*replace_variables(char	*str, t_data *data, char type, char *start);
 int		get_start_unquote(char *str, char **start);
 //------------------------------//
 
