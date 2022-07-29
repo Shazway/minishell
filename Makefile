@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/29 23:50:06 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/30 00:20:24 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,8 @@ SRCS		=	$(SRC)/builtins/cd.c			\
 				$(SRC)/expand_utils.c			\
 				$(SRC)/redirections_utils.c		\
 				$(SRC)/update_pwd.c				\
-				$(SRC)/builtins/cd_home.c
+				$(SRC)/builtins/cd_home.c		\
+				$(SRC)/arr_del_utils.c
 
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 

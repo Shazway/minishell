@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 23:50:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 00:19:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ char	**str_arr_add(char **sarr, int len_sarr, char **entry, int len_entry);
 char	*ft_str_zero(char	*str);
 int		ft_malloc(void **p, size_t length);
 int		*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
+int		*end_sarrdel_worker(int **to_del, int **len_new, int len_sarr, int j);
 void	*ft_free(void *ptr);
 void	*ft_free_strs(char **s1, char **s2, char **s3, char **s4);
 void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
