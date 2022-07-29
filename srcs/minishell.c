@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 00:14:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:06:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ministart(t_data *data)
 		return ;
 	}
 	if (ft_strchr(data->input, '$'))
-		data->input = expand_variables(data, data->input);
+		data->input = expand_variables(data, data->input, -1);
 	if (parsing(data))
 	{
 		delete_quotes(data);

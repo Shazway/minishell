@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 18:01:49 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:10:49 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	reset_signal_handler(t_data *data, int i)
 		data->signals_test->sa_sigaction = sig_info_main;
 	else if (i == 1)
 		data->signals_test->sa_sigaction = secondary_handler;
+	else if (i == 2)
+		data->signals_test->sa_sigaction = heredoc_handler;
 	signal_intercept(data);
 }
 

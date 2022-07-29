@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:17:11 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 22:25:58 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 20:47:29 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_node(t_parsing *parsing)
 int	ft_printf(const char *str, ...)
 {
 	t_parsing	*parsing;
-	int		count;
+	int			count;
 
 	parsing = malloc(sizeof(t_parsing));
 	if (!parsing)

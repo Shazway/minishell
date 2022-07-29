@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 19:15:38 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:18:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_data
 	struct sigaction	*signals_test;
 }	t_data;
 
-typedef int				(*t_fp)(t_data *, int, char **);
+typedef int	(*t_fp)(t_data *, int, char **);
 
 typedef struct s_cmd
 {
@@ -157,12 +157,13 @@ int		dup2_close(int oldfd, int newfd);
 //------------------------------//
 
 //-----------EXPAND-------------//
-char	*expand_variables(t_data *data, char *str);
+char	*expand_variables(t_data *data, char *str, char type);
 char	*get_end(char *str, int index);
 char	*get_start(char *str);
 char	*get_var(char *str, t_data *data);
-char	*get_name(char	*str);
-char	*replace_variables(char	*str, t_data *data);
+char	*get_name(char	*str, char type);
+char	*replace_variables(char	*str, t_data *data, char type);
+int		get_start_unquote(char *str, char **start);
 //------------------------------//
 
 //-----------MINISHELL----------//
@@ -194,6 +195,7 @@ int		check_input(t_data *data);
 
 //-----------REDIRECTIONS-------//
 int		open_redirections(t_data *data);
+void	open_redirections_worker(t_cmd *arg, char *final_path, int type);
 int		setup_rfiles(t_cmd	*arg, int i, t_data *data);
 char	**eliminate_redirections(char **args);
 char	**destroy_redirections(char **dest, char **args);

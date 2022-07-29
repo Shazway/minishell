@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 11:39:53 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:17:52 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,14 @@ int	setup_rfiles(t_cmd	*arg, int i, t_data *data)
 		free(work_path);
 		return (0);
 	}
-	if (arg->fout != -1)
-		close(arg->fout);
-	if (arg->fin != -1)
-		close(arg->fin);
-	if (type == R_DIR)
-		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (type == R_DDIR)
-		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (type == L_DIR)
-		arg->fin = open(final_path, O_RDONLY);
-	free(final_path);
+	open_redirections_worker(arg, final_path, type);
 	if (type == L_DDIR)
 	{
 		if (arg->args[i + 1])
 		{
-			memset(data->signals_test, 0, sizeof(struct sigaction));
-			data->signals_test->sa_sigaction = heredoc_handler;
-			signal_intercept(data);
+			reset_signal_handler(data, 2);
 			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, data);
-			memset(data->signals_test, 0, sizeof(struct sigaction));
-			data->signals_test->sa_sigaction = sig_info_main;
-			signal_intercept(data);
+			reset_signal_handler(data, 0);
 		}
 	}
 	return (1);

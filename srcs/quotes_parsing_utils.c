@@ -1,41 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_variables.c                                 :+:      :+:    :+:   */
+/*   quotes_parsing_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:07:25 by tmoragli         ###   ########.fr       */
+/*   Created: 2022/07/29 20:50:18 by tmoragli          #+#    #+#             */
+/*   Updated: 2022/07/29 21:00:00 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_variables(t_data *data, char *str, char type)
+char	*del_quote_fill(char *str, char *new, int size)
 {
-	char	*start;
-	char	*end;
-	int		i;
+	int	i;
+	int	j;
 
 	i = 0;
-	while (str && str[i])
+	j = 0;
+	while (j < size)
 	{
-		check_quote(&type, str[i]);
-		if ((str[i] == '$' && type != '\''))
-		{
-			if (!get_start_unquote(str, &start))
-				msh_exit(data);
-			end = replace_variables(ft_substr(str, i,
-						ft_strlen(str) - i), data, type);
-			free(str);
-			str = ft_strjoin(start, end);
-			free(start);
-			free(end);
-		}
-		if (!str[i])
-			return (str);
+		if (str[i] != '\'' && str[i] != '"')
+			new[j++] = str[i];
 		i++;
 	}
-	return (str);
+	return (new);
+}
+
+char	*del_quote(char *str)
+{
+	char	*new;
+	int		i;
+	int		size;
+
+	size = 0;
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (str && str[i])
+	{
+		if (str[i] != '\'' && str[i] != '"')
+			size++;
+		i++;
+	}
+	new = malloc(sizeof(char) * (size + 1));
+	if (!new)
+		return (NULL);
+	new[size] = '\0';
+	free(str);
+	return (del_quote_fill(str, new, size));
 }

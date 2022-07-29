@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:03:56 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 22:21:53 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 20:47:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_parsing
 	int		count;
 	va_list	argptr;
 }					t_parsing;
-
 
 int		ft_printf(const char *str, ...);
 void	ft_parsing(char **str, t_parsing *parsing);

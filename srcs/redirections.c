@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 19:38:29 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:18:30 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ int	is_redirection(char	*str, int type)
 	if (!ft_strncmp(str, "<<", 3))
 		type = L_DDIR;
 	return (type);
+}
+
+void	open_redirections_worker(t_cmd *arg, char *final_path, int type)
+{
+	if (arg->fout != -1)
+		close(arg->fout);
+	if (arg->fin != -1)
+		close(arg->fin);
+	if (type == R_DIR)
+		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (type == R_DDIR)
+		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (type == L_DIR)
+		arg->fin = open(final_path, O_RDONLY);
+	free(final_path);
 }
 
 char	*concat_redir(char *str, char *redir, int *i, int is_double)
@@ -53,8 +68,6 @@ char	*concat_redir(char *str, char *redir, int *i, int is_double)
 	free(trash);
 	*i += (ft_strlen(redir));
 	free(end);
-	if (!str)
-		return (NULL);
 	return (str);
 }
 

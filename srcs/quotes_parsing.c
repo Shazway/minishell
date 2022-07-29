@@ -6,44 +6,11 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:58:13 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 20:40:43 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 20:58:04 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*del_quote(char *str)
-{
-	char	*new;
-	int		i;
-	int		size;
-	int		j;
-
-	size = 0;
-	i = 0;
-	if (!str)
-		return (NULL);
-	while (str && str[i])
-	{
-		if (str[i] != '\'' && str[i] != '"')
-			size++;
-		i++;
-	}
-	new = malloc(sizeof(char) * (size + 1));
-	if (!new)
-		return (NULL);
-	new[size] = '\0';
-	i = 0;
-	j = 0;
-	while (j < size)
-	{
-		if (str[i] != '\'' && str[i] != '"')
-			new[j++] = str[i];
-		i++;
-	}
-	free(str);
-	return (new);
-}
 
 void	delete_quotes(t_data *data)
 {
@@ -65,7 +32,8 @@ void	delete_quotes(t_data *data)
 		cmd_idx = cmd_idx->next;
 	}
 }
-int		trim_quote_size(char *str)
+
+int	trim_quote_size(char *str)
 {
 	int		i;
 	char	type;
@@ -111,19 +79,13 @@ char	*trim_quotes_fill(char *dest, char *str, int size)
 			if (str[i])
 				i++;
 			while (str[i] && str[i] != type)
-			{
-				dest[j] = str[i];
-				j++;
-				i++;
-			}
+				dest[j++] = str[i++];
 			type = -1;
 			if (str[i])
 				i++;
 			continue ;
 		}
-		dest[j] = str[i];
-		i++;
-		j++;
+		dest[j++] = str[i++];
 	}
 	return (dest);
 }
@@ -140,5 +102,5 @@ char	*trim_quotes(t_data *data, char *str)
 	trimmed[size] = '\0';
 	trimmed = trim_quotes_fill(trimmed, str, size);
 	free(str);
-	return(trimmed);
+	return (trimmed);
 }

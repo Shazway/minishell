@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/28 19:27:57 by mdkhissi         ###   ########.fr        #
+#    Updated: 2022/07/29 21:02:53 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,34 +27,36 @@ INCLUDES	=	-I $(INCLUDE) -I $(LIBFT)
 SRC			=	./srcs
 OBJ			=	./objs
 LIBFT		=	./libft
-SRCS		=	$(SRC)/builtins/cd.c		\
-				$(SRC)/builtins/cd_utils.c	\
-				$(SRC)/builtins/echo.c		\
-				$(SRC)/builtins/env.c		\
-				$(SRC)/builtins/exit.c		\
-				$(SRC)/builtins/export.c	\
-				$(SRC)/builtins/pwd.c		\
-				$(SRC)/builtins/unset.c		\
-				$(SRC)/setup_redirections.c	\
-				$(SRC)/cmd.c				\
-				$(SRC)/execution.c			\
-				$(SRC)/main.c				\
-				$(SRC)/minishell.c			\
-				$(SRC)/redirections.c		\
-				$(SRC)/parsing.c			\
-				$(SRC)/signals.c			\
-				$(SRC)/unquote_split.c		\
-				$(SRC)/expand_variables.c	\
-				$(SRC)/utils.c				\
-				$(SRC)/quotes_parsing.c		\
-				$(SRC)/pipe_utils.c			\
-				$(SRC)/msh_utils.c			\
-				$(SRC)/cmd_utils.c			\
-				$(SRC)/find_path.c			\
-				$(SRC)/heredoc.c			\
-				$(SRC)/find_path_utils.c	\
-				$(SRC)/str_arr_utils.c		\
-				$(SRC)/pre_parsing.c
+SRCS		=	$(SRC)/builtins/cd.c			\
+				$(SRC)/builtins/cd_utils.c		\
+				$(SRC)/builtins/echo.c			\
+				$(SRC)/builtins/env.c			\
+				$(SRC)/builtins/exit.c			\
+				$(SRC)/builtins/export.c		\
+				$(SRC)/builtins/pwd.c			\
+				$(SRC)/builtins/unset.c			\
+				$(SRC)/setup_redirections.c		\
+				$(SRC)/cmd.c					\
+				$(SRC)/execution.c				\
+				$(SRC)/main.c					\
+				$(SRC)/minishell.c				\
+				$(SRC)/redirections.c			\
+				$(SRC)/parsing.c				\
+				$(SRC)/signals.c				\
+				$(SRC)/unquote_split.c			\
+				$(SRC)/expand_variables.c		\
+				$(SRC)/utils.c					\
+				$(SRC)/quotes_parsing.c			\
+				$(SRC)/pipe_utils.c				\
+				$(SRC)/msh_utils.c				\
+				$(SRC)/cmd_utils.c				\
+				$(SRC)/find_path.c				\
+				$(SRC)/heredoc.c				\
+				$(SRC)/find_path_utils.c		\
+				$(SRC)/str_arr_utils.c			\
+				$(SRC)/pre_parsing.c			\
+				$(SRC)/quotes_parsing_utils.c	\
+				$(SRC)/expand_utils.c
 
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
