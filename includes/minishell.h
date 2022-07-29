@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:18:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:11:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int		check_echo_n(char *str);
 //-----------ENV---------------//
 int		ft_env(t_data *data, int ac, char **av);
 void	update_env(t_data *data, char **ids, char **entry, int len_entry);
-char	*find_var(char **envr, char *entry);
 char	*ft_s_replace(char *dest, char *src);
 //------------------------------//
 
@@ -178,6 +177,7 @@ int		set_env(t_data *data);
 
 //-----------PARSING------------//
 int		parsing(t_data *data);
+void	fill_token(t_data *data, char **pipe_split, int i);
 void	print_result(t_cmd *token);
 void	delete_quotes(t_data *data);
 void	split_spaces(t_cmd *token, char *content);
@@ -196,6 +196,7 @@ int		check_input(t_data *data);
 //-----------REDIRECTIONS-------//
 int		open_redirections(t_data *data);
 void	open_redirections_worker(t_cmd *arg, char *final_path, int type);
+void	rfiles_worker(t_cmd *arg, t_data *data);
 int		setup_rfiles(t_cmd	*arg, int i, t_data *data);
 char	**eliminate_redirections(char **args);
 char	**destroy_redirections(char **dest, char **args);

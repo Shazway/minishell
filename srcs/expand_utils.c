@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:02:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:28:58 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_name(char	*str, char type)
 	while (str && str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 		end++;
 	if (type == -1 && (str[end] == '"' || str[end] == '\''))
-		return (NULL);
+		return (ft_strdup("\0"));
 	if (end == start)
 		return (ft_strdup("$"));
 	if (end > 0)
@@ -61,7 +61,7 @@ char	*get_var(char *str, t_data *data)
 		}
 		i++;
 	}
-	return (NULL);
+	return (ft_strdup("\0"));
 }
 
 char	*get_start(char *str)

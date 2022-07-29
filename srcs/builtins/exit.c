@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 12:06:53 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:09:19 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,12 @@ int	check_digits(char *str)
 		count++;
 		i++;
 	}
-
 	if (str[i] != '\0')
 		return (1);
 	if (count > 19)
 		return (1);
-	if ((sign == '+' && i > 0 && count == 19 && str[i - 1] > '7') ||
-		(sign == '-' && i > 0 && count == 19 && str[i - 1] > '8'))
+	if ((sign == '+' && i > 0 && count == 19 && str[i - 1] > '7')
+		|| (sign == '-' && i > 0 && count == 19 && str[i - 1] > '8'))
 		return (1);
 	return (0);
 }
@@ -99,7 +98,7 @@ int	shell_exit(t_data *data, int ac, char **av)
 	}
 	if (check_digits(av[1]))
 	{
-		ft_putstr_fd("exit\nminishell: ",2);
+		ft_putstr_fd("exit\nminishell: ", 2);
 		ft_putstr_fd(av[0], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		return (2);
