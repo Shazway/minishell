@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 01:08:10 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 01:16:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	split_spaces(t_cmd *token, char *content)
 {
 	token->args = unquote_split(content, ' ');
 	token->ac = str_arr_size(token->args);
-	//print_result(token);
 }
 
 int	is_opened_quotes(t_data *data)
