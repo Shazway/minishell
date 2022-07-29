@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:17:52 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:49:48 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ char	**eliminate_redirections(char **args)
 
 int	open_redirections(t_data *data)
 {
-	int		i;
 	t_cmd	*arg;
 	t_list	*tmp;
 
@@ -123,18 +122,7 @@ int	open_redirections(t_data *data)
 	while (tmp)
 	{
 		arg = tmp->content;
-		i = 0;
-		while (arg->args && arg->args[i])
-		{
-			if (is_redirection(arg->args[i], 0))
-			{
-				if (!setup_rfiles(arg, i, data))
-					msh_exit(data);
-				i++;
-			}
-			if (arg->args[i])
-				i++;
-		}
+		rfiles_worker(arg, data);
 		arg->args = eliminate_redirections(arg->args);
 		if (arg->args)
 		{

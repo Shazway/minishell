@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 22:47:56 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:49:43 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,26 @@ char	*ft_s_replace(char *dest, char *src)
 	return (dest);
 }
 
+void	join_variable(char *str, char *true_var, char *end, char *start)
+{
+	char	*tmp;
+
+	tmp = str;
+	str = ft_strjoin(start, true_var);
+	ft_free_strs(&tmp, &start, &true_var, NULL);
+	tmp = str;
+	str = ft_strjoin(str, end);
+}
+
 char	*replace_variables(char	*str, t_data *data, char type)
 {
 	char	*true_var;
 	char	*start;
 	char	*end;
-	char	*tmp;
 	char	*name;
 
 	if (!str)
 		return (str);
-	printf("recieved : [%s] and type is [%c]\n", str, type);
 	end = NULL;
 	start = get_start(str);
 	name = get_name(str, type);
@@ -80,11 +89,7 @@ char	*replace_variables(char	*str, t_data *data, char type)
 		true_var = get_var(name, data);
 		end = get_end(str, ft_strlen(name) + 1);
 	}
-	tmp = str;
-	str = ft_strjoin(start, true_var);
-	ft_free_strs(&tmp, &start, &true_var, NULL);
-	tmp = str;
-	str = ft_strjoin(str, end);
-	ft_free_strs(&end, &tmp, &name, NULL);
+	join_variable(str, true_var, end, NULL);
+	ft_free_strs(&end, NULL, &name, NULL);
 	return (str);
 }

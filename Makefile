@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/29 21:02:53 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/07/29 21:50:06 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ SRCS		=	$(SRC)/builtins/cd.c			\
 				$(SRC)/str_arr_utils.c			\
 				$(SRC)/pre_parsing.c			\
 				$(SRC)/quotes_parsing_utils.c	\
-				$(SRC)/expand_utils.c
+				$(SRC)/expand_utils.c			\
+				$(SRC)/redirections_utils.c
 
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
