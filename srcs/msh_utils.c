@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 12:00:16 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 18:20:52 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ void	msh_perexit(t_data *data, char *scall)
 	perror(scall);
 	msh_free(data);
 	exit(EXIT_FAILURE);
+}
+
+void	msh_persignal(char *scall, int sigvalue)
+{
+	ft_putstr_fd("minishell: ", 2);
+	perror(scall);
+	g_cmd_status = sigvalue;
 }
 
 int	msh_init(t_data *data)

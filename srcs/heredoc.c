@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 12:01:09 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:06:34 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 int	here_doc(char *lim, int expand, t_data *data)
 {
 	int		fd;
-	char	*buf;
-	char	*p;
-	int		len_lim;
 	int		stdin_copy;
 
 	stdin_copy = dup(0);
@@ -32,39 +29,42 @@ int	here_doc(char *lim, int expand, t_data *data)
 		msh_exit(data);
 	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
-	{
-		perror("open");
-		g_cmd_status = 126;
-	}
-	len_lim = ft_strlen(lim);
-	while (fd)
-	{
-		buf = readline("> ");
-		if (!buf)
-			break ;
-		p = ft_strnstr(buf, lim, len_lim);
-		if (p && p == buf && p[len_lim] == '\0')
-		{
-			free(buf);
-			break ;
-		}
-		if (!heredoc_writer(fd, buf, expand, data))
-		{
-			free(buf);
-			free(lim);
-			msh_exit(data);
-		}
-		free(buf);
-	}
+		msh_persignal("open", 126);
+	heredoc_prompt(lim, expand, data, fd);
 	free(lim);
-	dup2(stdin_copy, 0);
-	close(stdin_copy);
+	if (!dup2_close(stdin_copy, STDIN_FILENO))
+		msh_perexit(data, "dup");
 	close(fd);
 	fd = open("/tmp/msh_here_doc", O_RDONLY);
 	return (fd);
 }
 
-int		heredoc_writer(int fd, char *buf, int expand, t_data *data)
+int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
+{
+	char	*buf;
+	char	*p;
+	int		len_lim;
+
+	len_lim = ft_strlen(lim);
+	while (fd)
+	{
+		buf = readline("> ");
+		if (!buf)
+			return (0);
+		p = ft_strnstr(buf, lim, len_lim);
+		if (p && p == buf && p[len_lim] == '\0')
+			return (ft_free(buf) == NULL);
+		if (!heredoc_writer(fd, buf, expand, data))
+		{
+			ft_free_strs(&buf, &lim, NULL, NULL);
+			msh_exit(data);
+		}
+		free(buf);
+	}
+	return (0);
+}
+
+int	heredoc_writer(int fd, char *buf, int expand, t_data *data)
 {
 	char	*p;
 	char	*var;
@@ -82,10 +82,8 @@ int		heredoc_writer(int fd, char *buf, int expand, t_data *data)
 			var = extract_var(p + 1);
 			from += 1 + ft_strlen(var);
 			value = find_var(data->env_str, var);
-			if (!value)
-				return (0);
-			free(value);
-			free(var);
+			ft_putstr_fd(value, fd);
+			ft_free_strs(&value, &var, NULL, NULL);
 			p = ft_strchr(buf + from, '$');
 		}
 	}
@@ -112,13 +110,11 @@ void	heredoc_handler(int signal, siginfo_t *s, void *trash)
 {
 	(void)trash;
 	(void)s;
-
 	if (signal == SIGINT)
 	{
 		write(1, "^C\n", 4);
 		g_cmd_status = 130;
 		close(0);
-		
 	}
 	if (signal == SIGQUIT)
 	{

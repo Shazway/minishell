@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 12:07:25 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 18:21:08 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 void	exec_error(t_cmd *cmd);
 void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
 int		here_doc(char *lim, int expand, t_data *data);
+int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
 int		heredoc_writer(int fd, char *buf, int expand, t_data *data);
 char	*extract_var(char *pvar);
 void	alloc_pipes(t_data *data);
@@ -170,6 +171,7 @@ int		msh_init(t_data *data);
 int		msh_free(t_data *data);
 void	msh_exit(t_data *data);
 void	msh_perexit(t_data *data, char *scall);
+void	msh_persignal(char *scall, int sigvalue);
 int		set_env(t_data *data);
 //------------------------------//
 
