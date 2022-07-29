@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 01:05:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 12:07:25 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char	*ft_s_replace(char *dest, char *src);
 //------------------------------//
 
 //-----------EXIT--------------//
+long	ft_atol(const char *str);
 int		shell_exit(t_data *data, int ac, char **av);
 //------------------------------//
 
@@ -146,12 +147,12 @@ void	run_forked_cmd(t_data *data, t_cmd *cmd);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 void	exec_error(t_cmd *cmd);
 void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
-int		here_doc(char *lim, int expand, char **envr, t_data *data);
-int		heredoc_writer(int fd, char *buf, int expand, char **envr);
+int		here_doc(char *lim, int expand, t_data *data);
+int		heredoc_writer(int fd, char *buf, int expand, t_data *data);
 char	*extract_var(char *pvar);
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);
-int		dup_close(int oldfd, int newfd);
+int		dup2_close(int oldfd, int newfd);
 //------------------------------//
 
 //-----------EXPAND-------------//
@@ -168,6 +169,7 @@ void	minishell_sh(t_data *data);
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
 void	msh_exit(t_data *data);
+void	msh_perexit(t_data *data, char *scall);
 int		set_env(t_data *data);
 //------------------------------//
 
@@ -190,7 +192,7 @@ int		check_input(t_data *data);
 
 //-----------REDIRECTIONS-------//
 int		open_redirections(t_data *data);
-int		setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data);
+int		setup_rfiles(t_cmd	*arg, int i, t_data *data);
 char	**eliminate_redirections(char **args);
 char	**destroy_redirections(char **dest, char **args);
 int		str_arr_size_r(char	**str);
@@ -220,7 +222,7 @@ char	*ft_str_zero(char	*str);
 int		ft_malloc(void **p, size_t length);
 int		*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
 void	*ft_free(void *ptr);
-void	*ft_free_ptrs(void **p1, void **p2, void **p3, void **p4);
+void	*ft_free_strs(char **s1, char **s2, char **s3, char **s4);
 void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//

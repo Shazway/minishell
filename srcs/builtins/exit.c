@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/27 02:04:26 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 12:06:53 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static long long	x_sign_l(long long x, int sign)
 	return (x);
 }
 
-int	ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	int			i;
 	long long	x;

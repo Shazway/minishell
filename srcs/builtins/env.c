@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 00:56:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 12:05:27 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set_env(t_data *data)
 
 	i = 0;
 	size = str_arr_size(__environ);
-	data->env_str = malloc(sizeof(char *) * (size + 1));
+	data->env_str = malloc((size + 1) * sizeof(char *));
 	if (!data->env_str)
 		return (0);
 	data->env_str[size] = NULL;
@@ -95,13 +95,9 @@ char	*replace_variables(char	*str, t_data *data)
 	}
 	tmp = str;
 	str = ft_strjoin(start, true_var);
-	free(tmp);
-	free(start);
-	free(true_var);
+	ft_free_strs(&tmp, &start, &true_var, NULL);
 	tmp = str;
 	str = ft_strjoin(str, end);
-	free(end);
-	free(tmp);
-	free(name);
+	ft_free_strs(&end, &tmp, &name, NULL);
 	return (str);
 }

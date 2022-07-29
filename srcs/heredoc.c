@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 01:02:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 12:01:09 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	here_doc(char *lim, int expand, char **envr, t_data *data)
+int	here_doc(char *lim, int expand, t_data *data)
 {
 	int		fd;
 	char	*buf;
@@ -21,6 +21,8 @@ int	here_doc(char *lim, int expand, char **envr, t_data *data)
 	int		stdin_copy;
 
 	stdin_copy = dup(0);
+	if (stdin_copy == -1)
+		msh_perexit(data, "dup");
 	expand = 1;
 	if (ft_strchr(lim, '"') || ft_strchr(lim, '\''))
 		expand = 0;
@@ -46,7 +48,7 @@ int	here_doc(char *lim, int expand, char **envr, t_data *data)
 			free(buf);
 			break ;
 		}
-		if (!heredoc_writer(fd, buf, expand, envr))
+		if (!heredoc_writer(fd, buf, expand, data))
 		{
 			free(buf);
 			free(lim);
@@ -62,7 +64,7 @@ int	here_doc(char *lim, int expand, char **envr, t_data *data)
 	return (fd);
 }
 
-int		heredoc_writer(int fd, char *buf, int expand, char **envr)
+int		heredoc_writer(int fd, char *buf, int expand, t_data *data)
 {
 	char	*p;
 	char	*var;
@@ -79,10 +81,9 @@ int		heredoc_writer(int fd, char *buf, int expand, char **envr)
 			write(fd, buf + from, p - (buf + from));
 			var = extract_var(p + 1);
 			from += 1 + ft_strlen(var);
-			value = find_var(envr, var);
+			value = find_var(data->env_str, var);
 			if (!value)
 				return (0);
-			ft_printf("%s\n", value);
 			free(value);
 			free(var);
 			p = ft_strchr(buf + from, '$');

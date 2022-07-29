@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 00:04:42 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 12:10:43 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,18 @@ int	ft_export(t_data *data, int ac, char **av)
 
 	if (ac == 1)
 		return (ft_env(data, ac, av));
-	ids = malloc(ac * sizeof(char *));
-	if (!ids)
+	ft_sar_alloc(&ids, ac, sizeof(char *));
+	ft_sar_alloc(&entry, ac, sizeof(char *));
+	if (!ids || !entry)
+	{
+		ft_free_sars(&ids, &entry, NULL, NULL);
 		msh_exit(data);
-	entry = malloc(ac * sizeof(char *));
-	if (!entry)
-		msh_exit(data);
+	}
 	len_entry = export_worker(ids, entry, ac, av);
 	if (len_entry == -1)
 		msh_exit(data);
 	else if (len_entry == 0)
-	{
-		free(ids);
-		free(entry);
-		return (0);
-	}
-	ids[len_entry] = NULL;
-	entry[len_entry] = NULL;
+		return (!ft_free_sars(&ids, &entry, NULL, NULL));
 	update_env(data, ids, entry, len_entry);
 	return (0);
 }
@@ -57,16 +52,16 @@ int	export_worker(char **ids, char **entry, int ac, char **av)
 		if (is_validid(av[i], len) && p_eq)
 		{
 			ids[j] = ft_strndup(av[i], len);
-			if (!ids[j])
-				return ((!str_arr_free(ids)) * -1);
-			entry[j++] = ft_strdup(av[i]);
-			if (!entry[j])
-				return ((!str_arr_free(entry)) * -1);
+			entry[j] = ft_strdup(av[i]);
+			if (!ids[j] || !entry[j++])
+				return (!ft_free_sars(&ids, &entry, NULL, NULL) * -1);
 		}
 		else if (p_eq)
 			ft_printf("minishell: export: `%s': not a valid identifier\n",
 				av[i]);
 	}
+	ids[j] = NULL;
+	entry[j] = NULL;
 	return (j);
 }
 

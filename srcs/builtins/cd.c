@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 01:05:49 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:35:07 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ int	change_path_worker(char *goal, char *foldername, t_data *data)
 	data->old_path = ft_strdup(data->relative_path);
 	if (!data->old_path)
 	{
-		free(goal);
-		free(foldername);
+		ft_free_strs(&goal, &foldername, NULL, NULL);
 		msh_exit(data);
 	}
 	ret = new_pwd(ft_strdup(foldername), &(data->relative_path));
-	free(goal);
-	free(foldername);
+	ft_free_strs(&goal, &foldername, NULL, NULL);
 	return (ret);
 }
 
@@ -67,8 +65,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	if (chdir(goal) == -1)
 	{
 		perror("cd");
-		free(goal);
-		free(foldername);
+		ft_free_strs(&goal, &foldername, NULL, NULL);
 		return (127);
 	}
 	if (!change_path_worker(goal, foldername, data))

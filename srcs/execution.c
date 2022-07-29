@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 01:01:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:55:55 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	execute(t_data *data)
 {
 	t_cmd	*cmd;
 	t_list	*c_idx;
-	pid_t	wpid;
 
 	alloc_pipes(data);
 	c_idx = data->cmd;
@@ -34,7 +33,6 @@ void	execute(t_data *data)
 		c_idx = c_idx->next;
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
-	wpid = 1;
 	while (data->child > 0)
 		data->child = waitpid(data->child, &g_cmd_status, 0);
 	g_cmd_status = WEXITSTATUS(g_cmd_status);
@@ -61,11 +59,11 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 	w = i - 1 * (i == n - 1);
 	if (cmd->fin == -1 && i != 0 && n > 1)
 		dup2(data->pips[r].fd[0], STDIN_FILENO);
-	else if (cmd->fin != -1 && !dup_close(cmd->fin, STDIN_FILENO))
+	else if (cmd->fin != -1 && !dup2_close(cmd->fin, STDIN_FILENO))
 		msh_exit(data);
 	if (cmd->fout == -1 && i != n - 1 && n > 1)
 		dup2(data->pips[w].fd[1], STDOUT_FILENO);
-	else if (cmd->fout != -1 && !dup_close(cmd->fout, STDOUT_FILENO))
+	else if (cmd->fout != -1 && !dup2_close(cmd->fout, STDOUT_FILENO))
 		msh_exit(data);
 	close_unused_pipes(data->pips, r, w, n);
 	if (cmd->builtin)

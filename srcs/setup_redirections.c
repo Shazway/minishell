@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setup_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 22:58:27 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:39:53 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
+int	setup_rfiles(t_cmd	*arg, int i, t_data *data)
 {
 	char	*work_path;
 	char	*final_path;
@@ -44,7 +44,7 @@ int	setup_rfiles(t_cmd	*arg, int i, char **envr, t_data *data)
 			memset(data->signals_test, 0, sizeof(struct sigaction));
 			data->signals_test->sa_sigaction = heredoc_handler;
 			signal_intercept(data);
-			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, envr, data);
+			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, data);
 			memset(data->signals_test, 0, sizeof(struct sigaction));
 			data->signals_test->sa_sigaction = sig_info_main;
 			signal_intercept(data);
@@ -142,7 +142,7 @@ int	open_redirections(t_data *data)
 		{
 			if (is_redirection(arg->args[i], 0))
 			{
-				if (!setup_rfiles(arg, i, data->env_str, data))
+				if (!setup_rfiles(arg, i, data))
 					msh_exit(data);
 				i++;
 			}

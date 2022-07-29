@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:55:18 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 00:00:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:34:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ char	**str_arr_free(char **str)
 	return (NULL);
 }
 
-void	*ft_free_ptrs(void **p1, void **p2, void **p3, void **p4)
+void	*ft_free_strs(char **s1, char **s2, char **s3, char **s4)
 {
-	if (p1 && *p1)
-		*p1 = ft_free(*p1);
-	if (p2 && *p2)
-		*p2 = ft_free(*p2);
-	if (p3 && *p3)
-		*p3 = ft_free(*p3);
-	if (p4 && *p4)
-		*p4 = ft_free(*p4);
+	if (s1 && *s1)
+		*s1 = ft_free(*s1);
+	if (s2 && *s2)
+		*s2 = ft_free(*s2);
+	if (s3 && *s3)
+		*s3 = ft_free(*s3);
+	if (s4 && *s4)
+		*s4 = ft_free(*s4);
 	return (NULL);
 }
 

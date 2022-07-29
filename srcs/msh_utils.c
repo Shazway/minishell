@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 00:55:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 12:00:16 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ int	msh_free(t_data *data)
 
 void	msh_exit(t_data *data)
 {
+	msh_free(data);
+	exit(EXIT_FAILURE);
+}
+
+void	msh_perexit(t_data *data, char *scall)
+{
+	ft_putstr_fd("minishell: ", 2);
+	perror(scall);
 	msh_free(data);
 	exit(EXIT_FAILURE);
 }

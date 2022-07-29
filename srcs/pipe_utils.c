@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:16:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 18:41:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 16:12:20 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	close_pipes(t_pipex *pips, int n)
 	}
 }
 
-int	dup_close(int oldfd, int newfd)
+int	dup2_close(int oldfd, int newfd)
 {
 	if (oldfd != newfd)
 	{
