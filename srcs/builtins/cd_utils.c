@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 01:04:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 23:50:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,40 +47,6 @@ void	swap_paths(t_data *data)
 	tmp = data->old_path;
 	data->old_path = data->relative_path;
 	data->relative_path = tmp;
-}
-
-int	cd_home(char *path, char *name, t_data *data)
-{
-	if (!path)
-		msh_exit(data);
-	if (!ft_strncmp(name, "HOME", ft_strlen("HOME")))
-	{
-		if (chdir(path) == -1)
-		{
-			free(path);
-			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-			return (1);
-		}
-		free(data->old_path);
-		data->old_path = ft_strdup(data->relative_path);
-		free(data->relative_path);
-		data->relative_path = ft_strdup(path);
-		if (!data->relative_path || !data->old_path)
-			msh_exit(data);
-	}
-	if (!ft_strncmp(name, "OLDPWD", ft_strlen("OLDPWD")))
-	{
-		if (chdir(path) == -1)
-		{
-			free(path);
-			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-			return (1);
-		}
-		swap_paths(data);
-	}
-	free(path);
-	export_paths(data);
-	return (0);
 }
 
 int	cd_dash(char *arg, t_data *data)
