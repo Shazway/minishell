@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 12:05:27 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:31:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ char	*replace_variables(char	*str, t_data *data)
 	else if (!ft_strncmp(name, "$", ft_strlen(name)))
 	{
 		true_var = ft_strdup("$");
+		end = get_end(str, ft_strlen(name));
+	}
+	else if (!ft_strncmp(name, "$?", ft_strlen(name)))
+	{
+		true_var = get_var(name, data);
 		end = get_end(str, ft_strlen(name));
 	}
 	else
