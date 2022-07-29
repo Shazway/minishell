@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 22:47:52 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:57:54 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,6 @@ int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
 		free(buf);
 	}
 	return (0);
-}
-
-char	*extract_var(char *pvar)
-{
-	int		to;
-	char	*var;
-
-	to = is_validid(pvar, -1);
-	if (to > 0)
-	{
-		var = ft_substr(pvar, 0, to);
-		return (var);
-	}
-	return (NULL);
 }
 
 void	heredoc_handler(int signal, siginfo_t *s, void *trash)

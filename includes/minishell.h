@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 22:11:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/29 22:58:15 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,6 @@ void	exec_error(t_cmd *cmd);
 void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
 int		here_doc(char *lim, int expand, t_data *data);
 int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
-int		heredoc_writer(int fd, char *buf, int expand, t_data *data);
-char	*extract_var(char *pvar);
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);
 int		dup2_close(int oldfd, int newfd);
