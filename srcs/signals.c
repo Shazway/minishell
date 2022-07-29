@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 21:10:49 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 01:12:06 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGQUIT)
 	{
 		g_cmd_status = 0;
+		wait(NULL);
 		return ;
 	}
 	if (signal == SIGCHLD)
