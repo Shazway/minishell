@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 11:30:09 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:41:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_name(char	*str)
 	end = start;
 	if (str && str[end] == '?')
 		return (ft_strdup("$?"));
-	while (str && ft_isalnum(str[end]))
+	while (str && str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 		end++;
 	if (end == start && type == -1)
 		return (NULL);
