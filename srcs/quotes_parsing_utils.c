@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 20:50:18 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:00:00 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 17:36:15 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*del_quote_fill(char *str, char *new, int size)
 			new[j++] = str[i];
 		i++;
 	}
+	free(str);
 	return (new);
 }
 
@@ -48,6 +49,5 @@ char	*del_quote(char *str)
 	if (!new)
 		return (NULL);
 	new[size] = '\0';
-	free(str);
 	return (del_quote_fill(str, new, size));
 }

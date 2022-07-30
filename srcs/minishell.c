@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:06:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 19:42:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,22 @@ void	ministart(t_data *data)
 	}
 }
 
+int	only_isspace(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_strlen(str))
+		return (1);
+	while (str && str[i])
+	{
+		if (!ft_isspace(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	minishell_sh(t_data *data)
 {
 	while (1)
@@ -69,7 +85,7 @@ void	minishell_sh(t_data *data)
 		data->input = readline(data->prompt);
 		if (!data->input)
 			break ;
-		else
+		else if (!only_isspace(data->input))
 			ministart(data);
 		data->input = ft_free(data->input);
 	}

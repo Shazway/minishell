@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 14:44:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 18:43:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ void	execute(t_data *data)
 		c_idx = c_idx->next;
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
-	while (data->child > 0 && g_cmd_status != 127 && g_cmd_status != 126)
+	data->child = waitpid(-1, &g_cmd_status, 0);
+	while (data->child > 0)
 	{
-		data->child = waitpid(data->child, &g_cmd_status, 0);
-		g_cmd_status = WEXITSTATUS(g_cmd_status);
+		if (g_cmd_status != 127 && g_cmd_status != 126)
+			g_cmd_status = WEXITSTATUS(g_cmd_status);
+		data->child = waitpid(-1, &g_cmd_status, 0);
 	}
 	reset_signal_handler(data, 0);
 }
@@ -84,11 +86,15 @@ void	exec_error(t_cmd *cmd)
 	fdtest = -1;
 	if (!cmd->fullpath)
 		cmd_notfound(cmd->name);
-	else if (open(cmd->fullpath, O_WRONLY | O_APPEND) == -1
-		|| access(cmd->fullpath, X_OK) == -1)
+	if (cmd->fullpath)
 	{
-		perror("minishell: ");
-		g_cmd_status = 126;
+		fdtest = open(cmd->fullpath, O_WRONLY | O_APPEND);
+		if (fdtest == -1
+			|| access(cmd->fullpath, X_OK) == -1)
+		{
+			perror("minishell: ");
+			g_cmd_status = 126;
+		}
 	}
 	if (fdtest != -1)
 		close(fdtest);

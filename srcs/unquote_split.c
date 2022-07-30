@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 16:04:51 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/23 23:55:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 16:36:58 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	malloc_words(char *s, char c, char **str, int count)
 			i++;
 		}
 		if (!ft_malloc((void **)&str[k], sizeof(char) * (j + 1)))
-			return (1);
+			return (str_arr_free(str) == 0);
 		k++;
 	}
 	return (0);
@@ -108,9 +108,7 @@ char	**fill(char *s, char c, char **str)
 char	**unquote_split(char *s, char c)
 {
 	char	**str;
-	char	**tmp;
 	int		count;
-	int		i;
 
 	if (!s)
 		return (NULL);
@@ -120,9 +118,5 @@ char	**unquote_split(char *s, char c)
 	str[count] = NULL;
 	if (malloc_words(s, c, str, count))
 		return (NULL);
-	tmp = fill(s, c, str);
-	i = 0;
-	while (tmp && tmp[i])
-		i++;
-	return (tmp);
+	return (fill(s, c, str));
 }

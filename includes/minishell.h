@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 16:30:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 19:41:26 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ int		*end_sarrdel_worker(int **to_del, int **len_new, int len_sarr, int j);
 void	*ft_free(void *ptr);
 void	*ft_free_strs(char **s1, char **s2, char **s3, char **s4);
 void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
+int		ft_isspace(int c);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
 
