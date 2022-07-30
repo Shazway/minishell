@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 15:08:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 15:15:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,16 @@ void	exec_builtin(t_data *data, t_cmd *cmd)
 	g_cmd_status = cmd->func(data, cmd->ac, cmd->args);
 	if (cmd->to_fork || !ft_strncmp(cmd->name, "exit", 4))
 	{
-		if (!ft_strncmp(cmd->name, "exit", 4) && !cmd->to_fork)
+		if (!ft_strncmp(cmd->name, "exit", 4))
 		{
-			if (g_cmd_status == 2)
+			if (g_cmd_status == 2 && !cmd->to_fork)
 			{
 				ft_putstr_fd("exit\n", 2);
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(cmd->args[1], 2);
 				ft_putstr_fd(": numeric argument required\n", 2);
 			}
-			else if (g_cmd_status != 257)
+			else if (g_cmd_status != 257 && !cmd->to_fork)
 				ft_putstr_fd("exit\n", 2);
 			else if (g_cmd_status == 257)
 				g_cmd_status = 1;
