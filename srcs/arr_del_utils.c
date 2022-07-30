@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 00:18:47 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 00:32:18 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 01:11:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ char	**str_arr_del(char **sarr, char **entry, int len_entry)
 	return (new);
 }
 
-int	*end_sarrdel_worker(int **to_del, int **len_new, int len_sarr, int j)
+int	*end_sarrdel_worker(int *to_del, int **len_new, int len_sarr, int j)
 {
-	*to_del[j] = -1;
+	to_del[j] = -1;
 	**len_new = len_sarr - j;
-	return (*to_del);
+	return (to_del);
 }
 
 int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new)
@@ -74,5 +74,5 @@ int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new)
 			}
 		}
 	}
-	return (end_sarrdel_worker(&to_del, &len_new, len_sarr, j));
+	return (end_sarrdel_worker(to_del, &len_new, len_sarr, j));
 }

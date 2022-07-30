@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 22:05:55 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/31 01:05:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	}
 	if (!change_path_worker(goal, foldername, data))
 		msh_exit(data);
-	export_paths(data);
+	//export_paths(data);
 	return (0);
 }
 

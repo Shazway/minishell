@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 23:41:15 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 23:48:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 01:05:48 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int	cd_home(char *path, char *name, t_data *data)
 		if (to_old(path, data))
 			return (1);
 	free(path);
-	export_paths(data);
+	//export_paths(data);
 	return (0);
 }
