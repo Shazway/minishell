@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 18:43:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 20:27:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 		exec_builtin(data, cmd);
 	else if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 	{
-		exec_error(cmd);
+		exec_error(cmd, data);
 		msh_exit(data);
 	}
 }
 
-void	exec_error(t_cmd *cmd)
+void	exec_error(t_cmd *cmd, t_data *data)
 {
 	int		fdtest;
 
@@ -92,7 +92,9 @@ void	exec_error(t_cmd *cmd)
 		if (fdtest == -1
 			|| access(cmd->fullpath, X_OK) == -1)
 		{
-			perror("minishell: ");
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(data->input, 2);
+			ft_putstr_fd(": is a directory\n", 2);
 			g_cmd_status = 126;
 		}
 	}
