@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 16:30:27 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 22:39:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,12 @@ char	*get_var(char *str, t_data *data)
 
 char	*get_end(char *str, int index)
 {
-	int	i;
-
 	if (index > (int)ft_strlen(str))
 		return (ft_strdup("\0"));
-	i = index;
-	if (!str[i])
+	if (!str[index])
 		return (ft_strdup("\0"));
-	return (ft_substr(str, i, ft_strlen(str) - i));
+	printf("DEBUG GET_END: str[i] %c\n", str[index]);
+	return (ft_substr(str, index, ft_strlen(str) - index));
 }
 
 int	get_start_unquote(char *str, char **start)
