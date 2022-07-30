@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 22:39:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 22:55:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ char	*get_end(char *str, int index)
 		return (ft_strdup("\0"));
 	if (!str[index])
 		return (ft_strdup("\0"));
-	printf("DEBUG GET_END: str[i] %c\n", str[index]);
 	return (ft_substr(str, index, ft_strlen(str) - index));
 }
 
