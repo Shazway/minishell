@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 18:48:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 21:29:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	msh_persignal(char *scall, int sigvalue)
 int	msh_init(t_data *data)
 {
 	data->signals_test = malloc(sizeof(struct sigaction));
-	memset(data->signals_test, 0, sizeof(struct sigaction));
+	ft_memset(data->signals_test, 0, sizeof(struct sigaction));
 	data->signals_test->sa_sigaction = sig_info_main;
 	data->input = NULL;
 	data->env_str = NULL;

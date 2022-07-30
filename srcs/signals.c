@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 14:38:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 21:29:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	signal_intercept(t_data *data)
 
 void	reset_signal_handler(t_data *data, int i)
 {
-	memset(data->signals_test, 0, sizeof(struct sigaction));
+	ft_memset(data->signals_test, 0, sizeof(struct sigaction));
 	if (i == 0)
 		data->signals_test->sa_sigaction = sig_info_main;
 	else if (i == 1)

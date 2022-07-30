@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 15:15:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 21:33:03 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 	i = 0;
 	while (i < 7)
 	{
-		if (cmd->name && !ft_strncmp(b[i], cmd->name, ft_strlen(cmd->name)))
+		if (cmd->name && !ft_strncmp(cmd->name, b[i], -1))
 		{
 			cmd->builtin = 1;
 			cmd->func = f[i];
