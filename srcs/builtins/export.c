@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 19:59:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 23:18:26 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,24 @@ int	export_worker(char **ids, char **entry, int ac, char **av)
 	int		j;
 	char	*p_eq;
 	int		len;
+	char	*p;
 
 	i = 0;
 	j = 0;
 	while (++i < ac)
 	{
 		p_eq = ft_strchr(av[i], '=');
-		len = (p_eq - &av[i][0]) * (p_eq != 0) + ft_strlen(av[i]) * (!p_eq);
+		len = (p_eq - &av[i][0]) * (p_eq != 0) + (-1) * (!p_eq);
 		if (is_validid(av[i], len) && p_eq)
 		{
-			ids[j] = ft_strndup(av[i], len);
-			entry[j] = ft_strdup(av[i]);
-			if (!ids[j] || !entry[j++])
-				return (!ft_free_sars(&ids, &entry, NULL, NULL) * -1);
+			p = id_exist(av, ac, i, len);
+			if (!p)
+			{
+				ids[j] = ft_strndup(av[i], len);
+				entry[j] = ft_strdup(av[i]);
+				if (!ids[j] || !entry[j++])
+					return (!ft_free_sars(&ids, &entry, NULL, NULL) * -1);
+			}
 		}
 		else if (p_eq)
 			ft_printf("minishell: export: `%s': not a valid identifier\n",
@@ -63,6 +68,20 @@ int	export_worker(char **ids, char **entry, int ac, char **av)
 	ids[j] = NULL;
 	entry[j] = NULL;
 	return (j);
+}
+
+char	*id_exist(char **av, int ac, int idx, int len)
+{
+	int	i;
+
+	i = ac - 1;
+	while (av[i] && i > idx)
+	{
+		if (!ft_strncmp(av[i], av[idx], len))
+			return (av[i]);
+		i--;
+	}
+	return (NULL);
 }
 
 int	is_validid(char	*identifier, int len)
