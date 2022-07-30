@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 22:28:58 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 16:20:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ char	*get_end(char *str, int index)
 	int	i;
 
 	if (index > (int)ft_strlen(str))
-		return (NULL);
+		return (ft_strdup("\0"));
 	i = index;
 	if (!str[i])
-		return (NULL);
+		return (ft_strdup("\0"));
 	return (ft_substr(str, i, ft_strlen(str) - i));
 }
 

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 00:19:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 16:05:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define R_DDIR 2
 # define L_DIR 3
 # define L_DDIR 4
+# define FAILED_ALLOC 12
 
 extern int	g_cmd_status;
 

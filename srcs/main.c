@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 22:27:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 16:07:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	if (termios_setup(data) || msh_init(data))
 	{
 		msh_free(data);
-		return (1);
+		exit(FAILED_ALLOC);
 	}
 	minishell_sh(data);
 	if (!data->input)
