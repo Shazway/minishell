@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 22:09:19 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 14:58:04 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,14 @@ int	shell_exit(t_data *data, int ac, char **av)
 
 	(void)data;
 	if (ac == 1)
-	{
-		write(1, "exit\n", 6);
 		return (0);
-	}
 	if (check_digits(av[1]))
-	{
-		ft_putstr_fd("exit\nminishell: ", 2);
-		ft_putstr_fd(av[0], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
 		return (2);
-	}
 	if (ac > 2)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return (1);
+		return (257);
 	}
-	write(1, "exit\n", 6);
 	arg = ft_atol(av[1]);
 	return (arg % 256);
 }

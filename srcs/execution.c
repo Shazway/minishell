@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/29 22:44:59 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/30 14:44:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	execute(t_data *data)
 		c_idx = c_idx->next;
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
-	while (data->child > 0)
+	while (data->child > 0 && g_cmd_status != 127 && g_cmd_status != 126)
 	{
 		data->child = waitpid(data->child, &g_cmd_status, 0);
 		g_cmd_status = WEXITSTATUS(g_cmd_status);

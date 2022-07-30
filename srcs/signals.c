@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 01:12:06 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 14:38:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 	if (signal == SIGINT)
 	{
 		g_cmd_status = 130;
-		wait(NULL);
+		wait(&g_cmd_status);
+		g_cmd_status = WEXITSTATUS(g_cmd_status);
 		return ;
 	}
 	if (signal == SIGQUIT)
 	{
 		g_cmd_status = 0;
-		wait(NULL);
+		wait(&g_cmd_status);
+		g_cmd_status = WEXITSTATUS(g_cmd_status);
 		return ;
 	}
 	if (signal == SIGCHLD)

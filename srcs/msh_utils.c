@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 18:20:52 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/30 14:44:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	msh_free(t_data *data)
 void	msh_exit(t_data *data)
 {
 	msh_free(data);
-	exit(EXIT_FAILURE);
+	exit(g_cmd_status);
 }
 
 void	msh_perexit(t_data *data, char *scall)
