@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 16:05:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/30 16:30:20 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ int		dup2_close(int oldfd, int newfd);
 //-----------EXPAND-------------//
 char	*expand_variables(t_data *data, char *str, char type);
 char	*get_end(char *str, int index);
-char	*get_start(char *str);
 char	*get_var(char *str, t_data *data);
 char	*get_name(char	*str, char type);
 char	*replace_variables(char	*str, t_data *data, char type, char *start);
