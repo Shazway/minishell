@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 01:11:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 01:14:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ char	*next_dir(char *foldername);
 char	*previous_dir(char *path);
 char	*next_dir(char *foldername);
 void	update_pwd(t_data *data);
-void	export_paths(t_data *data);
 //------------------------------//
 
 //-----------ECHO--------------//

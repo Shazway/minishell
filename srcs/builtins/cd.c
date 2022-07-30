@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/31 01:05:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 01:14:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,30 +70,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	}
 	if (!change_path_worker(goal, foldername, data))
 		msh_exit(data);
-	//export_paths(data);
 	return (0);
-}
-
-void	export_paths(t_data *data)
-{
-	char	**arg;
-
-	arg = malloc(4 * sizeof(char *));
-	if (!arg)
-		msh_exit(data);
-	arg[3] = NULL;
-	arg[0] = ft_strdup("export");
-	arg[1] = ft_strjoin("PWD=", data->relative_path);
-	arg[2] = ft_strjoin("OLDPWD=", data->old_path);
-	if (!arg[0] || !arg[1] || !arg[2])
-	{
-		free(arg[0]);
-		free(arg[1]);
-		free(arg[2]);
-		free(arg);
-	}
-	ft_export(data, 3, arg);
-	str_arr_free(arg);
 }
 
 int	cd(t_data *data, int ac, char **str)
