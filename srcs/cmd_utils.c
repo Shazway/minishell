@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 19:39:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:17:51 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	search_cmds(t_data *data)
 	while (i != NULL)
 	{
 		cmd = i->content;
-		if (!cmd->name)
+		if (!cmd->name[0])
 		{
 			if (prev == NULL)
 				data->cmd = i->next;
@@ -77,7 +77,6 @@ void	free_cmd(void *vcmd)
 {
 	t_cmd	*cmd;
 
-	printf("qweqe\n");
 	cmd = (t_cmd *)vcmd;
 	free(cmd->name);
 	str_arr_free(cmd->args);

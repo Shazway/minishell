@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 14:46:36 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:19:58 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	export_worker(char **ids, char **entry, int ac, char **av)
 	int		j;
 	char	*p_eq;
 	int		len;
-	char	*p;
 
 	i = 0;
 	j = 0;
@@ -52,8 +51,7 @@ int	export_worker(char **ids, char **entry, int ac, char **av)
 		len = (p_eq - &av[i][0]) * (p_eq != 0) + (-1) * (!p_eq);
 		if (is_validid(av[i], len) && p_eq)
 		{
-			p = id_exist(av, ac, i, len);
-			if (!p)
+			if (!id_exist(av, ac, i, len))
 			{
 				ids[j] = ft_strndup(av[i], len);
 				entry[j] = ft_strdup(av[i]);

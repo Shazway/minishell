@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 19:34:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:17:25 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,9 @@ void	open_redirections_worker(t_cmd *arg, char *final_path, int type)
 	if (type == L_DIR)
 		arg->fin = open(final_path, O_RDONLY);
 	if ((type == R_DIR || type == R_DDIR) && arg->fout == -1)
-	{
-		free(arg->args[0]);
-		arg->args[0] = NULL;
-	}
+		arg->args[0] = ft_str_zero(arg->args[0]);
 	if ((type == L_DIR || type == L_DDIR) && arg->fin == -1)
-	{
-		free(arg->args[0]);
-		arg->args[0] = NULL;
-	}
+		arg->args[0] = ft_str_zero(arg->args[0]);
 	free(final_path);
 }
 
