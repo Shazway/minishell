@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:18:30 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 19:34:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	is_redirection(char	*str, int type)
 
 void	open_redirections_worker(t_cmd *arg, char *final_path, int type)
 {
-	if (arg->fout != -1)
+	if (arg->fout != -1 && (type == R_DIR || type == R_DDIR))
 		close(arg->fout);
-	if (arg->fin != -1)
+	if (arg->fin != -1 && (type == L_DIR || type == L_DDIR))
 		close(arg->fin);
 	if (type == R_DIR)
 		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -39,6 +39,16 @@ void	open_redirections_worker(t_cmd *arg, char *final_path, int type)
 		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (type == L_DIR)
 		arg->fin = open(final_path, O_RDONLY);
+	if ((type == R_DIR || type == R_DDIR) && arg->fout == -1)
+	{
+		free(arg->args[0]);
+		arg->args[0] = NULL;
+	}
+	if ((type == L_DIR || type == L_DDIR) && arg->fin == -1)
+	{
+		free(arg->args[0]);
+		arg->args[0] = NULL;
+	}
 	free(final_path);
 }
 

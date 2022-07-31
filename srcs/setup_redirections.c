@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 21:49:48 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 17:12:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	setup_rfiles(t_cmd	*arg, int i, t_data *data)
 		if (arg->args[i + 1])
 		{
 			reset_signal_handler(data, 2);
-			arg->fin = here_doc(ft_strdup(arg->args[i + 1]), 1, data);
+			if (here_doc(ft_strdup(arg->args[i + 1]), 1, &arg->fin, data) <= 0)
+				msh_exit(data, 1);
 			reset_signal_handler(data, 0);
 		}
 	}

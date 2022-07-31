@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 22:42:12 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 18:01:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*join_variable(char *str, char *true_var, char *end, char *start)
 	char	*tmp;
 
 	if (!true_var || !end)
-		return (ft_free_strs(&true_var, NULL, NULL, NULL));
+		return (ft_free_strs(&true_var, &str, NULL, NULL));
 	tmp = str;
 	str = ft_strjoin(start, true_var);
 	ft_free_strs(&tmp, &start, &true_var, NULL);
@@ -79,11 +79,11 @@ char	*replace_variables(char *str, t_data *data, char type, char *start)
 	end = NULL;
 	name = get_name(str, type);
 	if (!name)
-		return (NULL);
+		return (ft_free(str));
 	if (name && name[0])
 	{
 		true_var = get_var(name, data);
-		end = get_end(str, ft_strlen(name) + 1);
+		end = get_end(str, ft_strlen(name));
 	}
 	else
 	{

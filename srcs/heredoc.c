@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 23:51:22 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/31 18:37:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	here_doc(char *lim, int expand, t_data *data)
+int	here_doc(char *lim, int expand, int *fd, t_data *data)
 {
-	int		fd;
 	int		stdin_copy;
-
+	
+	if (!lim)
+		msh_exit(data, 1);
 	stdin_copy = dup(0);
 	if (stdin_copy == -1)
 		msh_perexit(data, "dup");
@@ -26,17 +27,23 @@ int	here_doc(char *lim, int expand, t_data *data)
 	if (!expand)
 		lim = del_quote(lim);
 	if (!lim)
-		msh_exit(data);
-	fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (!fd)
+		return (close(stdin_copy));
+	*fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (!*fd)
 		msh_persignal("open", 126);
-	heredoc_prompt(lim, expand, data, fd);
+	if (!heredoc_prompt(lim, expand, data, *fd))
+	{
+		close(*fd);
+		*fd = -1;
+		return (0);
+	}
 	free(lim);
 	if (!dup2_close(stdin_copy, STDIN_FILENO))
 		msh_perexit(data, "dup");
-	close(fd);
-	fd = open("/tmp/msh_here_doc", O_RDONLY);
-	return (fd);
+	close(*fd);
+	*fd = open("/tmp/msh_here_doc", O_RDONLY);
+	close(stdin_copy);
+	return (1);
 }
 
 int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
@@ -56,10 +63,12 @@ int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
 			return (ft_free(buf) == NULL);
 		if (expand)
 			buf = expand_variables(data, buf, -1);
+		if (!buf)
+			return (0);
 		ft_putendl_fd(buf, fd);
 		free(buf);
 	}
-	return (0);
+	return (1);
 }
 
 void	heredoc_handler(int signal, siginfo_t *s, void *trash)

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 00:58:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 14:46:36 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	ft_export(t_data *data, int ac, char **av)
 	if (!ids || !entry)
 	{
 		ft_free_sars(&ids, &entry, NULL, NULL);
-		msh_exit(data);
+		msh_exit(data, 1);
 	}
 	len_entry = export_worker(ids, entry, ac, av);
 	if (len_entry == -1)
-		msh_exit(data);
+		msh_exit(data, 1);
 	else if (len_entry == 0)
 		return (!ft_free_sars(&ids, &entry, NULL, NULL));
 	update_env(data, ids, entry, len_entry);

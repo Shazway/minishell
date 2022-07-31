@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 21:29:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 14:42:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int	msh_free(t_data *data)
 	return (1);
 }
 
-void	msh_exit(t_data *data)
+void	msh_exit(t_data *data, int bad_malloc)
 {
+	if (bad_malloc)
+		g_cmd_status = 12;
 	msh_free(data);
 	exit(g_cmd_status);
 }

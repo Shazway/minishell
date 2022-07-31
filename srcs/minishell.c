@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 19:42:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 19:55:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void	set_prompt_string(t_data *data)
 	crf_dolar = ft_strjoin(cr_dir,
 			"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
 	if (!crf_dolar)
-		msh_exit(data);
+		msh_exit(data, 1);
 	tmp = data->prompt;
 	data->prompt = ft_strjoin("\001\033[1;32m\002""╔\002"
 			"\001\033[1;32m\002"" minishell" " " "\001╝\002" " " "\001\033[1;31m\002""",
 			crf_dolar);
-	if (!data->prompt)
-		msh_exit(data);
 	free(crf_dolar);
 	free(tmp);
+	if (!data->prompt)
+		msh_exit(data, 1);
 }
 
 void	ministart(t_data *data)
@@ -48,14 +48,19 @@ void	ministart(t_data *data)
 	}
 	if (ft_strchr(data->input, '$'))
 		data->input = expand_variables(data, data->input, -1);
+	if (!data->input)
+		msh_exit(data, 1);
 	if (parsing(data))
 	{
-		delete_quotes(data);
 		open_redirections(data);
+		delete_quotes(data);
 		search_cmds(data);
-		execute(data);
-		free_pipes(data);
-		ft_lstclear(&data->cmd, &free_cmd);
+		if (data->cmd)
+		{
+			execute(data);
+			free_pipes(data);
+			ft_lstclear(&data->cmd, &free_cmd);
+		}
 	}
 }
 
@@ -80,7 +85,7 @@ void	minishell_sh(t_data *data)
 	while (1)
 	{
 		if (signal_intercept(data))
-			exit(1);
+			msh_exit(data, 0);
 		set_prompt_string(data);
 		data->input = readline(data->prompt);
 		if (!data->input)

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:56 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 22:08:26 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 14:46:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_unset(t_data *data, int ac, char **av)
 	j = 0;
 	to_del = malloc(ac * sizeof(char *));
 	if (!to_del)
-		msh_exit(data);
+		msh_exit(data, 1);
 	i = 1;
 	while (av && av[i])
 	{

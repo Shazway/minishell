@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:16:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 16:12:20 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/31 17:56:15 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	alloc_pipes(t_data *data)
 {
 	data->pips = malloc((data->n_cmd - 1) * sizeof(t_pipex));
 	if (!data->pips)
-		msh_exit(data);
+		msh_exit(data, 1);
 }
 
 void	init_pipe(t_data *data, int i)
 {
 	if (pipe(data->pips[i].fd) == (-1))
-		msh_exit(data);
+		msh_exit(data, 0);
 }
 
 void	free_pipes(t_data *data)

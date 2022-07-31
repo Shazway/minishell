@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 19:22:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 15:19:59 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	parsing(t_data *data)
 	i = 0;
 	data->input = separate_redir(data->input);
 	if (!data->input)
-		msh_exit(data);
+		msh_exit(data, 1);
 	if (!ft_strlen(data->input))
 		return (0);
 	pipe_split = unquote_split(data->input, '|');
 	if (!pipe_split)
-		msh_exit(data);
+		msh_exit(data, 1);
 	while (pipe_split && pipe_split[i])
 	{
 		fill_token(data, pipe_split, i);
@@ -45,7 +45,7 @@ void	fill_token(t_data *data, char **pipe_split, int i)
 	{
 		ft_lstclear(&(data->cmd), &(free_cmd));
 		str_arr_free(pipe_split);
-		msh_exit(data);
+		msh_exit(data, 1);
 	}
 	ft_lstadd_back(&(data->cmd), ft_lstnew((void *)token));
 	split_spaces(token, pipe_split[i]);
@@ -53,7 +53,7 @@ void	fill_token(t_data *data, char **pipe_split, int i)
 	{
 		ft_lstclear(&(data->cmd), &(free_cmd));
 		str_arr_free(pipe_split);
-		msh_exit(data);
+		msh_exit(data, 1);
 	}
 }
 

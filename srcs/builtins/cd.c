@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/31 01:14:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 14:46:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	change_path_worker(char *goal, char *foldername, t_data *data)
 	if (!data->old_path)
 	{
 		ft_free_strs(&goal, &foldername, NULL, NULL);
-		msh_exit(data);
+		msh_exit(data, 1);
 	}
 	ret = new_pwd(ft_strdup(foldername), &(data->relative_path));
 	ft_free_strs(&goal, &foldername, NULL, NULL);
@@ -55,12 +55,12 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	if (!foldername)
 	{
 		free(goal);
-		msh_exit(data);
+		msh_exit(data, 1);
 	}
 	if (!goal)
 	{
 		free(foldername);
-		msh_exit(data);
+		msh_exit(data, 1);
 	}
 	if (chdir(goal) == -1)
 	{
@@ -69,7 +69,7 @@ int	change_path(char *goal, char *foldername, t_data *data)
 		return (1);
 	}
 	if (!change_path_worker(goal, foldername, data))
-		msh_exit(data);
+		msh_exit(data, 1);
 	return (0);
 }
 
@@ -85,7 +85,7 @@ int	cd(t_data *data, int ac, char **str)
 		return (cd_home(get_var("HOME", data), "HOME", data));
 	arg = ft_strdup(str[1]);
 	if (!arg)
-		msh_exit(data);
+		msh_exit(data, 1);
 	if (is_dash(arg) != 0)
 		return (cd_dash(arg, data));
 	if (arg[0] == '/')

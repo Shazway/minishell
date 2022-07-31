@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 01:14:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 16:22:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int		is_validid(char	*identifier, int len);
 void	free_pipes(t_data *data);
 void	close_pipes(t_pipex *pips, int n);
 void	update_pwd(t_data *data);
+char	*id_exist(char **av, int ac, int idx, int len);
 //------------------------------//
 
 //-----------PWD---------------//
@@ -148,7 +149,7 @@ void	run_forked_cmd(t_data *data, t_cmd *cmd);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 void	exec_error(t_cmd *cmd, t_data *data);
 void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
-int		here_doc(char *lim, int expand, t_data *data);
+int		here_doc(char *lim, int expand, int *fd, t_data *data);
 int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);
@@ -168,7 +169,7 @@ int		get_start_unquote(char *str, char **start);
 void	minishell_sh(t_data *data);
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
-void	msh_exit(t_data *data);
+void	msh_exit(t_data *data, int bad_malloc);
 void	msh_perexit(t_data *data, char *scall);
 void	msh_persignal(char *scall, int sigvalue);
 int		set_env(t_data *data);
@@ -225,12 +226,11 @@ char	**str_arr_add(char **sarr, int len_sarr, char **entry, int len_entry);
 char	*ft_str_zero(char	*str);
 int		ft_malloc(void **p, size_t length);
 int		*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new);
-int	*end_sarrdel_worker(int *to_del, int **len_new, int len_sarr, int j);
+int		*end_sarrdel_worker(int *to_del, int **len_new, int len_sarr, int j);
 void	*ft_free(void *ptr);
 void	*ft_free_strs(char **s1, char **s2, char **s3, char **s4);
 void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
 int		ft_isspace(int c);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
-char	*id_exist(char **av, int ac, int idx, int len);
 #endif

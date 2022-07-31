@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 20:50:18 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 17:36:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 15:48:12 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	*del_quote(char *str)
 		i++;
 	}
 	new = malloc(sizeof(char) * (size + 1));
+	free(new);
+	new = NULL;
 	if (!new)
 		return (NULL);
 	new[size] = '\0';

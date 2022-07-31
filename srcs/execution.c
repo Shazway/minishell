@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 20:27:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 18:47:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,18 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 	if (cmd->fin == -1 && i != 0 && n > 1)
 		dup2(data->pips[r].fd[0], STDIN_FILENO);
 	else if (cmd->fin != -1 && !dup2_close(cmd->fin, STDIN_FILENO))
-		msh_exit(data);
+		msh_exit(data, 0);
 	if (cmd->fout == -1 && i != n - 1 && n > 1)
 		dup2(data->pips[w].fd[1], STDOUT_FILENO);
 	else if (cmd->fout != -1 && !dup2_close(cmd->fout, STDOUT_FILENO))
-		msh_exit(data);
+		msh_exit(data, 0);
 	close_unused_pipes(data->pips, r, w, n);
 	if (cmd->builtin)
 		exec_builtin(data, cmd);
 	else if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 	{
 		exec_error(cmd, data);
-		msh_exit(data);
+		msh_exit(data, 0);
 	}
 }
 
@@ -93,9 +93,10 @@ void	exec_error(t_cmd *cmd, t_data *data)
 			|| access(cmd->fullpath, X_OK) == -1)
 		{
 			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(data->input, 2);
-			ft_putstr_fd(": is a directory\n", 2);
-			g_cmd_status = 126;
+			perror(data->input);
+		// if
+			g_cmd_status = 127;
+		// else 
 		}
 	}
 	if (fdtest != -1)

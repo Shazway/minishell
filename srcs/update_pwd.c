@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 23:32:36 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 23:33:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 14:45:45 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	update_relative_path(t_data *data)
 
 	pwd_var = get_var("PWD", data);
 	if (!pwd_var)
-		msh_exit(data);
+		msh_exit(data, 1);
 	if (!ft_strncmp(data->relative_path, pwd_var,
 			ft_strlen(data->relative_path))
 		|| chdir(pwd_var) == -1)
@@ -33,7 +33,7 @@ void	update_relative_path(t_data *data)
 	}
 	free(pwd_var);
 	if (!data->relative_path)
-		msh_exit(data);
+		msh_exit(data, 1);
 }
 
 void	update_old_path(t_data *data)
@@ -42,7 +42,7 @@ void	update_old_path(t_data *data)
 
 	old_pwd_var = get_var("OLDPWD", data);
 	if (!old_pwd_var)
-		msh_exit(data);
+		msh_exit(data, 1);
 	if (!ft_strncmp(data->old_path, old_pwd_var, ft_strlen(data->old_path))
 		|| chdir(old_pwd_var) == -1)
 	{
@@ -56,7 +56,7 @@ void	update_old_path(t_data *data)
 	}
 	free(old_pwd_var);
 	if (!data->old_path)
-		msh_exit(data);
+		msh_exit(data, 1);
 }
 
 void	update_pwd(t_data *data)

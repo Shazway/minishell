@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 21:33:03 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 18:48:38 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ char	*get_path(char *c_name, char **envr)
 	char	**path_array;
 	char	*working_cmd;
 
+	if (!envr || !c_name)
+		return (NULL);
 	if (ft_strchr(c_name, '/'))
 		return (ft_strdup(c_name));
-	if (!envr)
-		return (NULL);
 	i = -1;
 	while (envr[++i] != NULL)
 	{

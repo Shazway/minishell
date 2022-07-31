@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 22:55:28 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 18:25:02 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,20 @@ char	*get_var(char *str, t_data *data)
 	char	*dest;
 	int		i;
 	int		len;
+	int		var_len;
 
 	i = 0;
 	if (!str)
 		return (NULL);
-	if (!ft_strncmp(str, "$", ft_strlen(str)))
-		return (ft_strdup("$"));
-	if (!ft_strncmp(str, "$?", ft_strlen(str)))
-		return (ft_itoa(g_cmd_status));
 	len = ft_strlen(str);
+	if (!ft_strncmp(str, "$", len))
+		return (ft_strdup("$"));
+	if (!ft_strncmp(str, "$?", len))
+		return (ft_itoa(g_cmd_status));
 	while (data->env_str && data->env_str[i])
 	{
-		if (!ft_strncmp(str, data->env_str[i], len))
+		var_len = ft_strchr(data->env_str[i], '=') - &data->env_str[i][0];
+		if ((var_len == len) && !ft_strncmp(data->env_str[i], str, len))
 		{
 			dest = ft_strdup(ft_strchr(data->env_str[i], '=') + 1);
 			return (dest);
@@ -95,5 +97,7 @@ int	get_start_unquote(char *str, char **start)
 		return (1);
 	}
 	*start = ft_strdup("");
+	if (!start)
+		return (ft_free(start) != 0);
 	return (1);
 }

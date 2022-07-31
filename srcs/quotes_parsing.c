@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:58:13 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 20:58:04 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 15:28:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	delete_quotes(t_data *data)
 		{
 			if (ft_strchr(cmd->args[i], '"') || ft_strchr(cmd->args[i], '\''))
 				cmd->args[i] = trim_quotes(data, cmd->args[i]);
+			if (!cmd->args[i])
+				msh_exit(data, 1);
 			i++;
 		}
 		cmd_idx = cmd_idx->next;
@@ -98,9 +100,10 @@ char	*trim_quotes(t_data *data, char *str)
 	size = trim_quote_size(str);
 	trimmed = malloc(sizeof(char) * (size + 1));
 	if (!trimmed)
-		msh_exit(data);
+		msh_exit(data, 1);
 	trimmed[size] = '\0';
-	trimmed = trim_quotes_fill(trimmed, str, size);
+	if (size)
+		trimmed = trim_quotes_fill(trimmed, str, size);
 	free(str);
 	return (trimmed);
 }

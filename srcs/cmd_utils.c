@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 00:59:04 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 19:39:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,43 @@
 
 void	search_cmds(t_data *data)
 {
-	t_list	*cmd_idx;
-	t_cmd	*current_cmd;
+	t_list	*i;
+	t_cmd	*cmd;
+	t_list	*prev;
 	char	*fullpath;
 
-	cmd_idx = data->cmd;
-	while (cmd_idx != NULL)
+	i = data->cmd;
+	prev = NULL;
+	while (i != NULL)
 	{
-		current_cmd = cmd_idx->content;
-		current_cmd->builtin = is_builtin(data, current_cmd);
-		if (!current_cmd->builtin)
+		cmd = i->content;
+		if (!cmd->name)
 		{
-			fullpath = get_path(current_cmd->name, data->env_str);
-			if (fullpath)
-			{
-				free(current_cmd->fullpath);
-				current_cmd->fullpath = fullpath;
-			}
+			if (prev == NULL)
+				data->cmd = i->next;
+			else
+				prev->next = i->next;
+			ft_lstdelone(i, free_cmd);
+			if (prev)
+				i = prev->next;
+			else
+				i = data->cmd;
 		}
-		cmd_idx = cmd_idx->next;
+		else
+		{
+			cmd->builtin = is_builtin(data, cmd);
+			if (!cmd->builtin)
+			{
+				fullpath = get_path(cmd->name, data->env_str);
+				if (fullpath)
+				{
+					free(cmd->fullpath);
+					cmd->fullpath = fullpath;
+				}
+			}
+			prev = i;
+			i = i->next;
+		}
 	}
 }
 
@@ -59,6 +77,7 @@ void	free_cmd(void *vcmd)
 {
 	t_cmd	*cmd;
 
+	printf("qweqe\n");
 	cmd = (t_cmd *)vcmd;
 	free(cmd->name);
 	str_arr_free(cmd->args);

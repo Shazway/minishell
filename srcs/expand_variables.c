@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/30 19:19:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 16:10:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,17 @@ char	*expand_variables(t_data *data, char *str, char type)
 		if ((str[i] == '$' && type != '\''))
 		{
 			if (!get_start_unquote(str, &start))
-				msh_exit(data);
+				msh_exit(data, 1);
 			end = replace_variables(ft_substr(str, i,
 						ft_strlen(str) - i), data, type, NULL);
 			if (!end)
-			{
-				free(start);
-				msh_exit(data);
-			}
+			return (ft_free(start));
 			free(str);
 			str = ft_strjoin(start, end);
 			free(start);
 			free(end);
 			if (!str)
-				msh_exit(data);
+				return (NULL);
 		}
 		if (!str[i])
 			return (str);

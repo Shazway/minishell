@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/28 19:08:34 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 14:44:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	check_input(t_data *data)
 	data->input = ft_strtrim(data->input, " ");
 	free(tmp);
 	if (!data->input)
-		msh_exit(data);
+		msh_exit(data, 1);
 	while (data->input && data->input[i])
 	{
 		check_quote(&type, data->input[i]);
