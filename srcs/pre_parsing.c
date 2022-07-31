@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 14:44:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 23:29:55 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_input_redirect(t_data *data, int *i, int count)
 		count++;
 		*i = *i + 1;
 	}
-	if (count > 2)
+	if (count > 2 || data->input[*i] == '\0')
 	{
 		data->error_msh = "minishell: syntax error for either > or <\n";
 		return (0);

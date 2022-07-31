@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/31 20:45:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 23:38:34 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ void	exec_error(t_cmd *cmd, t_data *data)
 
 	fdtest = -1;
 	if (!cmd->fullpath)
+	{
+		ft_putstr_fd("minishell: ", 2);
 		cmd_notfound(cmd->name);
+	}
 	if (cmd->fullpath)
 	{
 		acc = access(cmd->fullpath, X_OK);

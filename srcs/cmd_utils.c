@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 20:17:51 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/01 00:21:48 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	search_cmds(t_data *data)
 	while (i != NULL)
 	{
 		cmd = i->content;
-		if (!cmd->name[0])
+		if (!cmd->args || !cmd->name[0])
 		{
 			if (prev == NULL)
 				data->cmd = i->next;
@@ -67,7 +67,9 @@ t_cmd	*init_cmd(int i)
 	cmd->builtin = 0;
 	cmd->fin = -1;
 	cmd->fout = -1;
-	cmd->name = NULL;
+	cmd->name = ft_strdup("\0");
+	if (!cmd->name)
+		return (ft_free(cmd));
 	cmd->args = NULL;
 	cmd->fullpath = NULL;
 	return (cmd);

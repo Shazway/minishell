@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 20:54:43 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 23:37:10 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*get_var(char *str, t_data *data)
 	len = ft_strlen(str);
 	if (!ft_strncmp(str, "$", len))
 		return (ft_strdup("$"));
-	if (!ft_strncmp(str, "$?", len))
+	if (!ft_strncmp(str, "?", len))
 		return (ft_itoa(g_cmd_status));
 	while (data->env_str && data->env_str[i])
 	{

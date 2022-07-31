@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 21:12:23 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 00:20:53 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int	open_redirections(t_data *data)
 		{
 			free(arg->name);
 			arg->name = ft_strdup(arg->args[0]);
+			if (!arg->name)
+				msh_exit(data, 1);
 		}
 		tmp = tmp->next;
 	}
