@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 18:25:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:54:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ char	*get_name(char	*str, char type)
 
 	start = 0;
 	while (str && str[start] && str[start] != '$')
-	{
 		start++;
-	}
 	if (str[start] == '$')
 		start++;
 	end = start;
 	if (str && str[end] == '?')
-		return (ft_strdup("$?"));
+		return (ft_strdup("?"));
 	while (str && str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 		end++;
 	if (type == -1 && (str[end] == '"' || str[end] == '\''))
