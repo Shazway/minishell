@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 17:12:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 21:12:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	setup_rfiles(t_cmd	*arg, int i, t_data *data)
 		free(work_path);
 		return (0);
 	}
-	open_redirections_worker(arg, final_path, type);
+	open_redirections_worker(arg, final_path, type, i);
 	if (type == L_DDIR)
 	{
 		if (arg->args[i + 1])

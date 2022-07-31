@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 16:22:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/07/31 21:11:36 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int		check_input(t_data *data);
 
 //-----------REDIRECTIONS-------//
 int		open_redirections(t_data *data);
-void	open_redirections_worker(t_cmd *arg, char *final_path, int type);
+void	open_redirections_worker(t_cmd *arg, char *final_path, int type, int i);
 void	rfiles_worker(t_cmd *arg, t_data *data);
 int		setup_rfiles(t_cmd	*arg, int i, t_data *data);
 char	**eliminate_redirections(char **args);

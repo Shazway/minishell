@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 20:17:25 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/07/31 21:19:11 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@ int	is_redirection(char	*str, int type)
 	return (type);
 }
 
-void	open_redirections_worker(t_cmd *arg, char *final_path, int type)
+void	open_redirections_worker(t_cmd *arg, char *final_path, int type, int i)
 {
+	if (!arg->args[0][0])
+	{
+		free(final_path);
+		return ;
+	}
 	if (arg->fout != -1 && (type == R_DIR || type == R_DDIR))
 		close(arg->fout);
 	if (arg->fin != -1 && (type == L_DIR || type == L_DDIR))
@@ -39,11 +44,14 @@ void	open_redirections_worker(t_cmd *arg, char *final_path, int type)
 		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (type == L_DIR)
 		arg->fin = open(final_path, O_RDONLY);
-	if ((type == R_DIR || type == R_DDIR) && arg->fout == -1)
-		arg->args[0] = ft_str_zero(arg->args[0]);
-	if ((type == L_DIR || type == L_DDIR) && arg->fin == -1)
-		arg->args[0] = ft_str_zero(arg->args[0]);
 	free(final_path);
+	if (((type == R_DIR || type == R_DDIR) && arg->fout == -1)
+		|| ((type == L_DIR || type == L_DDIR) && arg->fin == -1))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		perror(arg->args[i + 1]);
+		arg->args[0] = ft_str_zero(arg->args[0]);
+	}
 }
 
 char	*concat_redir(char *str, char *redir, int *i, int is_double)
