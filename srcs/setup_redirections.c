@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 00:20:53 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/01 01:43:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,11 @@ int	open_redirections(t_data *data)
 	while (tmp)
 	{
 		arg = tmp->content;
-		rfiles_worker(arg, data);
+		if (rfiles_worker(arg, data))
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		arg->args = eliminate_redirections(arg->args);
 		if (arg->args)
 		{
