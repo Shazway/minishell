@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 21:29:41 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 00:47:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 int	signal_intercept(t_data *data)
 {
-	if (sigaction(SIGCHLD, data->signals_test, NULL) == -1)
+	if (sigaction(SIGCHLD, data->signals, NULL) == -1)
 		return (1);
-	if (sigaction(SIGINT, data->signals_test, NULL) == -1)
+	if (sigaction(SIGINT, data->signals, NULL) == -1)
 		return (1);
-	if (sigaction(SIGQUIT, data->signals_test, NULL) == -1)
+	if (sigaction(SIGQUIT, data->signals, NULL) == -1)
 		return (1);
 	return (0);
 }
 
 void	reset_signal_handler(t_data *data, int i)
 {
-	ft_memset(data->signals_test, 0, sizeof(struct sigaction));
+	ft_memset(data->signals, 0, sizeof(struct sigaction));
 	if (i == 0)
-		data->signals_test->sa_sigaction = sig_info_main;
+		data->signals->sa_sigaction = sig_info_main;
 	else if (i == 1)
-		data->signals_test->sa_sigaction = secondary_handler;
+		data->signals->sa_sigaction = secondary_handler;
 	else if (i == 2)
-		data->signals_test->sa_sigaction = heredoc_handler;
+		data->signals->sa_sigaction = heredoc_handler;
 	signal_intercept(data);
 }
 
