@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 15:35:13 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:08:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ char	*get_name(char	*str)
 		end++;
 	if (end > 0)
 		end--;
-	if (end == start)
-		return (ft_strdup("\0"));
 	return (ft_substr(str, start, (end - start + 1)));
 }
 
@@ -99,7 +97,7 @@ int	get_start_unquote(char *str, char **start)
 			return (0);
 		return (1);
 	}
-	*start = ft_strdup("");
+	*start = ft_strdup("\0");
 	if (!start)
 		return (ft_free(start) != 0);
 	return (1);

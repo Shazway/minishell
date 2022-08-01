@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 15:36:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:51:20 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ int		dup2_close(int oldfd, int newfd);
 //------------------------------//
 
 //-----------EXPAND-------------//
+void	expand_list(t_data *data);
 char	*expand_variables(t_data *data, char *str, char type);
 int		is_expand(char c);
 char	*get_end(char *str, int index);

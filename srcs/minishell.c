@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 03:30:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:51:08 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ void	ministart(t_data *data)
 		ft_putstr_fd(data->error_msh, 2);
 		return ;
 	}
-	if (ft_strchr(data->input, '$'))
-		data->input = expand_variables(data, data->input, -1);
 	if (!data->input)
 		msh_exit(data, 1);
 	if (parsing(data))
 	{
+		expand_list(data);
 		delete_quotes(data);
 		open_redirections(data);
 		search_cmds(data);
