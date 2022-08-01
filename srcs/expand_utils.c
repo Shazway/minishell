@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 23:37:10 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/01 04:15:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ char	*get_name(char	*str, char type)
 	end = start;
 	if (str && str[end] == '?')
 		return (ft_strdup("?"));
+	if (type == -1 && str[end] 
+	&& !ft_isspace(str[end]) 
+	&& !ft_isalnum(str[end]) && str[end] != '_')
+		return (ft_strdup("\0"));
 	while (str && str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 		end++;
-	if (type == -1 && (str[end] == '"' || str[end] == '\''))
-		return (ft_strdup("\0"));
 	if (end == start)
 		return (ft_strdup("$"));
 	if (end > 0)

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 01:49:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 03:30:55 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ void	minishell_sh(t_data *data)
 			break ;
 		else if (!only_isspace(data->input))
 			ministart(data);
-		data->input = ft_free(data->input);
+		free(data->input);
 	}
 }
