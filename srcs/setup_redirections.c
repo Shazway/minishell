@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 03:05:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 03:13:20 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	setup_rfiles(t_cmd	*arg, int i, t_data *data)
 	char	*work_path;
 	char	*final_path;
 	int		type;
-	char	*lim;
 
-	lim = NULL;
 	type = is_redirection(arg->args[i], 0);
 	work_path = ft_strdup(data->relative_path);
 	final_path = concat_path(work_path, arg->args[i + 1]);
@@ -34,10 +32,8 @@ int	setup_rfiles(t_cmd	*arg, int i, t_data *data)
 		if (arg->args[i + 1])
 		{
 			reset_signal_handler(data, 2);
-			lim = ft_strdup(arg->args[i + 1]);
-			if (here_doc(lim, 1, &arg->fin, data))
+			if (here_doc(ft_strdup(arg->args[i + 1]), 1, &arg->fin, data))
 				msh_exit(data, 1);
-			free(lim);
 			reset_signal_handler(data, 0);
 		}
 	}

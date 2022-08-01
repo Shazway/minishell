@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/01 03:08:32 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 03:14:11 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ int	here_doc(char *lim, int expand, int *fd, t_data *data)
 		*fd = -1;
 		return (1);
 	}
+	free(lim);
 	if (!dup2_close(stdin_copy, STDIN_FILENO))
-		msh_perexit(data, "dup", lim);
+		msh_perexit(data, "dup", NULL);
 	close(*fd);
 	*fd = open("/tmp/msh_here_doc", O_RDONLY);
 	return (0);
