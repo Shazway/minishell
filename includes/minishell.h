@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 15:51:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 23:59:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	print_fullpath(t_data *data);
 void	execute(t_data *data);
 void	run_forked_cmd(t_data *data, t_cmd *cmd);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
-void	exec_error(t_cmd *cmd, t_data *data);
+void	exec_error(t_cmd *cmd);
 void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
 int		here_doc(char *lim, int expand, int *fd, t_data *data);
 int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);

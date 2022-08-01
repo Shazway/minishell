@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/31 23:38:34 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 00:09:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	execute(t_data *data)
 	while (c_idx != NULL)
 	{
 		cmd = c_idx->content;
+		if (!cmd->name[0])
+		{
+			c_idx = c_idx->next;
+			continue ;
+		}
 		if (c_idx->next != NULL)
 			init_pipe(data, cmd->i);
 		if (!cmd->to_fork)
@@ -74,30 +79,30 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 		exec_builtin(data, cmd);
 	else if (execve(cmd->fullpath, cmd->args, data->env_str) == -1)
 	{
-		exec_error(cmd, data);
+		exec_error(cmd);
 		msh_exit(data, 0);
 	}
 }
 
-void	exec_error(t_cmd *cmd, t_data *data)
+void	exec_error(t_cmd *cmd)
 {
 	int		fdtest;
 	int		acc;
 
 	fdtest = -1;
-	if (!cmd->fullpath)
+	if (!cmd->fullpath[0])
 	{
 		ft_putstr_fd("minishell: ", 2);
 		cmd_notfound(cmd->name);
 	}
-	if (cmd->fullpath)
+	if (cmd->fullpath && cmd->fullpath[0])
 	{
 		acc = access(cmd->fullpath, X_OK);
 		fdtest = open(cmd->fullpath, O_WRONLY | O_APPEND);
 		if (acc == -1 || fdtest == -1)
 		{
 			ft_putstr_fd("minishell: ", 2);
-			perror(data->input);
+			perror(cmd->fullpath);
 			g_cmd_status = 126;
 		}
 	}
