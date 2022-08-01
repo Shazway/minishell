@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 23:35:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 00:32:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ char	*replace_variables(char *str, t_data *data, char *start)
 	char	*end;
 	char	*name;
 
-	printf("INPUT FOR REPLACE: [%s]\n", str);
 	if (!str)
 		return (str);
 	name = get_name(str);
@@ -92,6 +91,5 @@ char	*replace_variables(char *str, t_data *data, char *start)
 	}
 	str = join_variable(str, true_var, end, start);
 	ft_free_strs(&end, NULL, &name, NULL);
-	printf("RESULT AFTER JOIN: [%s]\n", str);
 	return (str);
 }

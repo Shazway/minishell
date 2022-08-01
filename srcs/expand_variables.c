@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 23:55:04 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 00:31:49 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,9 @@ char	*expand_variables(t_data *data, char *str, char type)
 			free(end);
 			if (!str)
 				return (NULL);
-			printf("RESULT AFTER SECOND JOIN: [%s]\n", str);
 			continue ;
 		}
 		i++;
 	}
-	printf("END RESULT[%s]\n", str);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 23:57:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 00:31:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	search_cmds(t_data *data)
 		cmd = i->content;
 		if (!cmd->name[0])
 		{
-			printf("here\n");
 			i = i->next;
 			continue ;
 		}
