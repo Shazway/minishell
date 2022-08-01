@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 14:42:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 02:39:36 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ void	msh_exit(t_data *data, int bad_malloc)
 	exit(g_cmd_status);
 }
 
-void	msh_perexit(t_data *data, char *scall)
+void	msh_perexit(t_data *data, char *scall, void *p)
 {
+	free(p);
 	ft_putstr_fd("minishell: ", 2);
 	perror(scall);
 	msh_free(data);
 	exit(EXIT_FAILURE);
 }
 
-void	msh_persignal(char *scall, int sigvalue)
+void	msh_persignal(char *scall, int sigvalue, void *p)
 {
+	free(p);
 	ft_putstr_fd("minishell: ", 2);
 	perror(scall);
 	g_cmd_status = sigvalue;

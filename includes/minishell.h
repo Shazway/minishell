@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 01:43:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 02:40:28 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,8 @@ void	minishell_sh(t_data *data);
 int		msh_init(t_data *data);
 int		msh_free(t_data *data);
 void	msh_exit(t_data *data, int bad_malloc);
-void	msh_perexit(t_data *data, char *scall);
-void	msh_persignal(char *scall, int sigvalue);
+void	msh_perexit(t_data *data, char *scall, void *p);
+void	msh_persignal(char *scall, int sigvalue, void *p);
 int		set_env(t_data *data);
 //------------------------------//
 

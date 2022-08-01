@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 02:09:16 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 02:31:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	open_redirections_worker(t_cmd *arg, char *final_path, int type, int i)
 		arg->fin = open(final_path, O_RDONLY);
 	free(final_path);
 	if (((type == R_DIR || type == R_DDIR) && arg->fout == -1)
-		|| ((type == L_DIR || type == L_DDIR) && arg->fin == -1))
+		|| ((type == L_DIR) && arg->fin == -1))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(arg->args[i + 1]);

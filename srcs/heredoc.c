@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/01 02:23:26 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 03:05:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,31 @@ int	here_doc(char *lim, int expand, int *fd, t_data *data)
 	int		stdin_copy;
 	
 	if (!lim)
-		msh_exit(data, 1);
+		return (1);
 	stdin_copy = dup(0);
 	if (stdin_copy == -1)
-		msh_perexit(data, "dup");
+		msh_perexit(data, "dup", lim);
 	expand = 1;
 	if (ft_strchr(lim, '"') || ft_strchr(lim, '\''))
 		expand = 0;
 	if (!expand)
 		lim = del_quote(lim);
 	if (!lim)
-		return (close(stdin_copy));
+		return (close(stdin_copy) == 0);
 	*fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!*fd)
-		msh_persignal("open", 126);
-	if (!heredoc_prompt(lim, expand, data, *fd))
+		msh_persignal("open", 126, lim);
+	if (heredoc_prompt(lim, expand, data, *fd))
 	{
 		close(*fd);
 		*fd = -1;
-		return (0);
+		return (1);
 	}
-	free(lim);
 	if (!dup2_close(stdin_copy, STDIN_FILENO))
-		msh_perexit(data, "dup");
+		msh_perexit(data, "dup", lim);
 	close(*fd);
 	*fd = open("/tmp/msh_here_doc", O_RDONLY);
-	//close(stdin_copy);
-	return (1);
+	return (0);
 }
 
 int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
@@ -64,11 +62,11 @@ int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
 		if (expand)
 			buf = expand_variables(data, buf, -1);
 		if (!buf)
-			return (0);
+			return (1);
 		ft_putendl_fd(buf, fd);
 		free(buf);
 	}
-	return (1);
+	return (0);
 }
 
 void	heredoc_handler(int signal, siginfo_t *s, void *trash)
