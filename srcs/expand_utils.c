@@ -6,13 +6,20 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 04:15:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:35:13 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_name(char	*str, char type)
+int	is_expand(char c)
+{
+	if (ft_isalnum(c) || c == '_' || c == '?')
+		return (0);
+	return (1);
+}
+
+char	*get_name(char	*str)
 {
 	int		start;
 	int		end;
@@ -20,21 +27,17 @@ char	*get_name(char	*str, char type)
 	start = 0;
 	while (str && str[start] && str[start] != '$')
 		start++;
-	if (str[start] == '$')
+	if (str && str[start] == '$')
 		start++;
 	end = start;
 	if (str && str[end] == '?')
 		return (ft_strdup("?"));
-	if (type == -1 && str[end] 
-	&& !ft_isspace(str[end]) 
-	&& !ft_isalnum(str[end]) && str[end] != '_')
-		return (ft_strdup("\0"));
 	while (str && str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 		end++;
-	if (end == start)
-		return (ft_strdup("$"));
 	if (end > 0)
 		end--;
+	if (end == start)
+		return (ft_strdup("\0"));
 	return (ft_substr(str, start, (end - start + 1)));
 }
 
