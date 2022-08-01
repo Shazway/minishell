@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 00:58:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 01:01:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,21 @@ int	msh_allocate(t_data *data)
 
 int	msh_init(t_data *data)
 {
-	data->signals->sa_sigaction = sig_info_main;
+	data->signals = NULL;
 	data->input = NULL;
 	data->cmd = NULL;
 	data->pips = NULL;
 	data->prompt = NULL;
 	data->error_msh = NULL;
-	data->relative_path = NULL;
-	data->old_path = NULL;
 	data->prompt_path = NULL;
 	data->child = -1;
 	g_cmd_status = 0;
 	data->n_cmd = 0;
-	data->signals = NULL;
 	data->env_str = NULL;
 	data->relative_path = NULL;
 	data->old_path = NULL;
 	if (msh_allocate(data))
 		msh_exit(data, 1);
+	data->signals->sa_sigaction = sig_info_main;
 	return (0);
 }
