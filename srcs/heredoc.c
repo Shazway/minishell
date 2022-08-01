@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/01 03:05:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 03:08:32 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
 			return (0);
 		p = ft_strnstr(buf, lim, len_lim);
 		if (p && p == buf && p[len_lim] == '\0')
-			return (ft_free(buf) == NULL);
+			return (ft_free(buf) != NULL);
 		if (expand)
 			buf = expand_variables(data, buf, -1);
 		if (!buf)
