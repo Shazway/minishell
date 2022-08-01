@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 19:55:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 01:49:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	ministart(t_data *data)
 		msh_exit(data, 1);
 	if (parsing(data))
 	{
-		open_redirections(data);
 		delete_quotes(data);
+		open_redirections(data);
 		search_cmds(data);
 		if (data->cmd)
 		{
