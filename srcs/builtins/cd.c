@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/31 14:46:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:38:30 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	}
 	if (chdir(goal) == -1)
 	{
-		perror("minishell: cd");
+		ft_putstr_fd("minishell: cd: ", 2);
+		perror(foldername);
 		ft_free_strs(&goal, &foldername, NULL, NULL);
 		return (1);
 	}
