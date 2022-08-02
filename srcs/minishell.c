@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 15:51:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:54:48 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,9 @@ void	ministart(t_data *data)
 		delete_quotes(data);
 		open_redirections(data);
 		search_cmds(data);
-		if (data->cmd)
-		{
-			execute(data);
-			free_pipes(data);
-			ft_lstclear(&data->cmd, &free_cmd);
-		}
+		execute(data);
+		free_pipes(data);
+		ft_lstclear(&data->cmd, &free_cmd);
 	}
 }
 
@@ -91,6 +88,6 @@ void	minishell_sh(t_data *data)
 			break ;
 		else if (!only_isspace(data->input))
 			ministart(data);
-		free(data->input);
+		data->input = ft_free(data->input);
 	}
 }

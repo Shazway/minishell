@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 19:06:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:48:08 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ typedef struct s_data
 	char				*error_msh;
 	t_pipex				*pips;
 	pid_t				child;
-	struct sigaction	*signals_test;
+	struct sigaction	*signals;
 }	t_data;
 
 typedef int	(*t_fp)(t_data *, int, char **);
+
+
 
 typedef struct s_cmd
 {
@@ -88,13 +90,6 @@ int		cd_home(char *path, char *name, t_data *data);
 int		cd_dash(char *arg, t_data *data);
 char	*concat_path(char *s1, char *s2);
 int		change_path(char *goal, char *foldername, t_data *data);
-char	*find_new_pwd(char *foldername, char **goal);
-int		foldername_loop(char **foldername, char **new_path);
-int		new_pwd(char *foldername, char **new_path);
-char	*next_dir(char *foldername);
-char	*previous_dir(char *path);
-char	*next_dir(char *foldername);
-void	update_pwd(t_data *data);
 //------------------------------//
 
 //-----------ECHO--------------//
@@ -122,7 +117,6 @@ char	*replace_env_entry(char *old, int len_id, char *entry);
 int		get_id_len(char *entry);
 void	free_pipes(t_data *data);
 void	close_pipes(t_pipex *pips, int n);
-void	update_pwd(t_data *data);
 char	*id_exist(char **av, int ac, int idx, int len);
 int		export_display(char **envr);
 //------------------------------//
@@ -152,7 +146,7 @@ void	print_fullpath(t_data *data);
 void	execute(t_data *data);
 void	run_forked_cmd(t_data *data, t_cmd *cmd);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
-void	exec_error(t_cmd *cmd, t_data *data);
+void	exec_error(t_cmd *cmd);
 void	close_unused_pipes(t_data *data, int r, int w, int c_idx);
 int		here_doc(char *lim, int expand, int *fd, t_data *data);
 int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
@@ -237,7 +231,15 @@ int		*end_sarrdel_worker(int *to_del, int **len_new, int len_sarr, int j);
 void	*ft_free(void *ptr);
 void	*ft_free_strs(char **s1, char **s2, char **s3, char **s4);
 void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
-int		ft_isspace(int c);
+int		ft_isspace(char c);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
+//-----------TEST----------------//
+char	**unquote_split_v2(char *s, int (*delim)(char c));
+char	**fill_v2(char *s, int (*delim)(char c), char **str);
+int		malloc_words_v2(char *s, int (*delim)(char c), char **str, int count);
+int		count_words_v2(char *s, int (*delim)(char c));
+int		is_pipe(char c);
+char	*trim_delim(char *s, int (*delim)(char c));
+
 #endif

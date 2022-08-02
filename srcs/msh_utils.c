@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 02:39:36 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:46:49 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	msh_free(t_data *data)
 {
 	rl_clear_history();
-	free(data->signals_test);
+	free(data->signals);
 	free(data->input);
 	free(data->prompt);
 	free(data->relative_path);
@@ -53,28 +53,38 @@ void	msh_persignal(char *scall, int sigvalue, void *p)
 	g_cmd_status = sigvalue;
 }
 
+int	msh_allocate(t_data *data)
+{
+	data->signals = malloc(sizeof(struct sigaction));
+	if (!data->signals)
+		return (1);
+	ft_memset(data->signals, 0, sizeof(struct sigaction));
+	if (!set_env(data))
+		return (1);
+	data->relative_path = getcwd(NULL, 0);
+	data->old_path = ft_strdup(data->relative_path);
+	if (!data->relative_path || !data->old_path)
+		return (1);
+	return (0);
+}
+
 int	msh_init(t_data *data)
 {
-	data->signals_test = malloc(sizeof(struct sigaction));
-	ft_memset(data->signals_test, 0, sizeof(struct sigaction));
-	data->signals_test->sa_sigaction = sig_info_main;
+	data->signals = NULL;
 	data->input = NULL;
-	data->env_str = NULL;
 	data->cmd = NULL;
 	data->pips = NULL;
 	data->prompt = NULL;
 	data->error_msh = NULL;
-	data->relative_path = NULL;
-	data->old_path = NULL;
 	data->prompt_path = NULL;
 	data->child = -1;
 	g_cmd_status = 0;
 	data->n_cmd = 0;
-	if (!set_env(data))
-		return (1);
-	data->relative_path = get_var("PWD", data);
-	data->old_path = ft_strdup(data->relative_path);
-	if (!data->relative_path || !data->old_path)
-		return (1);
+	data->env_str = NULL;
+	data->relative_path = NULL;
+	data->old_path = NULL;
+	if (msh_allocate(data))
+		msh_exit(data, 1);
+	data->signals->sa_sigaction = sig_info_main;
 	return (0);
 }

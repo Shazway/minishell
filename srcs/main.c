@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/31 14:34:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 01:03:36 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	if (termios_setup(data) || msh_init(data))
+	if (msh_init(data) || termios_setup(data))
 	{
 		msh_free(data);
 		exit(FAILED_ALLOC);

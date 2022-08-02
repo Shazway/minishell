@@ -6,7 +6,7 @@
 #    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/08/02 18:11:11 by mdkhissi         ###   ########.fr        #
+#    Updated: 2022/08/02 19:43:17 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,17 +51,15 @@ SRCS		=	$(SRC)/builtins/cd.c			\
 				$(SRC)/pipe_utils.c				\
 				$(SRC)/msh_utils.c				\
 				$(SRC)/cmd_utils.c				\
-				$(SRC)/find_path.c				\
 				$(SRC)/heredoc.c				\
-				$(SRC)/find_path_utils.c		\
 				$(SRC)/str_arr_utils.c			\
 				$(SRC)/pre_parsing.c			\
 				$(SRC)/quotes_parsing_utils.c	\
 				$(SRC)/expand_utils.c			\
 				$(SRC)/redirections_utils.c		\
-				$(SRC)/update_pwd.c				\
 				$(SRC)/builtins/cd_home.c		\
-				$(SRC)/arr_del_utils.c
+				$(SRC)/arr_del_utils.c			\
+				$(SRC)/unquote_split_v2.c		\
 
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 

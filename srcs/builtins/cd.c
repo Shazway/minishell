@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/31 14:46:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 17:42:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,15 @@ char	*concat_path(char *goal, char *folder_name)
 
 int	change_path_worker(char *goal, char *foldername, t_data *data)
 {
-	int	ret;
 
 	free(data->old_path);
 	data->old_path = ft_strdup(data->relative_path);
-	if (!data->old_path)
-	{
-		ft_free_strs(&goal, &foldername, NULL, NULL);
-		msh_exit(data, 1);
-	}
-	ret = new_pwd(ft_strdup(foldername), &(data->relative_path));
 	ft_free_strs(&goal, &foldername, NULL, NULL);
-	return (ret);
+	if (!data->old_path)
+		msh_exit(data, 1);
+	data->relative_path = getcwd(NULL, 0);
+	ft_free_strs(&goal, &foldername, NULL, NULL);
+	return (1);
 }
 
 int	change_path(char *goal, char *foldername, t_data *data)
@@ -64,7 +61,8 @@ int	change_path(char *goal, char *foldername, t_data *data)
 	}
 	if (chdir(goal) == -1)
 	{
-		perror("minishell: cd");
+		ft_putstr_fd("minishell: cd: ", 2);
+		perror(foldername);
 		ft_free_strs(&goal, &foldername, NULL, NULL);
 		return (1);
 	}

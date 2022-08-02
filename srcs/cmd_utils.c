@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 19:19:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:45:10 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,28 @@ void	search_cmds(t_data *data)
 {
 	t_list	*i;
 	t_cmd	*cmd;
-	t_list	*prev;
 	char	*fullpath;
 
 	i = data->cmd;
-	prev = NULL;
 	while (i != NULL)
 	{
 		cmd = i->content;
-		if (!cmd->args || !cmd->name[0])
+		if (!cmd->name[0])
 		{
-			if (prev == NULL)
-				data->cmd = i->next;
-			else
-				prev->next = i->next;
-			ft_lstdelone(i, free_cmd);
-			if (prev)
-				i = prev->next;
-			else
-				i = data->cmd;
-			data->n_cmd--;
-		}
-		else
-		{
-			cmd->builtin = is_builtin(data, cmd);
-			if (!cmd->builtin)
-			{
-				fullpath = get_path(cmd->name, data->env_str);
-				if (fullpath)
-				{
-					free(cmd->fullpath);
-					cmd->fullpath = fullpath;
-				}
-			}
-			prev = i;
 			i = i->next;
+			continue ;
 		}
+		cmd->builtin = is_builtin(data, cmd);
+		if (!cmd->builtin)
+		{
+			fullpath = get_path(cmd->name, data->env_str);
+			if (fullpath)
+			{
+				free(cmd->fullpath);
+				cmd->fullpath = fullpath;
+			}
+		}
+			i = i->next;
 	}
 }
 
@@ -72,7 +58,13 @@ t_cmd	*init_cmd(int i)
 	if (!cmd->name)
 		return (ft_free(cmd));
 	cmd->args = NULL;
-	cmd->fullpath = NULL;
+	cmd->fullpath = ft_strdup("\0");
+	if (!cmd->fullpath)
+	{
+		free(cmd->name);
+		free(cmd);
+		return (NULL);
+	}
 	return (cmd);
 }
 
