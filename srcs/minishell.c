@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 15:51:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:01:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ministart(t_data *data)
 			ft_lstclear(&data->cmd, &free_cmd);
 		}
 	}
+	parsing(data);
 }
 
 int	only_isspace(char *str)

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 00:47:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:24:42 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	signal_intercept(t_data *data)
 {
-	if (sigaction(SIGCHLD, data->signals, NULL) == -1)
-		return (1);
 	if (sigaction(SIGINT, data->signals, NULL) == -1)
 		return (1);
 	if (sigaction(SIGQUIT, data->signals, NULL) == -1)
@@ -35,6 +33,7 @@ void	reset_signal_handler(t_data *data, int i)
 	signal_intercept(data);
 }
 
+
 void	secondary_handler(int signal, siginfo_t *s, void *trash)
 {
 	(void)s;
@@ -53,8 +52,6 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 		g_cmd_status = WEXITSTATUS(g_cmd_status);
 		return ;
 	}
-	if (signal == SIGCHLD)
-		return ;
 }
 
 void	sig_info_main(int signal, siginfo_t *s, void *trash)
@@ -74,8 +71,6 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 		g_cmd_status = 0;
 		return ;
 	}
-	if (signal == SIGCHLD)
-		return ;
 }
 
 int	termios_setup(t_data *data)

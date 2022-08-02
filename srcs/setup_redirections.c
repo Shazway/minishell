@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 01:29:18 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:02:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int	open_redirections(t_data *data)
 			if (!arg->name)
 				msh_exit(data, 1);
 		}
+		arg->ac = str_arr_size(arg->args);
 		tmp = tmp->next;
 	}
 	return (1);

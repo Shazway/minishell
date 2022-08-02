@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 23:41:15 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 14:46:00 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:46:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	to_home(char *path, t_data *data)
 	free(data->old_path);
 	data->old_path = ft_strdup(data->relative_path);
 	free(data->relative_path);
-	data->relative_path = ft_strdup(path);
+	data->relative_path = getcwd(NULL, 0);
 	if (!data->relative_path || !data->old_path)
 		msh_exit(data, 1);
 	return (0);

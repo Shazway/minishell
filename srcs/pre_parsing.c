@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 03:20:05 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 17:03:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	syntax_msh(t_data *data, char *str)
 
 int	is_next_token(t_data *data, int i, char type)
 {
+	if (data->input && !data->input[i])
+		return (0);
 	while (data->input[i] && ft_isspace(data->input[i]))
 		i++;
 	if (data->input[i] == type)
@@ -48,6 +50,8 @@ int	check_input_redirect(t_data *data, int *i, int count)
 
 int	check_input_pipe(t_data *data, int *i, int count)
 {
+	if (!is_next_token(data, *i + 1, '|'))
+		return(syntax_msh(data, "minishell: syntax error for \'|\'\n"));
 	if (!data->input[*i + 1] || (*i == 0)
 		|| (*i > 0 && (data->input[*i - 1] == '>'
 				|| data->input[*i - 1] == '<'))
@@ -60,8 +64,6 @@ int	check_input_pipe(t_data *data, int *i, int count)
 		*i = *i + 1;
 	}
 	if (count > 1 || !data->input[*i])
-		return(syntax_msh(data, "minishell: syntax error for \'|\'\n"));
-	if (!is_next_token(data, *i, data->input[*i]))
 		return(syntax_msh(data, "minishell: syntax error for \'|\'\n"));
 	return (1);
 }

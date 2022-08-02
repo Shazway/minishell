@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 01:01:27 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:46:49 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	msh_allocate(t_data *data)
 	ft_memset(data->signals, 0, sizeof(struct sigaction));
 	if (!set_env(data))
 		return (1);
-	data->relative_path = get_var("PWD", data);
+	data->relative_path = getcwd(NULL, 0);
 	data->old_path = ft_strdup(data->relative_path);
 	if (!data->relative_path || !data->old_path)
 		return (1);

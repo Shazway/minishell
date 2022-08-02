@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 00:47:47 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 18:57:05 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_data
 
 typedef int	(*t_fp)(t_data *, int, char **);
 
+
+
 typedef struct s_cmd
 {
 	int		i;
@@ -87,13 +89,6 @@ int		cd_home(char *path, char *name, t_data *data);
 int		cd_dash(char *arg, t_data *data);
 char	*concat_path(char *s1, char *s2);
 int		change_path(char *goal, char *foldername, t_data *data);
-char	*find_new_pwd(char *foldername, char **goal);
-int		foldername_loop(char **foldername, char **new_path);
-int		new_pwd(char *foldername, char **new_path);
-char	*next_dir(char *foldername);
-char	*previous_dir(char *path);
-char	*next_dir(char *foldername);
-void	update_pwd(t_data *data);
 //------------------------------//
 
 //-----------ECHO--------------//
@@ -118,7 +113,6 @@ int		export_worker(char **ids, char **entry, int ac, char **av);
 int		is_validid(char	*identifier, int len);
 void	free_pipes(t_data *data);
 void	close_pipes(t_pipex *pips, int n);
-void	update_pwd(t_data *data);
 char	*id_exist(char **av, int ac, int idx, int len);
 //------------------------------//
 
@@ -232,7 +226,15 @@ int		*end_sarrdel_worker(int *to_del, int **len_new, int len_sarr, int j);
 void	*ft_free(void *ptr);
 void	*ft_free_strs(char **s1, char **s2, char **s3, char **s4);
 void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
-int		ft_isspace(int c);
+int		ft_isspace(char c);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
+//-----------TEST----------------//
+char	**unquote_split_v2(char *s, int (*delim)(char c));
+char	**fill_v2(char *s, int (*delim)(char c), char **str);
+int		malloc_words_v2(char *s, int (*delim)(char c), char **str, int count);
+int		count_words_v2(char *s, int (*delim)(char c));
+int		is_pipe(char c);
+char	*trim_delim(char *s, int (*delim)(char c));
+
 #endif

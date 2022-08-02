@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 01:36:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:24:30 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,4 @@ void	heredoc_handler(int signal, siginfo_t *s, void *trash)
 		g_cmd_status = 0;
 		return ;
 	}
-	if (signal == SIGCHLD)
-		return ;
 }

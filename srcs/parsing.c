@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 15:54:39 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:01:40 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	parsing(t_data *data)
 {
 	int		i;
 	char	**pipe_split;
+	char	*tmp;
 
 	i = 0;
 	data->input = separate_redir(data->input);
@@ -23,7 +24,10 @@ int	parsing(t_data *data)
 		msh_exit(data, 1);
 	if (!ft_strlen(data->input))
 		return (0);
-	pipe_split = unquote_split(data->input, '|');
+	tmp = data->input;
+	data->input = trim_delim(data->input, &ft_isspace);
+	free(tmp);
+	pipe_split = unquote_split_v2(data->input, &is_pipe);
 	if (!pipe_split)
 		msh_exit(data, 1);
 	while (pipe_split && pipe_split[i])
@@ -71,10 +75,9 @@ void	print_result(t_cmd *token)
 
 void	split_spaces(t_cmd *token, char *content)
 {
-	token->args = unquote_split(content, ' ');
+	token->args = unquote_split_v2(content, &(ft_isspace));
 	if (!token->args)
 		return ;
-	token->ac = str_arr_size(token->args);
 }
 
 int	is_opened_quotes(t_data *data)
