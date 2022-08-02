@@ -81,7 +81,7 @@ char	*replace_variables(char *str, t_data *data, char *start, char **true_var)
 		return (ft_free(str));
 	if (name && name[0])
 	{
-		*true_var = get_var(name, data);
+		*true_var = get_var(name, data, 0);
 		end = get_end(str, ft_strlen(name) + 1);
 	}
 	else

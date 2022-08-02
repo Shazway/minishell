@@ -1,55 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unquote_split.c                                    :+:      :+:    :+:   */
+/*   unquote_split.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/10 16:04:51 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 20:19:34 by mdkhissi         ###   ########.fr       */
+/*   Created: 2022/08/02 17:15:36 by tmoragli          #+#    #+#             */
+/*   Updated: 2022/08/03 00:14:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_quote(char *type, char c)
+int	count_words_worker(char *str, int (*delim)(char c))
 {
-	if (*type == -1 && (c == '"' || c == '\''))
-		*type = c;
-	else if (c == *type)
-		*type = -1;
-}
-
-int	count_words(char *s, char c)
-{
-	int		i;
 	int		count;
+	int		i;
 	char	type;
 
-	count = 1;
-	i = 0;
 	type = -1;
-	if (c == '|')
-		s = ft_strtrim(s, "|");
-	else if (c == ' ')
-		s = ft_strtrim(s, " ");
-	while (s[i])
+	i = 0;
+	count = 1;
+	while (str[i])
 	{
-		check_quote(&type, s[i]);
-		if ((s[i] == c && type == -1))
+		check_quote(&type, str[i]);
+		if ((delim(str[i]) && type == -1))
 		{
 			count++;
-			while (s[i] && s[i] == c)
+			while (str[i] && delim(str[i]))
 				i++;
 		}
 		else
 			i++;
 	}
-	free(s);
 	return (count);
 }
 
-int	malloc_words(char *s, char c, char **str, int count)
+int	count_words(char *s, int (*delim)(char c), int trim)
+{
+	char	*str;
+	int		count;
+
+	if (!s)
+		return (-1);
+	if (trim)
+		str = ft_strtrim(s, " \t\r\n\v\f");
+	else
+		str = ft_strdup(s);
+	if (!str)
+		return (-1);
+	count = count_words_worker(str, delim);
+	free(str);
+	return (count);
+}
+
+int	malloc_words(char *s, int (*delim)(char c), char **str, int count)
 {
 	int		i;
 	int		j;
@@ -62,9 +67,9 @@ int	malloc_words(char *s, char c, char **str, int count)
 	while (k < count)
 	{
 		j = 0;
-		while (s[i] && s[i] == c)
+		while (s[i] && delim(s[i]))
 			i++;
-		while (s[i] && (s[i] != c || type != -1))
+		while (s[i] && (!delim(s[i]) || type != -1))
 		{
 			check_quote(&type, s[i]);
 			j++;
@@ -77,7 +82,7 @@ int	malloc_words(char *s, char c, char **str, int count)
 	return (0);
 }
 
-char	**fill(char *s, char c, char **str)
+char	**fill(char *s, int (*delim)(char c), char **str)
 {
 	int		i;
 	int		k;
@@ -90,9 +95,9 @@ char	**fill(char *s, char c, char **str)
 	while (s[i] && str[k])
 	{
 		j = 0;
-		while (s[i] && s[i] == c)
+		while (s[i] && delim(s[i]))
 			i++;
-		while (s[i] && (s[i] != c || type != -1))
+		while (s[i] && (!delim(s[i]) || type != -1))
 		{
 			check_quote(&type, s[i]);
 			str[k][j] = s[i];
@@ -105,18 +110,20 @@ char	**fill(char *s, char c, char **str)
 	return (str);
 }
 
-char	**unquote_split(char *s, char c)
+char	**unquote_split(char *s, int (*delim)(char c), int trim)
 {
 	char	**str;
 	int		count;
 
 	if (!s)
 		return (NULL);
-	count = count_words(s, c);
+	count = count_words(s, delim, trim);
+	if (count == -1)
+		return (NULL);
 	if (!ft_malloc((void **)&str, sizeof(char *) * (count + 1)))
 		return (NULL);
 	str[count] = NULL;
-	if (malloc_words(s, c, str, count))
+	if (malloc_words(s, delim, str, count))
 		return (NULL);
-	return (fill(s, c, str));
+	return (fill(s, delim, str));
 }

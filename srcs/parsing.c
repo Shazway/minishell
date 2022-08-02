@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 23:13:33 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 01:48:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parsing(t_data *data)
 		msh_exit(data, 1);
 	if (!ft_strlen(data->input))
 		return (0);
-	pipe_split = unquote_split_v2(data->input, &is_pipe, 0);
+	pipe_split = unquote_split(data->input, &is_pipe, 0);
 	if (!pipe_split)
 		msh_exit(data, 1);
 	while (pipe_split && pipe_split[i])
@@ -48,7 +48,7 @@ void	fill_token(t_data *data, char **pipe_split, int i)
 		msh_exit(data, 1);
 	}
 	ft_lstadd_back(&(data->cmd), ft_lstnew((void *)token));
-	split_spaces(token, pipe_split[i]);
+	token->args = unquote_split(pipe_split[i], &ft_isspace, 1);
 	if (!token->args)
 	{
 		ft_lstclear(&(data->cmd), &(free_cmd));
@@ -69,9 +69,13 @@ void	print_result(t_cmd *token)
 	}
 }
 
-void	split_spaces(t_cmd *token, char *content)
+int	is_pipe(char c)
 {
-	token->args = unquote_split_v2(content, &(ft_isspace), 1);
+	if (!c)
+		return (0);
+	if (c == '|')
+		return (1);
+	return (0);
 }
 
 int	is_opened_quotes(t_data *data)
@@ -89,6 +93,5 @@ int	is_opened_quotes(t_data *data)
 	if (type == -1)
 		return (1);
 	data->error_msh = "Unclosed quote, try closing the \" or \' quote\n";
-
 	return (0);
 }
