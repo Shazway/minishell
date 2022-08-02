@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:16:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 17:56:15 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:30:22 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	alloc_pipes(t_data *data)
 
 void	init_pipe(t_data *data, int i)
 {
+	printf("init pipes\n");
 	if (pipe(data->pips[i].fd) == (-1))
 		msh_exit(data, 0);
 }
@@ -55,7 +56,8 @@ int	dup2_close(int oldfd, int newfd)
 	{
 		if (dup2(oldfd, newfd) == -1)
 		{
-			perror("minishell: ");
+			ft_putstr_fd("minishell: ", 2);
+			perror("pipe");
 			return (0);
 		}
 		close(oldfd);

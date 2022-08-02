@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:39:27 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/27 20:54:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/01 22:12:31 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char				*ft_strdup(char *src);
 char				*ft_strndup(char *src, size_t n);
 char				*ft_strjoin(char const *s1, char const *s2);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
+size_t				ft_strcat(char *dest, const char *src);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlen(const char *s);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -70,5 +71,6 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void*));
+int					ft_fill_iarr(int *iarr, int value, int n);
 
 #endif

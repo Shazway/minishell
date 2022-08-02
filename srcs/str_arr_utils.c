@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_arr_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 19:14:09 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/07/30 00:32:19 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 20:53:09 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ char	**str_arr_add(char **sarr, int len_sarr, char **entry, int len_entry)
 	int		j;
 
 	if (!ft_sar_alloc(&new, len_sarr + len_entry, sizeof(char *)))
-		return (ft_free_sars(&entry, &sarr, NULL, NULL));
+		return (ft_free_sars(NULL, &sarr, NULL, NULL));
 	i = -1;
 	while (++i < len_sarr)
 	{
 		new[i] = ft_strdup(sarr[i]);
 		if (!new[i])
-			return (ft_free_sars(&entry, &sarr, &new, NULL));
+			return (ft_free_sars(NULL, &sarr, &new, NULL));
 	}
 	j = -1;
 	while (entry && entry[++j])
@@ -56,10 +56,10 @@ char	**str_arr_add(char **sarr, int len_sarr, char **entry, int len_entry)
 		{
 			new[i] = ft_strdup(entry[j]);
 			if (!new[i++])
-				return (ft_free_sars(&entry, &sarr, &new, NULL));
+				return (ft_free_sars(NULL, &sarr, &new, NULL));
 		}
 	}
-	ft_free_sars(&entry, &sarr, NULL, NULL);
+	ft_free_sars(NULL, &sarr, NULL, NULL);
 	return (new);
 }
 

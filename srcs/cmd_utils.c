@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 00:21:48 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:19:00 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	search_cmds(t_data *data)
 				i = prev->next;
 			else
 				i = data->cmd;
+			data->n_cmd--;
 		}
 		else
 		{

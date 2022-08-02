@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 15:51:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:06:32 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_cmd
 	t_fp	func;
 }	t_cmd;
 
+
 //-----------CD--------------//
 int		cd(t_data *data, int ac, char **str);
 void	swap_paths(t_data *data);
@@ -103,7 +104,6 @@ int		check_echo_n(char *str);
 
 //-----------ENV---------------//
 int		ft_env(t_data *data, int ac, char **av);
-void	update_env(t_data *data, char **ids, char **entry, int len_entry);
 char	*ft_s_replace(char *dest, char *src);
 //------------------------------//
 
@@ -114,12 +114,17 @@ int		shell_exit(t_data *data, int ac, char **av);
 
 //-----------EXPORT------------//
 int		ft_export(t_data *data, int ac, char **av);
-int		export_worker(char **ids, char **entry, int ac, char **av);
+char	*export_worker(char *env_entry, char **av, int *ac, int *lens_id);
+char	*compare_replace(char *env_entry, char **entry, int len_id);
+char	*export_error(char *entry, int *ac);
 int		is_validid(char	*identifier, int len);
+char	*replace_env_entry(char *old, int len_id, char *entry);
+int		get_id_len(char *entry);
 void	free_pipes(t_data *data);
 void	close_pipes(t_pipex *pips, int n);
 void	update_pwd(t_data *data);
 char	*id_exist(char **av, int ac, int idx, int len);
+int		export_display(char **envr);
 //------------------------------//
 
 //-----------PWD---------------//
@@ -148,7 +153,7 @@ void	execute(t_data *data);
 void	run_forked_cmd(t_data *data, t_cmd *cmd);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 void	exec_error(t_cmd *cmd, t_data *data);
-void	close_unused_pipes(t_pipex *pips, int r, int w, int n);
+void	close_unused_pipes(t_data *data, int r, int w, int c_idx);
 int		here_doc(char *lim, int expand, int *fd, t_data *data);
 int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
 void	alloc_pipes(t_data *data);

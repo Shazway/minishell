@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/07/31 19:54:31 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/08/02 18:11:11 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DESCRIPTION =	Minishell
 
 # ----------- COMPILER FLAGS -------
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g3 #-fsanitize=address
 LPFLAGS		=	-L$(LIBFT) -lft -lreadline
 
 # ----------- INCLUDE --------------
@@ -33,6 +33,7 @@ SRCS		=	$(SRC)/builtins/cd.c			\
 				$(SRC)/builtins/env.c			\
 				$(SRC)/builtins/exit.c			\
 				$(SRC)/builtins/export.c		\
+				$(SRC)/builtins/export_utils.c	\
 				$(SRC)/builtins/pwd.c			\
 				$(SRC)/builtins/unset.c			\
 				$(SRC)/setup_redirections.c		\

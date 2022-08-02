@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 20:19:58 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:09:38 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,119 +14,114 @@
 
 int	ft_export(t_data *data, int ac, char **av)
 {
-	int		len_entry;
-	char	**ids;
-	char	**entry;
+	int	i;
+	int	lens_id[ac];
 
 	if (ac == 1)
-		return (ft_env(data, ac, av));
-	ft_sar_alloc(&ids, ac, sizeof(char *));
-	ft_sar_alloc(&entry, ac, sizeof(char *));
-	if (!ids || !entry)
+		return (export_display(data->env_str));
+	ft_fill_iarr(lens_id, -2, ac);
+	av[0] = ft_str_zero(av[0]);
+	ac--;
+	i = 0;
+	while (data->env_str[i])
 	{
-		ft_free_sars(&ids, &entry, NULL, NULL);
-		msh_exit(data, 1);
+		data->env_str[i] = export_worker(data->env_str[i], av, &ac, lens_id);
+		i++;
 	}
-	len_entry = export_worker(ids, entry, ac, av);
-	if (len_entry == -1)
-		msh_exit(data, 1);
-	else if (len_entry == 0)
-		return (!ft_free_sars(&ids, &entry, NULL, NULL));
-	update_env(data, ids, entry, len_entry);
+	if (ac > 0)
+		data->env_str = str_arr_add(data->env_str, i, av, ac);
 	return (0);
 }
 
-int	export_worker(char **ids, char **entry, int ac, char **av)
+char	*export_worker(char *env_entry, char **av, int *ac, int *lens_id)
 {
-	int		i;
-	int		j;
+	int	j;
+	int	valid;
+
+	j = 0;
+	while (av[j])
+	{
+		if (av[j][0])
+		{
+			if (lens_id[j] == -2)
+				lens_id[j] = get_id_len(av[j]);
+			valid = is_validid(av[j], lens_id[j]);
+			if (lens_id[j] > 0 && valid)
+			{
+				env_entry = compare_replace(env_entry, &av[j], lens_id[j]);
+				if (!av[j][0])
+					*ac -= 1;
+			}
+			if (!valid)
+				av[j] = export_error(av[j], ac);
+			if (lens_id[j] < 0 && valid)
+			{
+				av[j] = ft_str_zero(av[j]) ;
+				*ac -= 1;
+			}
+		}
+		j++;
+	}
+	return (env_entry);
+}
+
+char	*compare_replace(char *env_entry, char **entry, int len_id)
+{
+	char	*p_entry;
+
+	p_entry = *entry;
+	if (!ft_strncmp(env_entry, p_entry, len_id) &&
+			(p_entry[len_id] == '+' || p_entry[len_id] == '='))
+	{
+		env_entry = replace_env_entry(env_entry,
+				len_id, p_entry);
+		p_entry = ft_str_zero(p_entry);
+	}
+	*entry = p_entry;
+	return (env_entry);
+}
+
+char	*replace_env_entry(char *old, int len_id, char *entry)
+{
+	int		len;
+	char	*new;
+	int		append;
+
+	append = 0;
+	if (entry[len_id] == '+')
+		append = 1;
+	if (append)
+		len = ft_strlen(old) + ft_strlen(entry + len_id + 2);
+	else
+		len = ft_strlen(entry);
+	new = malloc((len + 1) * sizeof(char));
+	if (!new)
+		return (NULL);
+	ft_strlcpy(new, entry, len_id + 1);
+	new[len_id] = '=';
+	new[len_id + 1] = '\0';
+	if (append)
+		ft_strcat(new, old + len_id + 1);
+	ft_strcat(new, entry + len_id + 1 + 1 * (append == 1));
+	free(old);
+	return (new);
+}
+
+int get_id_len(char *entry)
+{
 	char	*p_eq;
 	int		len;
+	int		append;
 
-	i = 0;
-	j = 0;
-	while (++i < ac)
-	{
-		p_eq = ft_strchr(av[i], '=');
-		len = (p_eq - &av[i][0]) * (p_eq != 0) + (-1) * (!p_eq);
-		if (is_validid(av[i], len) && p_eq)
-		{
-			if (!id_exist(av, ac, i, len))
-			{
-				ids[j] = ft_strndup(av[i], len);
-				entry[j] = ft_strdup(av[i]);
-				if (!ids[j] || !entry[j++])
-					return (!ft_free_sars(&ids, &entry, NULL, NULL) * -1);
-			}
-		}
-		else if (p_eq)
-			ft_printf("minishell: export: `%s': not a valid identifier\n",
-				av[i]);
-	}
-	ids[j] = NULL;
-	entry[j] = NULL;
-	return (j);
-}
-
-char	*id_exist(char **av, int ac, int idx, int len)
-{
-	int	i;
-
-	i = ac - 1;
-	while (av[i] && i > idx)
-	{
-		if (!ft_strncmp(av[i], av[idx], len))
-			return (av[i]);
-		i--;
-	}
-	return (NULL);
-}
-
-int	is_validid(char	*identifier, int len)
-{
-	int	i;
-
-	i = 0;
-	while ((i < len || len == -1) && identifier[i])
-	{
-		if (!(ft_isalnum(identifier[i]) || identifier[i] == '_'))
-			return (0);
-		i++;
-	}
-	return (i);
-}
-
-void	update_env(t_data *data, char **ids, char **entry, int len_entry)
-{
-	int		i;
-	int		k;
-
-	i = -1;
-	while (data->env_str[++i])
-	{
-		k = -1;
-		while (entry[++k])
-		{
-			if (entry[k][0] &&
-				ft_strnstr(data->env_str[i], ids[k], 0) == data->env_str[i])
-			{
-				data->env_str[i] = ft_s_replace(data->env_str[i],
-						ft_strdup(entry[k]));
-				entry[k] = ft_str_zero(entry[k]);
-				len_entry--;
-				break ;
-			}
-		}
-	}
-	str_arr_free(ids);
-	if (len_entry > 0)
-		data->env_str = str_arr_add(data->env_str, i, entry, len_entry);
+	append = 0;
+	p_eq = ft_strchr(entry, '=');
+	if (p_eq && p_eq != entry && p_eq[-1] == '+')
+		append = 1;
+	if (p_eq)
+		len = p_eq - &entry[0];
 	else
-		str_arr_free(entry);
-}
-
-char	*ft_str_zero(char	*str)
-{
-	free(str);
-	return (ft_strdup(""));
+		len = -1;
+	if (p_eq && append)
+		len--;
+	return (len);
 }

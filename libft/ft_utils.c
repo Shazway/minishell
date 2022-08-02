@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 18:31:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/25 22:28:38 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 18:44:48 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,17 @@ void	ft_printarray(char *str, t_parsing *parsing)
 		str++;
 		parsing->count++;
 	}
+}
+
+int	ft_fill_iarr(int *iarr, int value, int n)
+{
+	int	i;
+
+	i = 0;
+	while (iarr && i < n)
+	{
+		iarr[i] = value;
+		i++;
+	}
+	return (i);
 }

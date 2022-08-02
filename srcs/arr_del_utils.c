@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arr_del_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 00:18:47 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/31 01:11:42 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/01 20:52:22 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	**str_arr_del(char **sarr, char **entry, int len_entry)
 	}
 	free(to_del);
 	str_arr_free(sarr);
-	str_arr_free(entry);
 	return (new);
 }
 
