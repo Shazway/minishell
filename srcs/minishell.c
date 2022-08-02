@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 22:33:16 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:26:37 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,27 @@ void	set_prompt_string(t_data *data)
 	free(tmp);
 	if (!data->prompt)
 		msh_exit(data, 1);
+}
+
+int	msh_init(t_data *data, char **env)
+{
+	data->signals = NULL;
+	data->input = NULL;
+	data->cmd = NULL;
+	data->pips = NULL;
+	data->prompt = NULL;
+	data->error_msh = NULL;
+	data->prompt_path = NULL;
+	data->child = -1;
+	g_cmd_status = 0;
+	data->n_cmd = 0;
+	data->env_str = NULL;
+	data->relative_path = NULL;
+	data->old_path = NULL;
+	if (msh_allocate(data, env))
+		msh_exit(data, 1);
+	data->signals->sa_sigaction = sig_info_main;
+	return (0);
 }
 
 void	ministart(t_data *data)

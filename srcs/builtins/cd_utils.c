@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:18:23 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/07/29 23:50:51 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:42:16 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int	cd_dash(char *arg, t_data *data)
 		return (cd_home(ft_strdup(data->old_path), "OLDPWD", data));
 	}
 	if (ret == 2)
-		return (cd_home(get_var("HOME", data), "HOME", data));
+		return (cd_home(get_var("HOME", data, 0), "HOME", data));
 	return (-1);
 }

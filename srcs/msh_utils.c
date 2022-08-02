@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 23:48:11 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:26:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,5 @@ int	msh_allocate(t_data *data, char **env)
 	data->old_path = ft_strdup(data->relative_path);
 	if (!data->relative_path || !data->old_path)
 		return (1);
-	return (0);
-}
-
-int	msh_init(t_data *data, char **env)
-{
-	data->signals = NULL;
-	data->input = NULL;
-	data->cmd = NULL;
-	data->pips = NULL;
-	data->prompt = NULL;
-	data->error_msh = NULL;
-	data->prompt_path = NULL;
-	data->child = -1;
-	g_cmd_status = 0;
-	data->n_cmd = 0;
-	data->env_str = NULL;
-	data->relative_path = NULL;
-	data->old_path = NULL;
-	if (msh_allocate(data, env))
-		msh_exit(data, 1);
-	data->signals->sa_sigaction = sig_info_main;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 17:03:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:29:46 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	check_input_redirect(t_data *data, int *i, int count)
 	if (!data->input[*i + 1]
 		|| (data->input[*i] == '>' && data->input[*i + 1] == '<')
 		|| (data->input[*i] == '<' && data->input[*i + 1] == '>'))
-		return (syntax_msh(data, "minishell: syntax error: > or < close to newline\n"));
+		return (syntax_msh(data,
+				"minishell: syntax error: > or < close to newline\n"));
 	while (data->input[*i]
 		&& (data->input[*i] == '>' || data->input[*i] == '<'))
 	{
@@ -51,20 +52,20 @@ int	check_input_redirect(t_data *data, int *i, int count)
 int	check_input_pipe(t_data *data, int *i, int count)
 {
 	if (!is_next_token(data, *i + 1, '|'))
-		return(syntax_msh(data, "minishell: syntax error for \'|\'\n"));
+		return (syntax_msh(data, "minishell: syntax error for \'|\'\n"));
 	if (!data->input[*i + 1] || (*i == 0)
 		|| (*i > 0 && (data->input[*i - 1] == '>'
 				|| data->input[*i - 1] == '<'))
 		|| (data->input[*i] && (data->input[*i + 1] == '>'
 				|| data->input[*i + 1] == '<')))
-		return(syntax_msh(data, "minishell: syntax error for \'|\'\n"));
+		return (syntax_msh(data, "minishell: syntax error for \'|\'\n"));
 	while (data->input[*i] && data->input[*i] == '|')
 	{
 		count++;
 		*i = *i + 1;
 	}
 	if (count > 1 || !data->input[*i])
-		return(syntax_msh(data, "minishell: syntax error for \'|\'\n"));
+		return (syntax_msh(data, "minishell: syntax error for \'|\'\n"));
 	return (1);
 }
 

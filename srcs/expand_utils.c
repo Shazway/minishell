@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 23:50:24 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:42:02 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,12 @@ char	*get_name(char	*str)
 	return (ft_substr(str, start, (end - start + 1)));
 }
 
-char	*get_var(char *str, t_data *data)
+char	*get_var(char *str, t_data *data, int i)
 {
 	char	*dest;
-	int		i;
 	int		len;
 	int		var_len;
 
-	i = 0;
 	if (!data->env_str)
 		return (ft_strdup("\0"));
 	if (!str)

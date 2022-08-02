@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_arr_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 19:14:09 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 23:53:49 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:24:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ int	str_arr_size(char **args)
 	while (args && args[count])
 		count++;
 	return (count);
+}
+
+void	check_quote(char *type, char c)
+{
+	if (*type == -1 && (c == '"' || c == '\''))
+		*type = c;
+	else if (c == *type)
+		*type = -1;
 }
 
 void	str_arr_display(char **str)

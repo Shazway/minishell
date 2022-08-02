@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 16:24:42 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:25:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	reset_signal_handler(t_data *data, int i)
 		data->signals->sa_sigaction = heredoc_handler;
 	signal_intercept(data);
 }
-
 
 void	secondary_handler(int signal, siginfo_t *s, void *trash)
 {

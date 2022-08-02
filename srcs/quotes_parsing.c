@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 15:58:13 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 23:55:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:25:53 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	delete_quotes(t_data *data)
 		{
 			if (ft_strchr(cmd->args[i], '"') || ft_strchr(cmd->args[i], '\''))
 				if (i == 0
-				|| (i > 0 && is_redirection(cmd->args[i - 1], 0) != L_DDIR))
+					|| (i > 0 && is_redirection(cmd->args[i - 1], 0) != L_DDIR))
 					cmd->args[i] = trim_quotes(data, cmd->args[i]);
 			if (!cmd->args[i])
 				msh_exit(data, 1);

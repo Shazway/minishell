@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 23:57:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:42:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ typedef struct s_data
 
 typedef int	(*t_fp)(t_data *, int, char **);
 
-
-
 typedef struct s_cmd
 {
 	int		i;
@@ -79,7 +77,6 @@ typedef struct s_cmd
 	int		builtin;
 	t_fp	func;
 }	t_cmd;
-
 
 //-----------CD--------------//
 int		cd(t_data *data, int ac, char **str);
@@ -160,15 +157,16 @@ void	expand_list(t_data *data);
 char	*expand_variables(t_data *data, char *str, char type);
 int		is_expand(char c);
 char	*get_end(char *str, int index);
-char	*get_var(char *str, t_data *data);
+char	*get_var(char *str, t_data *data, int i);
 char	*get_name(char	*str);
-char	*replace_variables(char *str, t_data *data, char *start, char **true_var);
+char	*replace_variables(char *str,
+			t_data *data, char *start, char **true_var);
 int		get_start_unquote(char *str, char **start);
 //------------------------------//
 
 //-----------MINISHELL----------//
 void	minishell_sh(t_data *data);
-int	msh_allocate(t_data *data, char **env);
+int		msh_allocate(t_data *data, char **env);
 int		msh_init(t_data *data, char **env);
 int		msh_free(t_data *data);
 void	msh_exit(t_data *data, int bad_malloc);
@@ -189,7 +187,6 @@ char	*del_quote(char *str);
 int		trim_quote_size(char *str);
 char	*trim_quotes_fill(char *dest, char *str, int size);
 char	*trim_quotes(t_data *data, char *str);
-char	**unquote_split(char *s, char c);
 int		check_input_redirect(t_data *data, int *i, int count);
 int		check_input_pipe(t_data *data, int *i, int count);
 int		check_input(t_data *data);
@@ -236,11 +233,10 @@ int		ft_isspace(char c);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
 //-----------TEST----------------//
-char	**unquote_split_v2(char *s, int (*delim)(char c), int trim);
-char	**fill_v2(char *s, int (*delim)(char c), char **str);
-int		malloc_words_v2(char *s, int (*delim)(char c), char **str, int count);
-int		count_words_v2(char *s, int (*delim)(char c), int trim);
+char	**unquote_split(char *s, int (*delim)(char c), int trim);
+char	**fill(char *s, int (*delim)(char c), char **str);
+int		malloc_words(char *s, int (*delim)(char c), char **str, int count);
+int		count_words(char *s, int (*delim)(char c), int trim);
 int		is_pipe(char c);
-char	*trim_delim(char *s, int (*delim)(char c));
 
 #endif

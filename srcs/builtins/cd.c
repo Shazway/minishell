@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 17:42:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:42:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*concat_path(char *goal, char *folder_name)
 
 int	change_path_worker(char *goal, char *foldername, t_data *data)
 {
-
 	free(data->old_path);
 	data->old_path = ft_strdup(data->relative_path);
 	ft_free_strs(&goal, &foldername, NULL, NULL);
@@ -80,7 +79,7 @@ int	cd(t_data *data, int ac, char **str)
 	if (ac > 2)
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2) > 0);
 	if (ac == 1 || (ac == 2 && !ft_strncmp(str[1], "~", ft_strlen(str[1]))))
-		return (cd_home(get_var("HOME", data), "HOME", data));
+		return (cd_home(get_var("HOME", data, 0), "HOME", data));
 	arg = ft_strdup(str[1]);
 	if (!arg)
 		msh_exit(data, 1);

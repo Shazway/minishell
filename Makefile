@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/08/02 22:38:11 by mdkhissi         ###   ########.fr        #
+#    Updated: 2022/08/03 00:18:27 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,8 +58,7 @@ SRCS		=	$(SRC)/builtins/cd.c			\
 				$(SRC)/expand_utils.c			\
 				$(SRC)/redirections_utils.c		\
 				$(SRC)/builtins/cd_home.c		\
-				$(SRC)/arr_del_utils.c			\
-				$(SRC)/unquote_split_v2.c		\
+				$(SRC)/arr_del_utils.c
 
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
 
