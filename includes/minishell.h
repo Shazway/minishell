@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 00:42:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 01:46:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,10 @@ int		set_env(t_data *data, char **env);
 
 //-----------PARSING------------//
 int		parsing(t_data *data);
+int		is_pipe(char c);
 void	fill_token(t_data *data, char **pipe_split, int i);
 void	print_result(t_cmd *token);
 void	delete_quotes(t_data *data);
-void	split_spaces(t_cmd *token, char *content);
 int		is_opened_quotes(t_data *data);
 void	check_quote(char *type, char c);
 char	*del_quote(char *str);

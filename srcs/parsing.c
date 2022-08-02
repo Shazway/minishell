@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 00:27:55 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 01:48:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	fill_token(t_data *data, char **pipe_split, int i)
 		msh_exit(data, 1);
 	}
 	ft_lstadd_back(&(data->cmd), ft_lstnew((void *)token));
-	split_spaces(token, pipe_split[i]);
+	token->args = unquote_split(pipe_split[i], &ft_isspace, 1);
 	if (!token->args)
 	{
 		ft_lstclear(&(data->cmd), &(free_cmd));
@@ -69,9 +69,13 @@ void	print_result(t_cmd *token)
 	}
 }
 
-void	split_spaces(t_cmd *token, char *content)
+int	is_pipe(char c)
 {
-	token->args = unquote_split(content, &(ft_isspace), 1);
+	if (!c)
+		return (0);
+	if (c == '|')
+		return (1);
+	return (0);
 }
 
 int	is_opened_quotes(t_data *data)

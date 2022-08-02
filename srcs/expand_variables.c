@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:31:17 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 00:50:54 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 01:44:50 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ char	*expand_variable_worker(t_data *data, char *str, int *i)
 	if (true_var[0])
 		*i += ft_strlen(true_var);
 	free(true_var);
-	printf("str[%s]\n", str);
 	return (str);
 }
+
 char	*expand_variables(t_data *data, char *str, char type)
 {
 	int		i;
@@ -68,7 +68,6 @@ char	*expand_variables(t_data *data, char *str, char type)
 		check_quote(&type, str[i]);
 		if ((str[i] == '$' && type != '\'') && !is_expand(str[i + 1]))
 		{
-			printf("str[%s]\n", str);
 			str = expand_variable_worker(data, str, &i);
 			if (!str)
 				return (NULL);

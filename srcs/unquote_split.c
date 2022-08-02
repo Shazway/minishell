@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-int	is_pipe(char c)
-{
-	if (!c)
-		return (0);
-	if (c == '|')
-		return (1);
-	return (0);
-}
-
 int	count_words_worker(char *str, int (*delim)(char c))
 {
 	int		count;
@@ -29,7 +20,7 @@ int	count_words_worker(char *str, int (*delim)(char c))
 
 	type = -1;
 	i = 0;
-	count = 0;
+	count = 1;
 	while (str[i])
 	{
 		check_quote(&type, str[i]);
