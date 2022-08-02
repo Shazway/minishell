@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 23:57:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:34:13 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 int	ft_export(t_data *data, int ac, char **av)
 {
 	int	i;
-	int	lens_id[ac];
-	
+	int	*lens_id;
+
 	if (ac == 1)
 		return (export_display(data->env_str));
+	lens_id = malloc(ac * sizeof(int));
+	if (!lens_id)
+		msh_exit(data, 1);
 	ft_fill_iarr(lens_id, -2, ac);
 	av[0] = ft_str_zero(av[0]);
 	ac--;
@@ -38,8 +41,8 @@ char	*export_worker(char *env_entry, char **av, int *ac, int *lens_id)
 	int	j;
 	int	valid;
 
-	j = 0;
-	while (av[j])
+	j = -1;
+	while (av[++j])
 	{
 		if (av[j][0])
 		{
@@ -55,12 +58,8 @@ char	*export_worker(char *env_entry, char **av, int *ac, int *lens_id)
 			if (!valid)
 				av[j] = export_error(av[j], ac);
 			if (lens_id[j] < 0 && valid)
-			{
-				av[j] = ft_str_zero(av[j]) ;
-				*ac -= 1;
-			}
+				av[j] = ft_str_zero(av[j]) + 0 * (*ac)--;
 		}
-		j++;
 	}
 	return (env_entry);
 }
@@ -70,8 +69,8 @@ char	*compare_replace(char *env_entry, char **entry, int len_id)
 	char	*p_entry;
 
 	p_entry = *entry;
-	if (!ft_strncmp(env_entry, p_entry, len_id) &&
-			(p_entry[len_id] == '+' || p_entry[len_id] == '='))
+	if (!ft_strncmp(env_entry, p_entry, len_id)
+		&& (p_entry[len_id] == '+' || p_entry[len_id] == '='))
 	{
 		env_entry = replace_env_entry(env_entry,
 				len_id, p_entry);
@@ -107,7 +106,7 @@ char	*replace_env_entry(char *old, int len_id, char *entry)
 	return (new);
 }
 
-int get_id_len(char *entry)
+int	get_id_len(char *entry)
 {
 	char	*p_eq;
 	int		len;

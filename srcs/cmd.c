@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 00:48:52 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:52:50 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char	*get_path(char *c_name, char **envr)
 	char	**path_array;
 	char	*working_cmd;
 
-	if (!envr || !c_name)
-		return (NULL);
+	if (!envr)
+		return (ft_strdup(""));
 	if (ft_strchr(c_name, '/'))
 		return (ft_strdup(c_name));
 	i = -1;
@@ -55,14 +55,18 @@ char	*get_path(char *c_name, char **envr)
 			break ;
 	}
 	if (!path_var)
-		return (NULL);
+		return (ft_strdup(""));
 	path_var += 5;
 	path_array = ft_split(path_var, ':');
+	if (!path_array)
+		return (NULL);
 	working_cmd = parse_path(path_array, c_name);
+	if (!working_cmd)
+		return (NULL);
 	str_arr_free(path_array);
 	if (working_cmd)
 		return (working_cmd);
-	return (NULL);
+	return (ft_strdup(""));
 }
 
 char	*parse_path(char **path_array, char *c_name)
@@ -73,11 +77,15 @@ char	*parse_path(char **path_array, char *c_name)
 	int		found;
 
 	slashcmd = ft_strjoin("/", c_name);
+	if (!slashcmd)
+		return (NULL);
 	found = 0;
 	i = 0;
 	while (!found && path_array && path_array[i] != NULL)
 	{
 		working_cmd = ft_strjoin(path_array[i++], slashcmd);
+		if (!working_cmd)
+			return (NULL);
 		if (access(working_cmd, F_OK) == 0)
 			found = 1;
 		if (!found)
@@ -111,5 +119,16 @@ void	exec_builtin(t_data *data, t_cmd *cmd)
 		}
 		msh_free(data);
 		exit(g_cmd_status);
+	}
+}
+
+void	wait_cmds(t_data *data)
+{
+	data->child = waitpid(-1, &g_cmd_status, 0);
+	while (data->child > 0)
+	{
+		if (g_cmd_status != 127 && g_cmd_status != 126)
+			g_cmd_status = WEXITSTATUS(g_cmd_status);
+		data->child = waitpid(-1, &g_cmd_status, 0);
 	}
 }

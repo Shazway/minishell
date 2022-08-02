@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 23:57:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:38:41 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ void	print_fullpath(t_data *data);
 void	execute(t_data *data);
 void	run_forked_cmd(t_data *data, t_cmd *cmd);
 void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
-void	exec_error(t_cmd *cmd);
+void	wait_cmds(t_data *data);
+void	exec_error(t_data *data, t_cmd *cmd);
 void	close_unused_pipes(t_data *data, int r, int w, int c_idx);
 int		here_doc(char *lim, int expand, int *fd, t_data *data);
 int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
