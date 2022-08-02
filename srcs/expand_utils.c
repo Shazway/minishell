@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:01:39 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 16:08:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:50:24 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*get_var(char *str, t_data *data)
 	int		var_len;
 
 	i = 0;
+	if (!data->env_str)
+		return (ft_strdup("\0"));
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str);

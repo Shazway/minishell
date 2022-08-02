@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 16:24:30 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:21:19 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,23 @@ int	here_doc(char *lim, int expand, int *fd, t_data *data)
 	}
 	if (!dup2_close(stdin_copy, STDIN_FILENO))
 		msh_perexit(data, "dup", NULL);
-	close(*fd);
-	*fd = open("/tmp/msh_here_doc", O_RDONLY);
+	if (g_cmd_status != 130)
+	{
+		close(*fd);
+		*fd = open("/tmp/msh_here_doc", O_RDONLY);
+	}
 	return (ret);
 }
 
 int	eof_heredoc(char *lim)
 {
-	ft_putstr_fd("minishell: warning: here-document", 2);
-	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
-	ft_putstr_fd(lim, 2);
-	ft_putstr_fd("\')\n", 2);
+	if (g_cmd_status != 130)
+	{
+		ft_putstr_fd("minishell: warning: here-document", 2);
+		ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd(lim, 2);
+		ft_putstr_fd("\')\n", 2);
+	}
 	return (0);
 }
 

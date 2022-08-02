@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 19:48:08 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:57:32 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,18 +162,19 @@ int		is_expand(char c);
 char	*get_end(char *str, int index);
 char	*get_var(char *str, t_data *data);
 char	*get_name(char	*str);
-char	*replace_variables(char *str, t_data *data, char *start);
+char	*replace_variables(char *str, t_data *data, char *start, char **true_var);
 int		get_start_unquote(char *str, char **start);
 //------------------------------//
 
 //-----------MINISHELL----------//
 void	minishell_sh(t_data *data);
-int		msh_init(t_data *data);
+int	msh_allocate(t_data *data, char **env);
+int		msh_init(t_data *data, char **env);
 int		msh_free(t_data *data);
 void	msh_exit(t_data *data, int bad_malloc);
 void	msh_perexit(t_data *data, char *scall, void *p);
 void	msh_persignal(char *scall, int sigvalue, void *p);
-int		set_env(t_data *data);
+int		set_env(t_data *data, char **env);
 //------------------------------//
 
 //-----------PARSING------------//
@@ -235,10 +236,10 @@ int		ft_isspace(char c);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
 //-----------TEST----------------//
-char	**unquote_split_v2(char *s, int (*delim)(char c));
+char	**unquote_split_v2(char *s, int (*delim)(char c), int trim);
 char	**fill_v2(char *s, int (*delim)(char c), char **str);
 int		malloc_words_v2(char *s, int (*delim)(char c), char **str, int count);
-int		count_words_v2(char *s, int (*delim)(char c));
+int		count_words_v2(char *s, int (*delim)(char c), int trim);
 int		is_pipe(char c);
 char	*trim_delim(char *s, int (*delim)(char c));
 

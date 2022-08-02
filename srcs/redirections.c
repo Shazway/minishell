@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 02:31:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:42:32 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	open_redirections_worker(t_cmd *arg, char *final_path, int type, int i)
 		ft_putstr_fd("minishell: ", 2);
 		perror(arg->args[i + 1]);
 		arg->args[0] = ft_str_zero(arg->args[0]);
+
 	}
 }
 

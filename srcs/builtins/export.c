@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 19:09:38 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:57:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	ft_export(t_data *data, int ac, char **av)
 {
 	int	i;
 	int	lens_id[ac];
-
+	
 	if (ac == 1)
 		return (export_display(data->env_str));
 	ft_fill_iarr(lens_id, -2, ac);
 	av[0] = ft_str_zero(av[0]);
 	ac--;
 	i = 0;
-	while (data->env_str[i])
+	while (data->env_str && data->env_str[i])
 	{
 		data->env_str[i] = export_worker(data->env_str[i], av, &ac, lens_id);
 		i++;

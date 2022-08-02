@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquote_split_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:15:36 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 18:59:59 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:12:30 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,37 @@ char	*trim_delim(char *s, int (*delim)(char c))
 	return (ft_substr(s, start, end - start));
 }
 
-int	count_words_v2(char *s, int (*delim)(char c))
+int	count_words_v2(char *s, int (*delim)(char c), int trim)
 {
 	int		i;
 	int		count;
 	char	type;
+	char	*str;
 
 	count = 1;
 	type = -1;
 	i = 0;
 	if (!s)
 		return (-1);
-	while (s[i])
+	if (trim)
+		str = ft_strtrim(s, " \t\r\n\v\f");
+	else
+		str = ft_strdup(s);
+	if (!str)
+		return (-1);
+	while (str[i])
 	{
-		check_quote(&type, s[i]);
-		if ((delim(s[i]) && type == -1))
+		check_quote(&type, str[i]);
+		if ((delim(str[i]) && type == -1))
 		{
 			count++;
-			while (s[i] && delim(s[i]))
+			while (str[i] && delim(str[i]))
 				i++;
 		}
 		else
 			i++;
 	}
+	free(str);
 	return (count);
 }
 
@@ -128,14 +136,14 @@ char	**fill_v2(char *s, int (*delim)(char c), char **str)
 	return (str);
 }
 
-char	**unquote_split_v2(char *s, int (*delim)(char c))
+char	**unquote_split_v2(char *s, int (*delim)(char c), int trim)
 {
 	char	**str;
 	int		count;
 
 	if (!s)
 		return (NULL);
-	count = count_words_v2(s, delim);
+	count = count_words_v2(s, delim, trim);
 	if (count == -1)
 		return (NULL);
 	if (!ft_malloc((void **)&str, sizeof(char *) * (count + 1)))

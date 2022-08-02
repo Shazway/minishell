@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 00:59:38 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 19:52:37 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:13:33 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	parsing(t_data *data)
 {
 	int		i;
 	char	**pipe_split;
-	char	*tmp;
 
 	i = 0;
 	data->input = separate_redir(data->input);
@@ -24,10 +23,7 @@ int	parsing(t_data *data)
 		msh_exit(data, 1);
 	if (!ft_strlen(data->input))
 		return (0);
-	tmp = data->input;
-	data->input = trim_delim(data->input, &ft_isspace);
-	free(tmp);
-	pipe_split = unquote_split_v2(data->input, &is_pipe);
+	pipe_split = unquote_split_v2(data->input, &is_pipe, 0);
 	if (!pipe_split)
 		msh_exit(data, 1);
 	while (pipe_split && pipe_split[i])
@@ -75,11 +71,7 @@ void	print_result(t_cmd *token)
 
 void	split_spaces(t_cmd *token, char *content)
 {
-	token->args = unquote_split_v2(content, &(ft_isspace));
-	printf("parsing\n");
-	str_arr_display(token->args);
-	if (!token->args)
-		return ;
+	token->args = unquote_split_v2(content, &(ft_isspace), 1);
 }
 
 int	is_opened_quotes(t_data *data)

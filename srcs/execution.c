@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 19:48:21 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:01:07 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ void	execute(t_data *data)
 	while (c_idx != NULL)
 	{
 		cmd = c_idx->content;
-		if (!cmd->name[0])
-		{
-			c_idx = c_idx->next;
-			continue ;
-		}
 		if (c_idx->next != NULL)
 		{
 			init_pipe(data, cmd->i);
+		}
+		if (!cmd->name[0])
+		{
+			c_idx = c_idx->next;
+			g_cmd_status = 1;
+			continue ;
 		}
 		if (!cmd->to_fork)
 			run_cmd(data, cmd, cmd->i, data->n_cmd);
@@ -108,10 +109,7 @@ void	exec_error(t_cmd *cmd)
 
 	fdtest = -1;
 	if (!cmd->fullpath[0])
-	{
-		ft_putstr_fd("minishell: ", 2);
 		cmd_notfound(cmd->name);
-	}
 	if (cmd->fullpath && cmd->fullpath[0])
 	{
 		acc = access(cmd->fullpath, X_OK);

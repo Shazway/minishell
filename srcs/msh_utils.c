@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 16:46:49 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:48:11 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,19 @@ void	msh_persignal(char *scall, int sigvalue, void *p)
 	g_cmd_status = sigvalue;
 }
 
-int	msh_allocate(t_data *data)
+int	msh_allocate(t_data *data, char **env)
 {
 	data->signals = malloc(sizeof(struct sigaction));
 	if (!data->signals)
 		return (1);
 	ft_memset(data->signals, 0, sizeof(struct sigaction));
-	if (!set_env(data))
-		return (1);
+	if (env)
+	{
+		if (!set_env(data, env))
+			return (1);
+	}
+	else
+		data->env_str = NULL;
 	data->relative_path = getcwd(NULL, 0);
 	data->old_path = ft_strdup(data->relative_path);
 	if (!data->relative_path || !data->old_path)
@@ -68,7 +73,7 @@ int	msh_allocate(t_data *data)
 	return (0);
 }
 
-int	msh_init(t_data *data)
+int	msh_init(t_data *data, char **env)
 {
 	data->signals = NULL;
 	data->input = NULL;
@@ -83,7 +88,7 @@ int	msh_init(t_data *data)
 	data->env_str = NULL;
 	data->relative_path = NULL;
 	data->old_path = NULL;
-	if (msh_allocate(data))
+	if (msh_allocate(data, env))
 		msh_exit(data, 1);
 	data->signals->sa_sigaction = sig_info_main;
 	return (0);
