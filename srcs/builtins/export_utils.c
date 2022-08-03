@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 18:09:04 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 18:19:57 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 21:50:03 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,15 @@ char	*id_exist(char **av, int ac, int idx, int len)
 int	is_validid(char	*identifier, int len)
 {
 	int	i;
-	int	number_only;
 
-	number_only = 1;
+	if (ft_isdigit(identifier[0]))
+		return (0);
 	i = 0;
 	while ((i < len || len == -1) && identifier[i])
 	{
-		if (ft_isalpha(identifier[i]) && number_only == 1)
-			number_only = 0;
 		if (!(ft_isalnum(identifier[i]) || identifier[i] == '_'))
 			return (0);
 		i++;
 	}
-	if (number_only == 1)
-		return (0);
 	return (i);
 }

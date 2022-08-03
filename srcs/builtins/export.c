@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 18:17:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 21:43:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,28 @@ int	ft_export(t_data *data, int ac, char **av)
 	int	i;
 	int	len_id;
 	int	valid;
+	int	ret;
 
 	if (ac == 1)
 		return (export_display(data->env_str));
-	i = 1;
-	while (av && av[i])
+	ret = 1;
+	i = 0;
+	while (av && av[++i])
 	{
 		len_id = get_id_len(av[i]);
 		valid = is_validid(av[i], len_id);
-		if (len_id > 0 && valid)
+		if (len_id > 0 && ft_strlen(av[i] + len_id) > 1 && valid)
 		{
 			data->env_str = update_env(data->env_str, av[i], len_id);
 			if (!data->env_str)
 				msh_exit(data, 1);
+			ret = 0;
 		}
 		if (!valid)
-		{
 			ft_printf("minishell: export: `%s': not a valid identifier\n",
 				av[i]);
-		}
-		i++;
 	}
-	return (0);
+	return (ret);
 }
 
 char	**update_env(char **envr, char *entry, int len_id)

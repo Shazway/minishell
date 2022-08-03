@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 02:56:49 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 18:34:34 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ int	pre_heredoc(t_data *data, int *stdin_copy, char **lim, int **fd)
 	return (ret);
 }
 
-int	eof_heredoc(char *lim)
+int	eof_heredoc(char *lim, int size)
 {
 	if (g_cmd_status != 130)
 	{
 		ft_putstr_fd("minishell: warning: here-document", 2);
+		ft_putstr_fd(" at line ", 2);
+		ft_putnbr_fd(size, 2);
 		ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
 		ft_putstr_fd(lim, 2);
 		ft_putstr_fd("\')\n", 2);
@@ -79,13 +81,16 @@ int	heredoc_prompt(char *lim, int expand, t_data *data, int fd)
 	char	*buf;
 	char	*p;
 	int		len_lim;
+	int		size;
 
+	size = 0;
 	len_lim = ft_strlen(lim);
 	while (fd)
 	{
 		buf = readline("> ");
+		size += ft_strlen(buf);
 		if (!buf)
-			return (eof_heredoc(lim));
+			return (eof_heredoc(lim, size));
 		p = ft_strnstr(buf, lim, len_lim);
 		if (p && p == buf && p[len_lim] == '\0')
 			return (ft_free(buf) != NULL);
