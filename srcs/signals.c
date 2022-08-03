@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 22:15:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 22:17:22 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 		rl_redisplay();
 	}
 	if (signal == SIGQUIT)
-	{
-		g_cmd_status = 0;
 		return ;
-	}
 }
 
 int	termios_setup(t_data *data)
