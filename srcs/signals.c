@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 22:17:22 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 22:36:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ void	reset_signal_handler(t_data *data, int i)
 	signal_intercept(data);
 }
 
+void	child_status(void)
+{
+	if (g_cmd_status == 2)
+		ft_putstr_fd("^C\n", 2);
+	if (g_cmd_status == 131)
+		ft_putstr_fd("^Quit (core dumped)\n", 2);
+	if (g_cmd_status == 2)
+		g_cmd_status = 130;
+}
+
 void	secondary_handler(int signal, siginfo_t *s, void *trash)
 {
 	(void)s;
@@ -56,14 +66,7 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 		return ;
 	}
 	if (signal == SIGCHLD)
-	{
-		if (g_cmd_status == 2)
-			ft_putstr_fd("^C\n", 2);
-		if (g_cmd_status == 131)
-			ft_putstr_fd("^Quit (core dumped)\n", 2);
-		if (g_cmd_status == 2)
-			g_cmd_status = 130;
-	}
+		sigchld_action();
 }
 
 void	sig_info_main(int signal, siginfo_t *s, void *trash)
@@ -80,18 +83,4 @@ void	sig_info_main(int signal, siginfo_t *s, void *trash)
 	}
 	if (signal == SIGQUIT)
 		return ;
-}
-
-int	termios_setup(t_data *data)
-{
-	int	rc;
-
-	rc = tcgetattr(0, &data->termios);
-	if (rc)
-		return (1);
-	data->termios.c_lflag &= ~ECHOCTL;
-	rc = tcsetattr(0, 0, &data->termios);
-	if (rc)
-		return (1);
-	return (0);
 }

@@ -6,11 +6,25 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:09:48 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 02:16:18 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 22:36:39 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	termios_setup(t_data *data)
+{
+	int	rc;
+
+	rc = tcgetattr(0, &data->termios);
+	if (rc)
+		return (1);
+	data->termios.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(0, 0, &data->termios);
+	if (rc)
+		return (1);
+	return (0);
+}
 
 int	main(int ac, char **av, char **env)
 {
