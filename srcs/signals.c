@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 02:12:28 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 22:11:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	signal_intercept(t_data *data)
 	if (sigaction(SIGINT, data->signals, NULL) == -1)
 		return (1);
 	if (sigaction(SIGQUIT, data->signals, NULL) == -1)
+		return (1);
+	if (sigaction(SIGCHLD, data->signals, NULL) == -1)
 		return (1);
 	return (0);
 }
@@ -41,15 +43,24 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 	{
 		g_cmd_status = 130;
 		wait(&g_cmd_status);
-		g_cmd_status = WEXITSTATUS(g_cmd_status);
+		if (g_cmd_status != 2)
+			g_cmd_status = WEXITSTATUS(g_cmd_status);
 		return ;
 	}
 	if (signal == SIGQUIT)
 	{
-		g_cmd_status = 0;
+		g_cmd_status = 131;
 		wait(&g_cmd_status);
-		g_cmd_status = WEXITSTATUS(g_cmd_status);
+		if (g_cmd_status != 131)
+			g_cmd_status = WEXITSTATUS(g_cmd_status);
 		return ;
+	}
+	if (signal == SIGCHLD)
+	{
+		if (g_cmd_status == 2)
+			ft_putstr_fd("^C\n", 2);
+		if (g_cmd_status == 131)
+			ft_putstr_fd("^Quit (core dumped)\n", 2);
 	}
 }
 
