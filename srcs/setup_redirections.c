@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 03:46:20 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 00:27:33 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,10 @@
 
 int	setup_rfiles(t_cmd	*arg, int i, t_data *data)
 {
-	char	*work_path;
-	char	*final_path;
 	int		type;
 
 	type = is_redirection(arg->args[i], 0);
-	work_path = ft_strdup(data->relative_path);
-	final_path = concat_path(work_path, arg->args[i + 1]);
-	if (!final_path)
-	{
-		free(work_path);
-		return (0);
-	}
-	open_redirections_worker(arg, final_path, type, i);
+	open_redirections_worker(arg, type, i);
 	if (type == L_DDIR)
 	{
 		if (arg->args[i + 1])

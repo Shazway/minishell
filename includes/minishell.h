@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 19:16:39 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/04 00:25:07 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef int	(*t_fp)(t_data *, int, char **);
 typedef struct s_cmd
 {
 	int		i;
+	int		redirect_success;
 	char	*name;
 	char	*lim;
 	char	**args;
@@ -196,7 +197,7 @@ int		check_input(t_data *data);
 
 //-----------REDIRECTIONS-------//
 int		open_redirections(t_data *data);
-void	open_redirections_worker(t_cmd *arg, char *final_path, int type, int i);
+void	open_redirections_worker(t_cmd *arg, int type, int i);
 int		rfiles_worker(t_cmd *arg, t_data *data);
 int		setup_rfiles(t_cmd	*arg, int i, t_data *data);
 char	**eliminate_redirections(char **args);
