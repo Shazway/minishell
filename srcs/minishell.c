@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 01:40:05 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:22:02 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	msh_init(t_data *data, char **env)
 	if (msh_allocate(data, env))
 		msh_exit(data, 1);
 	data->signals->sa_sigaction = sig_info_main;
+	if (signal_intercept(data) == -1)
+		return (1);
 	return (0);
 }
 
@@ -101,8 +103,8 @@ void	minishell_sh(t_data *data)
 {
 	while (1)
 	{
-		if (signal_intercept(data))
-			msh_exit(data, 0);
+	//	if (signal_intercept(data))
+	//		msh_exit(data, 0);
 		set_prompt_string(data);
 		data->input = readline(data->prompt);
 		if (!data->input)

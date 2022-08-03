@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 00:52:50 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:27:36 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*get_path(char *c_name, char **envr)
 		return (NULL);
 	working_cmd = parse_path(path_array, c_name);
 	if (!working_cmd)
-		return (NULL);
+		return (ft_free_sars(&path_array, NULL, NULL, NULL));
 	str_arr_free(path_array);
 	if (working_cmd)
 		return (working_cmd);
