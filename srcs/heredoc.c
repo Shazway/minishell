@@ -3,38 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 18:00:16 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/02 23:21:19 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:56:49 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	here_doc(char *lim, int expand, int *fd, t_data *data)
+int	here_doc(char *lim, int *fd, t_data *data)
 {
 	int		stdin_copy;
 	int		ret;
 
-	ret = 0;
-	if (!lim)
-		return (1);
-	stdin_copy = dup(0);
-	if (stdin_copy == -1)
-		msh_perexit(data, "dup", lim);
-	expand = 1;
-	if (ft_strchr(lim, '"') || ft_strchr(lim, '\''))
-		expand = 0;
-	if (!expand)
-		lim = del_quote(lim);
-	if (!lim)
-		return (close(stdin_copy) == 0);
-	*fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (!*fd)
-		msh_persignal("open", 126, lim);
-	ret = heredoc_prompt(lim, expand, data, *fd);
-	free(lim);
+	ret = pre_heredoc(data, &stdin_copy, &lim, &fd);
 	if (ret)
 	{
 		close(*fd);
@@ -48,6 +31,34 @@ int	here_doc(char *lim, int expand, int *fd, t_data *data)
 		close(*fd);
 		*fd = open("/tmp/msh_here_doc", O_RDONLY);
 	}
+	return (ret);
+}
+
+int	pre_heredoc(t_data *data, int *stdin_copy, char **lim, int **fd)
+{
+	int	expand;
+	int	ret;
+
+	ret = 0;
+	expand = 0;
+	ret = 0;
+	if (!*lim)
+		return (1);
+	*stdin_copy = dup(0);
+	if (*stdin_copy == -1)
+		msh_perexit(data, "dup", *lim);
+	expand = 1;
+	if (ft_strchr(*lim, '"') || ft_strchr(*lim, '\''))
+		expand = 0;
+	if (!expand)
+		*lim = del_quote(*lim);
+	if (!*lim)
+		return (close(*stdin_copy) == 0);
+	**fd = open("/tmp/msh_here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (!**fd)
+		msh_persignal("open", 126, *lim);
+	ret = heredoc_prompt(*lim, expand, data, **fd);
+	free(*lim);
 	return (ret);
 }
 

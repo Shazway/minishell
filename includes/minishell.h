@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 02:35:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:56:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n);
 void	wait_cmds(t_data *data);
 void	exec_error(t_data *data, t_cmd *cmd);
 void	close_unused_pipes(t_data *data, int r, int w, int c_idx);
-int		here_doc(char *lim, int expand, int *fd, t_data *data);
+int		here_doc(char *lim, int *fd, t_data *data);
+int		pre_heredoc(t_data *data, int *stdin_copy, char **lim, int **fd);
 int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);

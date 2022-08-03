@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 02:08:32 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 03:14:27 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ int	syntax_msh(t_data *data, char *str)
 	return (0);
 }
 
-int	is_next_token(t_data *data, int i, char type)
+int	is_next_token(t_data *data, int i)
 {
 	if (data->input && !data->input[i])
 		return (0);
 	while (data->input[i] && ft_isspace(data->input[i]))
 		i++;
-	if (data->input[i] == type)
+	if (data->input[i] == '|'
+		|| data->input[i] == '<'
+		|| data->input[i] == '>')
 		return (0);
 	return (1);
 }
@@ -35,7 +37,7 @@ int	check_input_redirect(t_data *data, int *i, int count)
 		|| (data->input[*i] == '>' && data->input[*i + 1] == '<')
 		|| (data->input[*i] == '<' && data->input[*i + 1] == '>'))
 		return (syntax_msh(data,
-				"minishell: syntax error: > or < close to newline\n"));
+				"minishell: syntax error near unexpected token \'newline\'\n"));
 	while (data->input[*i]
 		&& (data->input[*i] == '>' || data->input[*i] == '<'))
 	{
@@ -43,15 +45,15 @@ int	check_input_redirect(t_data *data, int *i, int count)
 		*i = *i + 1;
 	}
 	if (count > 2 || data->input[*i] == '\0')
-		return (syntax_msh(data, "minishell: syntax error for either > or <\n"));
-	if (data->input[*i] && !is_next_token(data, *i, data->input[*i + 1]))
-		return (syntax_msh(data, "minishell: syntax error for either > or <\n"));
+		return (syntax_msh(data, "minishell: syntax error near unexpected token \'> or <\'\n"));
+	if (i && !is_next_token(data, *i))
+		return (syntax_msh(data, "minishell: syntax error near unexpected token \'> or <\'\n"));
 	return (1);
 }
 
 int	check_input_pipe(t_data *data, int *i, int count)
 {
-	if (!is_next_token(data, *i + 1, '|'))
+	if (!is_next_token(data, *i + 1))
 		return (syntax_msh(data, "minishell: syntax error for \'|\'\n"));
 	if (!data->input[*i + 1] || (*i == 0)
 		|| (*i > 0 && (data->input[*i - 1] == '>'
