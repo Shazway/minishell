@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 03:14:27 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 03:15:57 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ int	check_input_redirect(t_data *data, int *i, int count)
 		*i = *i + 1;
 	}
 	if (count > 2 || data->input[*i] == '\0')
-		return (syntax_msh(data, "minishell: syntax error near unexpected token \'> or <\'\n"));
+		return (syntax_msh(data,
+				"minishell: syntax error near unexpected token \'> or <\'\n"));
 	if (i && !is_next_token(data, *i))
-		return (syntax_msh(data, "minishell: syntax error near unexpected token \'> or <\'\n"));
+		return (syntax_msh(data,
+				"minishell: syntax error near unexpected token \'> or <\'\n"));
 	return (1);
 }
 
