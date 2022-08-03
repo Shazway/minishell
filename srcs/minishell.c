@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 02:22:02 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:30:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ void	minishell_sh(t_data *data)
 {
 	while (1)
 	{
-	//	if (signal_intercept(data))
-	//		msh_exit(data, 0);
 		set_prompt_string(data);
 		data->input = readline(data->prompt);
 		if (!data->input)

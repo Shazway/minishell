@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 01:53:54 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:35:08 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	free_cmd(void *vcmd);
 void	close_cmd_files(t_cmd *cmd);
 void	cmd_notfound(char *cmd_name);
 int		is_builtin(t_data *data, t_cmd *cmd);
-char	*get_path(char *c_name, char **envr);
+char	*get_path(char *c_name, char **envr, t_data *data);
 char	*parse_path(char **path_array, char *c_name);
 void	print_fullpath(t_data *data);
 //------------------------------//

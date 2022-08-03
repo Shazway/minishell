@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:28:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 00:32:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:29:44 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +68,7 @@ char	*join_variable(char *str, char *true_var, char *end, char *start)
 	return (str);
 }
 
-char	*replace_variables(char *str, t_data *data, char *start, char **true_var)
+char	*replace_variables(char *str, t_data *data, char *start, char **var)
 {
 	char	*end;
 	char	*name;
@@ -81,15 +80,15 @@ char	*replace_variables(char *str, t_data *data, char *start, char **true_var)
 		return (ft_free(str));
 	if (name && name[0])
 	{
-		*true_var = get_var(name, data, 0);
+		*var = get_var(name, data, 0);
 		end = get_end(str, ft_strlen(name) + 1);
 	}
 	else
 	{
-		*true_var = ft_strdup("\0");
+		*var = ft_strdup("\0");
 		end = get_end(str, 2);
 	}
-	str = join_variable(str, *true_var, end, start);
+	str = join_variable(str, *var, end, start);
 	ft_free_strs(&end, NULL, &name, NULL);
 	return (str);
 }

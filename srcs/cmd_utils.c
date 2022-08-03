@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/02 19:45:10 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:34:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	search_cmds(t_data *data)
 		cmd->builtin = is_builtin(data, cmd);
 		if (!cmd->builtin)
 		{
-			fullpath = get_path(cmd->name, data->env_str);
+			fullpath = get_path(cmd->name, data->env_str, data);
 			if (fullpath)
 			{
 				free(cmd->fullpath);

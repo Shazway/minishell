@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 02:27:36 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:46:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 	return (0);
 }
 
-char	*get_path(char *c_name, char **envr)
+char	*get_path(char *c_name, char **envr, t_data *data)
 {
-	int		i;
 	char	*path_var;
 	char	**path_array;
 	char	*working_cmd;
@@ -47,24 +46,18 @@ char	*get_path(char *c_name, char **envr)
 		return (ft_strdup(""));
 	if (ft_strchr(c_name, '/'))
 		return (ft_strdup(c_name));
-	i = -1;
-	while (envr[++i] != NULL)
-	{
-		path_var = ft_strnstr(envr[i], "PATH=", 5);
-		if (path_var)
-			break ;
-	}
+	path_var = get_var("PATH", data, 0);
 	if (!path_var)
 		return (ft_strdup(""));
-	path_var += 5;
 	path_array = ft_split(path_var, ':');
+	free(path_var);
 	if (!path_array)
 		return (NULL);
 	working_cmd = parse_path(path_array, c_name);
-	if (!working_cmd)
-		return (ft_free_sars(&path_array, NULL, NULL, NULL));
 	str_arr_free(path_array);
-	if (working_cmd)
+	if (!working_cmd)
+		return (NULL);
+	else
 		return (working_cmd);
 	return (ft_strdup(""));
 }
