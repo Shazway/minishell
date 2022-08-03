@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 02:46:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 00:31:19 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,5 @@ void	wait_cmds(t_data *data)
 			g_cmd_status = WEXITSTATUS(g_cmd_status);
 		data->child = waitpid(-1, &g_cmd_status, 0);
 	}
+	reset_signal_handler(data, 0);
 }

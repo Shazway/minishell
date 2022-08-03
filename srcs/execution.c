@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 19:16:18 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/04 00:31:03 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	execute(t_data *data)
 			init_pipe(data, cmd->i);
 		if (!cmd->name[0])
 			g_cmd_status = 1;
+		if (cmd->redirect_success && !cmd->name[0])
+			cmd_notfound(cmd->name);
 		if (cmd->name[0])
 		{
 			if (cmd->name[0] && !cmd->to_fork)
@@ -39,7 +41,6 @@ void	execute(t_data *data)
 	}
 	close_pipes(data->pips, data->n_cmd - 1);
 	wait_cmds(data);
-	reset_signal_handler(data, 0);
 }
 
 void	run_forked_cmd(t_data *data, t_cmd *cmd)

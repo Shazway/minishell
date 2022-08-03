@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 02:05:17 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 00:24:53 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,24 @@ int	is_redirection(char	*str, int type)
 	return (type);
 }
 
-void	open_redirections_worker(t_cmd *arg, char *final_path, int type, int i)
+void	open_redirections_worker(t_cmd *arg, int type, int i)
 {
-	if (!arg->args[0][0])
-	{
-		free(final_path);
+	if (!arg->args[0][0] && arg->redirect_success == 0)
 		return ;
-	}
 	if (arg->fout != -1 && (type == R_DIR || type == R_DDIR))
 		close(arg->fout);
 	if (arg->fin != -1 && (type == L_DIR || type == L_DDIR))
 		close(arg->fin);
 	if (type == R_DIR)
-		arg->fout = open(final_path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		arg->fout = open(arg->args[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (type == R_DDIR)
-		arg->fout = open(final_path, O_RDWR | O_CREAT | O_APPEND, 0644);
+		arg->fout = open(arg->args[i + 1], O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (type == L_DIR)
-		arg->fin = open(final_path, O_RDONLY);
-	free(final_path);
+		arg->fin = open(arg->args[i + 1], O_RDONLY);
 	if (((type == R_DIR || type == R_DDIR) && arg->fout == -1)
 		|| ((type == L_DIR) && arg->fin == -1))
 	{
+		arg->redirect_success = 0;
 		ft_putstr_fd("minishell: ", 2);
 		perror(arg->args[i + 1]);
 		arg->args[0] = ft_str_zero(arg->args[0]);

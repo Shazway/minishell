@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 19:16:35 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/04 00:19:14 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_cmd	*init_cmd(int i)
 	if (!cmd)
 		return (NULL);
 	cmd->i = i;
+	cmd->redirect_success = 1;
 	cmd->ac = 0;
 	cmd->to_fork = 1;
 	cmd->builtin = 0;
@@ -92,6 +93,7 @@ void	close_cmd_files(t_cmd *cmd)
 
 void	cmd_notfound(char *cmd_name)
 {
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd_name, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	g_cmd_status = 127;
