@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:56 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 23:08:55 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/04 00:36:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	setup_to_del(t_data *data, char **av, char **to_del, int *j)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	ret = 0;
 	i = 1;
