@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 15:56:01 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 18:17:39 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,78 +15,85 @@
 int	ft_export(t_data *data, int ac, char **av)
 {
 	int	i;
-	int	*lens_id;
+	int	len_id;
+	int	valid;
 
 	if (ac == 1)
 		return (export_display(data->env_str));
-	lens_id = malloc(ac * sizeof(int));
-	if (!lens_id)
-		msh_exit(data, 1);
-	ft_fill_iarr(lens_id, -2, ac);
-	av[0] = ft_str_zero(av[0]);
-	ac--;
-	i = 0;
-	while (data->env_str && data->env_str[i])
+	i = 1;
+	while (av && av[i])
 	{
-		data->env_str[i] = export_worker(data->env_str[i], av, &ac, lens_id);
-		if (!data->env_str[i])
+		len_id = get_id_len(av[i]);
+		valid = is_validid(av[i], len_id);
+		if (len_id > 0 && valid)
 		{
-			str_arr_free(data->env_str);
-			free(lens_id);
-			msh_exit(data, 1);
+			data->env_str = update_env(data->env_str, av[i], len_id);
+			if (!data->env_str)
+				msh_exit(data, 1);
+		}
+		if (!valid)
+		{
+			ft_printf("minishell: export: `%s': not a valid identifier\n",
+				av[i]);
 		}
 		i++;
 	}
-	free(lens_id);
-	if (ac > 0)
-		data->env_str = str_arr_add(data->env_str, i, av, ac);
-	if (!data->env_str)
-		msh_exit(data, 1);
 	return (0);
 }
 
-char	*export_worker(char *env_entry, char **av, int *ac, int *lens_id)
+char	**update_env(char **envr, char *entry, int len_id)
 {
-	int	j;
-	int	valid;
+	int		i;
+	char	**new;
 
-	j = -1;
-	while (av[++j])
+	i = 0;
+	while (envr && envr[i])
 	{
-		if (av[j][0])
+		if (!ft_strncmp(envr[i], entry, len_id)
+			&& (envr[i][len_id] == '+' || envr[i][len_id] == '='))
 		{
-			if (lens_id[j] == -2)
-				lens_id[j] = get_id_len(av[j]);
-			valid = is_validid(av[j], lens_id[j]);
-			if (lens_id[j] > 0 && valid)
-			{
-				env_entry = compare_replace(env_entry, &av[j], lens_id[j]);
-				if (!av[j][0])
-					*ac -= 1;
-			}
-			if (!valid)
-				av[j] = export_error(av[j], ac);
-			if (lens_id[j] < 0 && valid)
-				av[j] = ft_str_zero(av[j]) + 0 * (*ac)--;
+			envr[i] = replace_env_entry(envr[i],
+					len_id, entry);
+			if (!envr[i])
+				return (str_arr_free(envr));
+			return (envr);
 		}
+		i++;
 	}
-	return (env_entry);
+	new = str_arr_add(envr, i, NULL, 1);
+	if (!new)
+		return (str_arr_free(envr));
+	new[i] = new_entry(entry, len_id);
+	if (!new[i])
+		return (ft_free_sars(&new, &envr, NULL, NULL));
+	return (new);
 }
 
-char	*compare_replace(char *env_entry, char **entry, int len_id)
+char	*new_entry(char *entry, int len_id)
 {
-	char	*p_entry;
+	int		i;
+	int		j;
+	char	*new;
+	int		len;
 
-	p_entry = *entry;
-	if (!ft_strncmp(env_entry, p_entry, len_id)
-		&& (p_entry[len_id] == '+' || p_entry[len_id] == '='))
+	len = ft_strlen(entry);
+	if (entry[len_id] == '+')
+		len--;
+	new = malloc((len + 1) * sizeof(char));
+	if (!new)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (entry && entry[i])
 	{
-		env_entry = replace_env_entry(env_entry,
-				len_id, p_entry);
-		p_entry = ft_str_zero(p_entry);
+		if (entry[i] != '+')
+			new[j++] = entry[i];
+		i++;
 	}
-	*entry = p_entry;
-	return (env_entry);
+	if (entry[len_id] == '+')
+		i--;
+	new[i] = '\0';
+	return (new);
 }
 
 char	*replace_env_entry(char *old, int len_id, char *entry)

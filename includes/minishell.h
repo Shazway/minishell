@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 16:03:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 18:00:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,10 @@ int		shell_exit(t_data *data, int ac, char **av);
 
 //-----------EXPORT------------//
 int		ft_export(t_data *data, int ac, char **av);
-char	*export_worker(char *env_entry, char **av, int *ac, int *lens_id);
-char	*compare_replace(char *env_entry, char **entry, int len_id);
-char	*export_error(char *entry, int *ac);
 int		is_validid(char	*identifier, int len);
+char	**update_env(char **envr, char *entry, int len_id);
 char	*replace_env_entry(char *old, int len_id, char *entry);
+char	*new_entry(char *entry, int len_id);
 int		get_id_len(char *entry);
 void	free_pipes(t_data *data);
 void	close_pipes(t_pipex *pips, int n);
