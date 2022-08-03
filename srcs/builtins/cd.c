@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 00:42:21 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:00:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	change_path_worker(char *goal, char *foldername, t_data *data)
 	ft_free_strs(&goal, &foldername, NULL, NULL);
 	if (!data->old_path)
 		msh_exit(data, 1);
+	free(data->relative_path);
 	data->relative_path = getcwd(NULL, 0);
 	ft_free_strs(&goal, &foldername, NULL, NULL);
 	return (1);
