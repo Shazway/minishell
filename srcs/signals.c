@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 22:36:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 22:45:34 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 		return ;
 	}
 	if (signal == SIGCHLD)
-		sigchld_action();
+		child_status();
 }
 
 void	sig_info_main(int signal, siginfo_t *s, void *trash)
