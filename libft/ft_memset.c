@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:37:38 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/06/04 18:08:32 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 13:07:38 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_memset(void *s, int c, size_t n)
 	unsigned char	*ptr;
 
 	ptr = s;
-	while (n-- > 0)
+	while (n-- > 0 && ptr)
 		*ptr++ = c;
 	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:37:24 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/06/04 18:55:00 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 13:06:21 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	one = (unsigned char *)s1;
 	two = (unsigned char *)s2;
 	i = 0;
-	while (i < n)
+	while (i < n && one && two)
 	{
 		if (one[i] != two[i])
 			return (one[i] - two[i]);

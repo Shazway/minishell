@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:37:19 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/06/04 18:04:48 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 13:06:06 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	*ft_memchr(void *s, int c, size_t n)
 
 	str = s;
 	i = 0;
-	while (i < n && str[i] != (unsigned char)c)
+	while (i < n && str && str[i] != (unsigned char)c)
 		i++;
-	if (i < n)
+	if (i < n && str)
 		return (&str[i]);
 	else
 		return (NULL);
