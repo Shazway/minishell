@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 02:57:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 03:46:20 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	open_redirections(t_data *data)
 		if (rfiles_worker(arg, data))
 		{
 			tmp = tmp->next;
+			arg->ac = str_arr_size(arg->args);
 			continue ;
 		}
 		arg->args = eliminate_redirections(arg->args);
