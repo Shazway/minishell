@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 23:24:49 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 22:11:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 22:13:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	secondary_handler(int signal, siginfo_t *s, void *trash)
 			ft_putstr_fd("^C\n", 2);
 		if (g_cmd_status == 131)
 			ft_putstr_fd("^Quit (core dumped)\n", 2);
+		if (g_cmd_status == 2)
+			g_cmd_status = 130;
 	}
 }
 
