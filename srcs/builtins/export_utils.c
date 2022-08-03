@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 18:09:04 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 21:50:03 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 22:55:38 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 int	export_display(char **envr)
 {
 	int	i;
+	int	len_id;
 
 	i = 0;
 	if (!envr)
 		return (0);
 	while (envr[i])
 	{
-		ft_printf("declare -x %s\n", envr[i]);
+		len_id = get_id_len(envr[i]);
+		printf("declare -x %.*s", len_id + 1, envr[i]);
+		printf("\"%s\"\n", envr[i] + len_id + 1);
 		i++;
 	}
 	return (0);

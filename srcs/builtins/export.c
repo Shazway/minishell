@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 21:43:06 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 23:07:12 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_export(t_data *data, int ac, char **av)
 
 	if (ac == 1)
 		return (export_display(data->env_str));
-	ret = 1;
+	ret = 0;
 	i = 0;
 	while (av && av[++i])
 	{
@@ -32,11 +32,10 @@ int	ft_export(t_data *data, int ac, char **av)
 			data->env_str = update_env(data->env_str, av[i], len_id);
 			if (!data->env_str)
 				msh_exit(data, 1);
-			ret = 0;
 		}
 		if (!valid)
 			ft_printf("minishell: export: `%s': not a valid identifier\n",
-				av[i]);
+				av[i + 0 * ret++]);
 	}
 	return (ret);
 }
