@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:42 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 00:34:13 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:56:01 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,19 @@ int	ft_export(t_data *data, int ac, char **av)
 	while (data->env_str && data->env_str[i])
 	{
 		data->env_str[i] = export_worker(data->env_str[i], av, &ac, lens_id);
+		if (!data->env_str[i])
+		{
+			str_arr_free(data->env_str);
+			free(lens_id);
+			msh_exit(data, 1);
+		}
 		i++;
 	}
+	free(lens_id);
 	if (ac > 0)
 		data->env_str = str_arr_add(data->env_str, i, av, ac);
+	if (!data->env_str)
+		msh_exit(data, 1);
 	return (0);
 }
 

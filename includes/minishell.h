@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 14:11:29 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:03:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int		pwd(t_data *data, int ac, char **av);
 
 //-----------UNSET-------------//
 int		ft_unset(t_data *data, int ac, char **av);
+char	**new_env(int len_new, char **sarr, char **new, int *to_del);
 //------------------------------//
 
 //-----------CMD---------------//

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 20:27:56 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/01 20:52:15 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:10:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	ft_unset(t_data *data, int ac, char **av)
 		{
 			to_del[j] = ft_strjoin(av[i], "=");
 			if (!to_del[j])
-				return (!str_arr_free(to_del) * -1);
+			{
+				str_arr_free(to_del);
+				msh_exit(data, 1);
+			}
 			j++;
 		}
 		i++;
@@ -37,5 +40,7 @@ int	ft_unset(t_data *data, int ac, char **av)
 	to_del[j] = NULL;
 	data->env_str = str_arr_del(data->env_str, to_del, j);
 	str_arr_free(to_del);
-	return (1);
+	if (!data->env_str)
+		msh_exit(data, 1);
+	return (0);
 }
