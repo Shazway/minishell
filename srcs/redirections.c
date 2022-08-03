@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:50:41 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 00:30:09 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:05:17 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ char	*concat_redir(char *str, char *redir, int *i, int is_double)
 		return (NULL);
 	here = ft_substr(str, 0, *i);
 	if (!here)
-	{
-		free(end);
-		return (NULL);
-	}
+		return (ft_free(end));
 	trash = str;
 	str = ft_strjoin(here, redir);
 	free(here);
@@ -115,7 +112,7 @@ char	*separate_redir(char *str)
 	type = -1;
 	i = 0;
 	temp = str;
-	str = ft_strtrim(str, " ");
+	str = ft_strtrim(str, " \t\r\n\v\f");
 	if (!str)
 		return (NULL);
 	free(temp);

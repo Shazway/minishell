@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 01:49:31 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 00:29:46 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/03 02:08:32 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_input_redirect(t_data *data, int *i, int count)
 	}
 	if (count > 2 || data->input[*i] == '\0')
 		return (syntax_msh(data, "minishell: syntax error for either > or <\n"));
-	if (!is_next_token(data, *i, data->input[*i]))
+	if (data->input[*i] && !is_next_token(data, *i, data->input[*i + 1]))
 		return (syntax_msh(data, "minishell: syntax error for either > or <\n"));
 	return (1);
 }
