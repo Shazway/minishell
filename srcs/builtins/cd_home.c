@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 23:41:15 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/04 02:51:24 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:43:19 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	to_home(char *path, t_data *data)
 	data->relative_path = getcwd(NULL, 0);
 	if (!data->relative_path || !data->old_path)
 		msh_exit(data, 1);
-	if (!export_paths(data))
-		msh_exit(data, 1);
 	return (0);
 }
 
@@ -40,8 +38,6 @@ int	to_old(char *path, t_data *data)
 		return (1);
 	}
 	swap_paths(data);
-	if (!export_paths(data))
-		msh_exit(data, 1);
 	return (0);
 }
 
@@ -56,5 +52,7 @@ int	cd_home(char *path, char *name, t_data *data)
 		if (to_old(path, data))
 			return (1);
 	free(path);
+	if (!export_paths(data))
+		msh_exit(data, 1);
 	return (0);
 }
