@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 02:00:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 02:57:45 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,24 @@ char	*concat_path(char *goal, char *folder_name)
 	return (goal);
 }
 
+int	export_paths(t_data *data)
+{
+	char	**arg;
+
+	arg = malloc(4 * sizeof(char *));
+	if (!arg)
+		msh_exit(data, 1);
+	arg[3] = NULL;
+	arg[0] = ft_strdup("export");
+	arg[1] = ft_strjoin("PWD=", data->relative_path);
+	arg[2] = ft_strjoin("OLDPWD=", data->old_path);
+	if (!arg[0] || !arg[1] || !arg[2])
+		return (str_arr_free(arg) != NULL);
+	ft_export(data, 3, arg);
+	str_arr_free(arg);
+	return (1);
+}
+
 int	change_path_worker(char *goal, char *foldername, t_data *data)
 {
 	free(data->old_path);
@@ -44,6 +62,8 @@ int	change_path_worker(char *goal, char *foldername, t_data *data)
 	free(data->relative_path);
 	data->relative_path = getcwd(NULL, 0);
 	ft_free_strs(&goal, &foldername, NULL, NULL);
+	if (!export_paths(data))
+		return (0);
 	return (1);
 }
 

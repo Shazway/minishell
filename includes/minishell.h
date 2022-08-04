@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/04 00:25:07 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 02:54:32 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_cmd
 
 //-----------CD--------------//
 int		cd(t_data *data, int ac, char **str);
+int		export_paths(t_data *data);
 void	swap_paths(t_data *data);
 int		is_double_dash(char *str);
 int		is_dash(char	*str);
