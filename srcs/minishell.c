@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/04 00:06:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:03:31 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@ void	set_prompt_string(t_data *data)
 {
 	char	*tmp;
 	char	*cr_dir;
-	char	*crf_dolar;
+	char	*crf_dollar;
 
 	cr_dir = ft_strrchr(data->relative_path, '/');
 	if ((cr_dir && !cr_dir[1]) || !cr_dir)
 		cr_dir = data->relative_path;
 	else
 		cr_dir = cr_dir + 1;
-	crf_dolar = ft_strjoin(cr_dir,
+	crf_dollar = ft_strjoin(cr_dir,
 			"\001 ▶\002 \001\033[1;34m\002""\001\033[0m\002");
-	if (!crf_dolar)
+	if (!crf_dollar)
 		msh_exit(data, 1);
 	tmp = data->prompt;
 	data->prompt = ft_strjoin("\001\033[1;32m\002""╔\002"
 			"\001\033[1;32m\002"" minishell" " " "\001╝\002" " " "\001\033[1;31m\002""",
-			crf_dolar);
-	free(crf_dolar);
+			crf_dollar);
+	free(crf_dollar);
 	free(tmp);
 	if (!data->prompt)
 		msh_exit(data, 1);
@@ -70,6 +70,8 @@ void	ministart(t_data *data)
 		return ;
 	}
 	data->input = expand_variables(data, data->input, -1);
+	if (!data->input)
+		msh_exit(data, 1);
 	if (parsing(data))
 	{
 		delete_quotes(data);

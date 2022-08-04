@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 00:18:47 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 16:13:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:49:24 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	**new_env(int len_new, char **sarr, char **new, int *to_del)
 			if (!new[i - j])
 			{
 				free(to_del);
-				str_arr_free(sarr);
 				return (str_arr_free(new));
 			}
 		}
@@ -90,8 +89,6 @@ int	*sarrdel_worker(char **sarr, char **entry, int len_entry, int *len_new)
 
 	len_sarr = str_arr_size(sarr);
 	if (!ft_malloc((void **)(&to_del), (len_sarr + 1) * sizeof(int)))
-		return (NULL);
-	if (!to_del)
 		return (NULL);
 	j = find_to_del(to_del, len_entry, sarr, entry);
 	to_del[j] = -1;

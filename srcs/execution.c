@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/04 00:31:03 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:34:08 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ void	execute(t_data *data)
 			g_cmd_status = 1;
 		if (cmd->redirect_success && !cmd->name[0])
 			cmd_notfound(cmd->name);
-		if (cmd->name[0])
-		{
-			if (cmd->name[0] && !cmd->to_fork)
-				run_cmd(data, cmd, cmd->i, data->n_cmd);
-			if (cmd->name[0] && cmd->to_fork)
-				run_forked_cmd(data, cmd);
-		}
+		if (cmd->name[0] && !cmd->to_fork)
+			run_cmd(data, cmd, cmd->i, data->n_cmd);
+		if (cmd->name[0] && cmd->to_fork)
+			run_forked_cmd(data, cmd);
 		c_idx = c_idx->next;
 	}
 	close_pipes(data->pips, data->n_cmd - 1);

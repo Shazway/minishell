@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:20:42 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/04 00:31:19 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:17:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*parse_path(char **path_array, char *c_name)
 	{
 		working_cmd = ft_strjoin(path_array[i++], slashcmd);
 		if (!working_cmd)
-			return (NULL);
+			return (ft_free(slashcmd));
 		if (access(working_cmd, F_OK) == 0)
 			found = 1;
 		if (!found)
@@ -88,7 +88,7 @@ char	*parse_path(char **path_array, char *c_name)
 	if (found)
 		return (working_cmd);
 	else
-		return (NULL);
+		return (ft_strdup(""));
 }
 
 void	exec_builtin(t_data *data, t_cmd *cmd)

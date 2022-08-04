@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:24:29 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/04 02:57:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:40:23 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	change_path_worker(char *goal, char *foldername, t_data *data)
 		msh_exit(data, 1);
 	free(data->relative_path);
 	data->relative_path = getcwd(NULL, 0);
-	ft_free_strs(&goal, &foldername, NULL, NULL);
+	if (!data->relative_path)
+		msh_exit(data, 1);
 	if (!export_paths(data))
 		return (0);
 	return (1);
@@ -69,14 +70,9 @@ int	change_path_worker(char *goal, char *foldername, t_data *data)
 
 int	change_path(char *goal, char *foldername, t_data *data)
 {
-	if (!foldername)
+	if (!foldername || !goal)
 	{
-		free(goal);
-		msh_exit(data, 1);
-	}
-	if (!goal)
-	{
-		free(foldername);
+		ft_free_strs(&foldername, &goal, NULL, NULL);
 		msh_exit(data, 1);
 	}
 	if (chdir(goal) == -1)
@@ -111,7 +107,7 @@ int	cd(t_data *data, int ac, char **str)
 	path = ft_strdup(data->relative_path);
 	path = concat_path(path, arg);
 	if (!path)
-		return (-1);
+		msh_perexit(data, NULL, arg);
 	if (change_path(path, arg, data))
 		return (1);
 	return (0);

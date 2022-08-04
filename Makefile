@@ -6,7 +6,7 @@
 #    By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/08/04 02:59:34 by tmoragli         ###   ########.fr        #
+#    Updated: 2022/08/04 16:09:46 by tmoragli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DESCRIPTION =	Minishell
 
 # ----------- COMPILER FLAGS -------
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror
 LPFLAGS		=	-L$(LIBFT) -lft -lreadline
 
 # ----------- INCLUDE --------------
@@ -78,9 +78,10 @@ ${NAME}		: $(OBJS)
 	@echo "$(WHITE)"
 			$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LPFLAGS) -o $@
 	@echo "$(RED) =========> Building $(DESCRIPTION).............DONE √\n"
-	
+	@echo "$(EOC)"
 $(OBJ)/%.o	: $(SRC)/%.c | $(OBJ) compiling
 			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "$(EOC)"
 
 compiling	:
 			@echo "$(WHITE)"
@@ -96,6 +97,7 @@ clean		:
 	@echo "$(PURPLE)"
 			-rm -rf $(OBJ)
 	@echo "$(RED) =========> Deleting object files.............DONE √\n"
+	@echo "$(EOC)"
 
 fclean		: clean
 	@echo "$(PURPLE)"
@@ -104,6 +106,7 @@ fclean		: clean
 	@echo "$(GREEN)"
 			make fclean -C $(LIBFT)
 	@echo "$(RED) =========> Cleaning libft.............DONE √\n"
+	@echo "$(EOC)"
 
 re			: fclean all
 
@@ -113,5 +116,6 @@ norm		:
 	@echo "$(CYAN)"
 			norminette $(SRC) $(INCLUDE)
 	@echo "$(RED) =========> Checking the norminette............DONE √\n"
+	@echo "$(EOC)"
 
 .PHONY: all clean fclean re norm

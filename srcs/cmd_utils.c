@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:22:33 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/04 00:19:14 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:50:59 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ void	search_cmds(t_data *data)
 		if (!cmd->builtin)
 		{
 			fullpath = get_path(cmd->name, data->env_str, data);
-			if (fullpath)
-			{
-				free(cmd->fullpath);
-				cmd->fullpath = fullpath;
-			}
+			if (!fullpath)
+				msh_exit(data, 1);
+			free(cmd->fullpath);
+			cmd->fullpath = fullpath;
 		}
-			i = i->next;
+		i = i->next;
 	}
 }
 

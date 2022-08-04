@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:07:43 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/04 00:27:33 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 16:04:54 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ char	**destroy_redirections(char **dest, char **args)
 	{
 		if (is_redirection(args[i], 0))
 		{
-			if (args[i])
-				i++;
-			if (args[i])
-				i++;
+			if (args[i] && args[i + 1])
+				i += 2;
 			continue ;
 		}
 		else if (args[i])
 		{
 			dest[j] = ft_strdup(args[i]);
+			if (!dest[j])
+				return (str_arr_free(dest));
 			j++;
 		}
 		if (!args[i])
@@ -121,13 +121,12 @@ int	open_redirections(t_data *data)
 			continue ;
 		}
 		arg->args = eliminate_redirections(arg->args);
-		if (arg->args)
-		{
-			free(arg->name);
-			arg->name = ft_strdup(arg->args[0]);
-			if (!arg->name)
-				msh_exit(data, 1);
-		}
+		if (!arg->args)
+			msh_exit(data, 1);
+		free(arg->name);
+		arg->name = ft_strdup(arg->args[0]);
+		if (!arg->name)
+			msh_exit(data, 1);
 		arg->ac = str_arr_size(arg->args);
 		tmp = tmp->next;
 	}
