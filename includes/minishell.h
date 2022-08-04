@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:57:35 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/04 02:54:32 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 03:07:43 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ char	**update_env(char **envr, char *entry, int len_id);
 char	*replace_env_entry(char *old, int len_id, char *entry);
 char	*new_entry(char *entry, int len_id);
 int		get_id_len(char *entry);
-void	free_pipes(t_data *data);
 void	close_pipes(t_pipex *pips, int n);
 char	*id_exist(char **av, int ac, int idx, int len);
 int		export_display(char **envr);
@@ -138,7 +137,6 @@ void	cmd_notfound(char *cmd_name);
 int		is_builtin(t_data *data, t_cmd *cmd);
 char	*get_path(char *c_name, char **envr, t_data *data);
 char	*parse_path(char **path_array, char *c_name);
-void	print_fullpath(t_data *data);
 //------------------------------//
 
 //-----------EXECUTE-----------//
@@ -154,10 +152,10 @@ int		heredoc_prompt(char *lim, int expand, t_data *data, int fd);
 void	alloc_pipes(t_data *data);
 void	init_pipe(t_data *data, int i);
 int		dup2_close(int oldfd, int newfd);
+void	free_pipes(t_data *data);
 //------------------------------//
 
 //-----------EXPAND-------------//
-void	expand_list(t_data *data);
 char	*expand_variables(t_data *data, char *str, char type);
 int		is_expand(char c);
 char	*get_end(char *str, int index);
@@ -181,6 +179,10 @@ int		set_env(t_data *data, char **env);
 
 //-----------PARSING------------//
 int		parsing(t_data *data);
+char	**unquote_split(char *s, int (*delim)(char c), int trim);
+char	**fill(char *s, int (*delim)(char c), char **str);
+int		malloc_words(char *s, int (*delim)(char c), char **str, int count);
+int		count_words(char *s, int (*delim)(char c), int trim);
 int		is_pipe(char c);
 void	fill_token(t_data *data, char **pipe_split, int i);
 void	print_result(t_cmd *token);
@@ -236,11 +238,5 @@ void	*ft_free_sars(char ***sar1, char ***sar2, char ***sar3, char ***sar4);
 int		ft_isspace(char c);
 int		ft_sar_alloc(char ***sarr, size_t len, size_t v_type);
 //-------------------------------//
-//-----------TEST----------------//
-char	**unquote_split(char *s, int (*delim)(char c), int trim);
-char	**fill(char *s, int (*delim)(char c), char **str);
-int		malloc_words(char *s, int (*delim)(char c), char **str, int count);
-int		count_words(char *s, int (*delim)(char c), int trim);
-int		is_pipe(char c);
 
 #endif
