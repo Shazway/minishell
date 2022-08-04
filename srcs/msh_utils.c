@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:19:28 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/03 02:19:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/04 03:15:51 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	msh_free(t_data *data)
 void	msh_exit(t_data *data, int bad_malloc)
 {
 	if (bad_malloc)
-		g_cmd_status = 12;
+		g_cmd_status = FAILED_ALLOC;
 	msh_free(data);
 	exit(g_cmd_status);
 }
