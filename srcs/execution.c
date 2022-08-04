@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/04 15:34:08 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/05 01:33:35 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,20 +107,19 @@ void	close_unused_pipes(t_data *data, int r, int w, int c_idx)
 {
 	int	i;
 
-	if (c_idx == 0 && c_idx != data->n_cmd - 1)
-		close(data->pips[r].fd[0]);
-	if (c_idx == data->n_cmd - 1 && data->n_cmd > 1)
-		close(data->pips[w].fd[1]);
+	if (data->n_cmd == 1)
+		return ;
+	if (c_idx == 0)
+		r = -1;
+	if (c_idx == data->n_cmd - 1)
+		w = -1;
 	i = 0;
-	while (i <= c_idx && c_idx != data->n_cmd - 1)
+	while (i <= c_idx)
 	{
+		if (i == data->n_cmd - 1)
+			break ;
 		if (i != r)
 			close(data->pips[i].fd[0]);
-		i++;
-	}
-	i = 0;
-	while (i < c_idx && c_idx != data->n_cmd - 1)
-	{
 		if (i != w)
 			close(data->pips[i].fd[1]);
 		i++;
