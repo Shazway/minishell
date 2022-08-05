@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:02:08 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/08/04 15:03:31 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/05 15:48:16 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,22 @@ int	only_isspace(char *str)
 
 void	minishell_sh(t_data *data)
 {
+	int	leave;
+
+	leave = 0;
+	if (data->input)
+		leave = 1;
 	while (1)
 	{
 		set_prompt_string(data);
-		data->input = readline(data->prompt);
+		if (!leave)
+			data->input = readline(data->prompt);
 		if (!data->input)
 			break ;
 		else if (!only_isspace(data->input))
 			ministart(data);
+		if (leave)
+			msh_exit(data, 0);
 		data->input = ft_free(data->input);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 23:00:30 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/05 01:33:35 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/08/05 15:39:28 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ void	run_cmd(t_data *data, t_cmd *cmd, int i, int n)
 		if (!dup2_close(data->pips[r].fd[0], STDIN_FILENO))
 			msh_exit(data, 0);
 	}
-	else if (cmd->fin != -1 && !dup2_close(cmd->fin, STDIN_FILENO))
+	else if (cmd->fin != -1 && cmd->to_fork && !dup2_close(cmd->fin, STDIN_FILENO))
 		msh_exit(data, 0);
 	if (cmd->fout == -1 && i != n - 1 && n > 1)
 	{
 		if (!dup2_close(data->pips[w].fd[1], STDOUT_FILENO))
 			msh_exit(data, 0);
 	}
-	else if (cmd->fout != -1 && !dup2_close(cmd->fout, STDOUT_FILENO))
+	else if (cmd->fout != -1 && cmd->to_fork && !dup2_close(cmd->fout, STDOUT_FILENO))
 		msh_exit(data, 0);
 	close_unused_pipes(data, r, w, i);
 	if (cmd->builtin)
