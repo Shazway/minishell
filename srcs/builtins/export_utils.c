@@ -6,7 +6,7 @@
 /*   By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 18:09:04 by mdkhissi          #+#    #+#             */
-/*   Updated: 2022/08/03 22:55:38 by mdkhissi         ###   ########.fr       */
+/*   Updated: 2022/08/06 14:43:02 by mdkhissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,43 @@ int	export_display(char **envr)
 {
 	int	i;
 	int	len_id;
+	int	*in_order;
+	int	len;
+	int	j;
+	int	tmp;
 
-	i = 0;
 	if (!envr)
 		return (0);
-	while (envr[i])
+	len = str_arr_size(envr);
+	in_order = malloc(len * sizeof(int));
+	i = 0;
+	while (i < len)
 	{
-		len_id = get_id_len(envr[i]);
-		printf("declare -x %.*s", len_id + 1, envr[i]);
-		printf("\"%s\"\n", envr[i] + len_id + 1);
+		in_order[i] = i;
+		i++;
+	}
+	i = 0;
+	while (i < len - 1)
+	{
+		j = i + 1;
+		while (j < len)
+		{
+			if (ft_strncmp(envr[in_order[i]], envr[in_order[j]], -1) > 0)
+			{
+				tmp = in_order[i];
+				in_order[i] = in_order[j];
+				in_order[j] = tmp;	
+			}
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < len)
+	{
+		len_id = get_id_len(envr[in_order[i]]);
+		printf("declare -x %.*s", len_id + 1, envr[in_order[i]]);
+		printf("\"%s\"\n", envr[in_order[i]] + len_id + 1);
 		i++;
 	}
 	return (0);
