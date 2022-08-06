@@ -6,7 +6,7 @@
 #    By: mdkhissi <mdkhissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 18:58:48 by tmoragli          #+#    #+#              #
-#    Updated: 2022/08/05 15:39:56 by mdkhissi         ###   ########.fr        #
+#    Updated: 2022/08/06 15:09:10 by mdkhissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,40 +27,40 @@ INCLUDES	=	-I $(INCLUDE) -I $(LIBFT)
 SRC			=	./srcs
 OBJ			=	./objs
 LIBFT		=	./libft
-SRCS		=	$(SRC)/builtins/cd.c			\
-				$(SRC)/builtins/cd_utils.c		\
-				$(SRC)/builtins/echo.c			\
-				$(SRC)/builtins/env.c			\
-				$(SRC)/builtins/exit.c			\
-				$(SRC)/builtins/export.c		\
-				$(SRC)/builtins/export_utils.c	\
-				$(SRC)/builtins/pwd.c			\
-				$(SRC)/builtins/unset.c			\
-				$(SRC)/setup_redirections.c		\
-				$(SRC)/cmd.c					\
-				$(SRC)/execution.c				\
-				$(SRC)/main.c					\
-				$(SRC)/minishell.c				\
-				$(SRC)/redirections.c			\
-				$(SRC)/parsing.c				\
-				$(SRC)/signals.c				\
-				$(SRC)/unquote_split.c			\
-				$(SRC)/expand_variables.c		\
-				$(SRC)/utils.c					\
-				$(SRC)/quotes_parsing.c			\
-				$(SRC)/pipe_utils.c				\
-				$(SRC)/msh_utils.c				\
-				$(SRC)/cmd_utils.c				\
-				$(SRC)/heredoc.c				\
-				$(SRC)/str_arr_utils.c			\
-				$(SRC)/pre_parsing.c			\
-				$(SRC)/quotes_parsing_utils.c	\
-				$(SRC)/expand_utils.c			\
-				$(SRC)/redirections_utils.c		\
-				$(SRC)/builtins/cd_home.c		\
-				$(SRC)/arr_del_utils.c
+SRCS		=	builtins/cd.c			\
+				builtins/cd_utils.c		\
+				builtins/echo.c			\
+				builtins/env.c			\
+				builtins/exit.c			\
+				builtins/export.c		\
+				builtins/export_utils.c	\
+				builtins/pwd.c			\
+				builtins/unset.c			\
+				setup_redirections.c		\
+				cmd.c					\
+				execution.c				\
+				main.c					\
+				minishell.c				\
+				redirections.c			\
+				parsing.c				\
+				signals.c				\
+				unquote_split.c			\
+				expand_variables.c		\
+				utils.c					\
+				quotes_parsing.c			\
+				pipe_utils.c				\
+				msh_utils.c				\
+				cmd_utils.c				\
+				heredoc.c				\
+				str_arr_utils.c			\
+				pre_parsing.c			\
+				quotes_parsing_utils.c	\
+				expand_utils.c			\
+				redirections_utils.c		\
+				builtins/cd_home.c		\
+				arr_del_utils.c
 
-OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o,$(SRCS))
+OBJS		= $(patsubst %.c, $(OBJ)/%.o,$(SRCS))
 
 # ----------- COLORS ---------------
 BLACK		= \033[1;30m
@@ -110,7 +110,7 @@ norm		:
 	@echo "$(BLACK)"
 			norminette $(LIBFT)	
 	@echo "$(CYAN)"
-			norminette $(SRC) $(INCLUDE)
+			norminette $(INCLUDE)
 	@echo "$(RED) =========> Checking the norminette............DONE √\n"
 
 .PHONY: all clean fclean re norm
